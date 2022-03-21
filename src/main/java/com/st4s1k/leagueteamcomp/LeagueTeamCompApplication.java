@@ -12,14 +12,12 @@ import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.text.MessageFormat;
 
 import static java.net.http.HttpResponse.BodyHandlers;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 
 public class LeagueTeamCompApplication extends Application {
@@ -58,12 +56,6 @@ public class LeagueTeamCompApplication extends Application {
             var iconPath = MessageFormat.format("champions/{0}.png", champion.getKey());
             champion.setImage(new Image(getFileFromResourceAsStream(iconPath)));
         });
-    }
-
-    private Champions getChampionsFromResource(Gson gson) {
-        var in = getFileFromResourceAsStream("champions.json");
-        var reader = new InputStreamReader(in, UTF_8);
-        return gson.fromJson(reader, Champions.class);
     }
 
     @SneakyThrows
