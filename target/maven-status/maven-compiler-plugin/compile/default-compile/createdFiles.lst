@@ -1,8 +1,0 @@
-module-info.class
-com\st4s1k\leagueteamcomp\model\Role.class
-com\st4s1k\leagueteamcomp\model\ChampionInfo.class
-com\st4s1k\leagueteamcomp\model\ChampionData.class
-com\st4s1k\leagueteamcomp\model\ChampionsResponse.class
-com\st4s1k\leagueteamcomp\model\ChampionStats.class
-com\st4s1k\leagueteamcomp\LeagueTeamCompLauncher.class
-com\st4s1k\leagueteamcomp\service\SummonerRoleListGeneratorService.class
