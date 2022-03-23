@@ -4,35 +4,35 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<TabPane prefHeight="560.0" prefWidth="760.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController">
-  <tabs>
-    <Tab text="Role Compositions">
-      <content>
-         <AnchorPane>
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController">
+   <tabs>
+      <Tab text="Role Compositions">
+         <content>
+            <AnchorPane>
                <children>
                   <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                            <children>
                               <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
-                                <columnConstraints>
-                                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
+                                 <columnConstraints>
+                                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
                                     <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="10.0" />
-                                  <ColumnConstraints halignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
                                     <ColumnConstraints halignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
                                     <ColumnConstraints halignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
                                     <ColumnConstraints halignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
                                     <ColumnConstraints halignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" />
+                                    <ColumnConstraints halignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
-                                </rowConstraints>
+                                 </rowConstraints>
                                  <children>
                                     <CheckBox fx:id="cbTop1" centerShape="false" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                     <CheckBox fx:id="cbTop2" centerShape="false" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -118,7 +118,7 @@
                               </GridPane>
                               <AnchorPane layoutX="260.0" layoutY="190.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0">
                                  <children>
-                                     <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onGenerateButtonClick" prefHeight="25.0" prefWidth="75.0" text="Generate" />
+                                    <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onGenerateButtonClick" prefHeight="25.0" prefWidth="75.0" text="Generate" />
                                     <Button alignment="CENTER" layoutX="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onResetButtonClick" prefHeight="25.0" prefWidth="75.0" text="Reset" />
                                  </children>
                               </AnchorPane>
@@ -146,11 +146,11 @@
                   </VBox>
                </children>
             </AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Champion Suggestions">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         </content>
+      </Tab>
+      <Tab text="Champion Suggestions">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <AnchorPane layoutX="400.0" layoutY="14.0">
                      <children>
@@ -176,8 +176,9 @@
                         <Label fx:id="allyTeamResultLabel" layoutY="270.0" prefHeight="200.0" prefWidth="200.0" styleClass="lablel" stylesheets="@style.css" />
                      </children>
                   </AnchorPane>
-               </children></AnchorPane>
-      </content>
-    </Tab>
-  </tabs>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+   </tabs>
 </TabPane>
