@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController">
+<TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController">
    <tabs>
       <Tab text="Role Compositions">
          <content>
@@ -152,7 +152,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <AnchorPane layoutX="400.0" layoutY="14.0">
+                  <AnchorPane layoutX="420.0" layoutY="50.0">
                      <children>
                         <Label layoutX="58.0" layoutY="4.0" text="Enemy Team">
                            <font>
@@ -161,10 +161,10 @@
                         </Label>
                         <TextField fx:id="enemySearchField" layoutY="28.0" onAction="#onEnemySearchAction" prefHeight="26.0" prefWidth="200.0" promptText="Type a champion name" />
                         <ListView fx:id="enemyList" layoutY="62.0" prefHeight="200.0" prefWidth="200.0" />
-                        <Label fx:id="enemyTeamResultLabel" layoutY="270.0" prefHeight="200.0" prefWidth="200.0" styleClass="lablel" stylesheets="@style.css" />
+                        <TextFlow fx:id="enemyTeamResultTextFlow" layoutY="270.0" prefHeight="200.0" prefWidth="200.0" styleClass="enemy-team-result" stylesheets="@style.css" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="161.0" layoutY="14.0">
+                  <AnchorPane layoutX="181.0" layoutY="50.0">
                      <children>
                         <Label layoutX="67.0" layoutY="4.0" text="Ally Team">
                            <font>
@@ -173,9 +173,14 @@
                         </Label>
                         <TextField fx:id="allySearchField" layoutY="28.0" onAction="#onAllySearchAction" prefHeight="26.0" prefWidth="200.0" promptText="Type a champion name" />
                         <ListView fx:id="allyList" layoutY="62.0" prefHeight="200.0" prefWidth="200.0" />
-                        <Label fx:id="allyTeamResultLabel" layoutY="270.0" prefHeight="200.0" prefWidth="200.0" styleClass="lablel" stylesheets="@style.css" />
+                        <TextFlow fx:id="allyTeamResultTextFlow" layoutY="270.0" prefHeight="200.0" prefWidth="200.0" styleClass="ally-team-result" stylesheets="@style.css" />
                      </children>
                   </AnchorPane>
+                  <Label fx:id="teamCompResultLabel" alignment="CENTER" layoutX="296.0" layoutY="14.0" prefHeight="18.0" prefWidth="207.0">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </content>

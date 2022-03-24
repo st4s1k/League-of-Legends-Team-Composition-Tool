@@ -11,12 +11,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
 
-import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import static java.net.http.HttpResponse.BodyHandlers;
@@ -58,29 +56,22 @@ public class LeagueTeamCompApplication extends Application {
     private void preloadChampions() {
         Champions champions = getChampionsFromUrl();
         ChampionRepository.init(champions);
-        champions.getChampions().values().forEach(champion -> {
-            String iconPath = MessageFormat.format("champions/{0}.png", champion.getKey());
-            champion.setImage(new Image(getFileFromResourceAsStream(iconPath)));
-        });
     }
 
     @SneakyThrows
     private Champions getChampionsFromUrl() {
         HttpRequest request = HttpRequest.newBuilder()
             .uri(new URI("http://cdn.merakianalytics.com/riot/lol/resources/latest/en-US/champions.json"))
-            .GET().build();
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, BodyHandlers.ofString());
-        String json = "{\"champions\":" + response.body() + "}";
-        return new Gson().fromJson(json, Champions.class);
-    }
-
-    private InputStream getFileFromResourceAsStream(String fileName) {
-        InputStream inputStream = getClass().getResourceAsStream(fileName);
-        if (inputStream == null) {
-            throw new IllegalArgumentException("file not found! " + fileName);
-        } else {
-            return inputStream;
-        }
+            .build();
+        String response = HttpClient.newHttpClient()
+            .sendAsync(request, BodyHandlers.ofString())
+            .thenApply(HttpResponse::body)
+            .join();
+        String json = "{\"champions\":" + response + "}";
+        Champions champions = new Gson().fromJson(json, Champions.class);
+        champions.getChampions().values()
+            .forEach(champion -> champion.setImage(new Image(champion.getIconUrl(), true)));
+        return champions;
     }
 
     private void closeProgram() {

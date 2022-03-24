@@ -12,11 +12,15 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import lombok.SneakyThrows;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.net.URL;
 import java.util.*;
+import java.util.function.DoubleBinaryOperator;
 import java.util.function.ToDoubleFunction;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -24,8 +28,11 @@ import java.util.stream.Stream;
 import static com.st4s1k.leagueteamcomp.model.SummonerRole.*;
 import static com.st4s1k.leagueteamcomp.service.SummonerRoleListGeneratorService.getCombinations;
 import static java.util.stream.Collectors.*;
+import static javafx.scene.paint.Color.*;
 
 public class LeagueTeamCompController implements Initializable {
+
+    private static final double OUTPUT_SCALE = 10;
 
     private ChampionRepository championRepository;
 
@@ -105,18 +112,21 @@ public class LeagueTeamCompController implements Initializable {
     /* Champion Suggestions  */
 
     @FXML
-    private TextField enemySearchField;
-    @FXML
-    private ListView<String> enemyList;
-    @FXML
-    private Label enemyTeamResultLabel;
-
-    @FXML
     private TextField allySearchField;
     @FXML
     private ListView<String> allyList;
     @FXML
-    private Label allyTeamResultLabel;
+    private TextFlow allyTeamResultTextFlow;
+
+    @FXML
+    private TextField enemySearchField;
+    @FXML
+    private ListView<String> enemyList;
+    @FXML
+    private TextFlow enemyTeamResultTextFlow;
+
+    @FXML
+    private Label teamCompResultLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -143,37 +153,133 @@ public class LeagueTeamCompController implements Initializable {
         allyList.setOnKeyPressed(event -> handleDeleteButton(event, allyList));
         enemyList.setOnKeyPressed(event -> handleDeleteButton(event, enemyList));
 
-        allyList.getItems().addListener((ListChangeListener<String>) change -> allyTeamResultLabel.setText(
-            getTeamStats(allyList)
-        ));
-        enemyList.getItems().addListener((ListChangeListener<String>) change -> enemyTeamResultLabel.setText(
-            getTeamStats(enemyList)
-        ));
+        getChampionListChangeListener().onChanged(null);
+        allyList.getItems().addListener(getChampionListChangeListener());
+        enemyList.getItems().addListener(getChampionListChangeListener());
     }
 
-    private String getTeamStats(ListView<String> allyList) {
-        return
-            "Damage:             " + getChampionInfoValue(allyList, AttributeRatings::getDamage) + "\n" +
-            "Attack:             " + getChampionInfoValue(allyList, AttributeRatings::getAttack) + "\n" +
-            "Defense:            " + getChampionInfoValue(allyList, AttributeRatings::getDefense) + "\n" +
-            "Magic:              " + getChampionInfoValue(allyList, AttributeRatings::getMagic) + "\n" +
-            "Difficulty:         " + getChampionInfoValue(allyList, AttributeRatings::getDifficulty) + "\n" +
-            "Control:            " + getChampionInfoValue(allyList, AttributeRatings::getControl) + "\n" +
-            "Toughness:          " + getChampionInfoValue(allyList, AttributeRatings::getToughness) + "\n" +
-            "Mobility:           " + getChampionInfoValue(allyList, AttributeRatings::getMobility) + "\n" +
-            "Utility:            " + getChampionInfoValue(allyList, AttributeRatings::getUtility) + "\n" +
-            "Ability Reliance:   " + getChampionInfoValue(allyList, AttributeRatings::getAbilityReliance);
+    private ListChangeListener<String> getChampionListChangeListener() {
+        return change -> {
+            calculateTeamStats(allyList, enemyList, allyTeamResultTextFlow);
+            calculateTeamStats(enemyList, allyList, enemyTeamResultTextFlow);
+            long allyRedCount = getRedCount(allyTeamResultTextFlow);
+            long enemyRedCount = getRedCount(enemyTeamResultTextFlow);
+            if (allyRedCount > enemyRedCount) {
+                teamCompResultLabel.setText("Enemy Team is better");
+            } else if (allyRedCount < enemyRedCount) {
+                teamCompResultLabel.setText("Ally Team is better");
+            } else {
+                teamCompResultLabel.setText("Teams are similar");
+            }
+        };
     }
 
-    private String getChampionInfoValue(ListView<String> allyList, ToDoubleFunction<AttributeRatings> getValue) {
-        var allyListItems = allyList.getItems();
-        var value = allyListItems.stream()
+    private long getRedCount(TextFlow textFlow) {
+        return textFlow.getChildren().stream()
+            .map(Text.class::cast)
+            .map(Shape::getFill)
+            .filter(RED::equals)
+            .count();
+    }
+
+    private void calculateTeamStats(ListView<String> championList, ListView<String> opponentChampionList, TextFlow textFlow) {
+        double damage = getChampionInfoValue(championList, AttributeRatings::getDamage, 3);
+        double attack = getChampionInfoValue(championList, AttributeRatings::getAttack, 10);
+        double defense = getChampionInfoValue(championList, AttributeRatings::getDefense, 10);
+        double magic = getChampionInfoValue(championList, AttributeRatings::getMagic, 10);
+        double difficulty = getChampionInfoValue(championList, AttributeRatings::getDifficulty, 3);
+        double control = getChampionInfoValue(championList, AttributeRatings::getControl, 3);
+        double toughness = getChampionInfoValue(championList, AttributeRatings::getToughness, 3);
+        double mobility = getChampionInfoValue(championList, AttributeRatings::getMobility, 3);
+        double utility = getChampionInfoValue(championList, AttributeRatings::getUtility, 3);
+        double abilityReliance = getChampionInfoValue(championList, AttributeRatings::getAbilityReliance, 100);
+
+        double opponentDamage = getChampionInfoValue(opponentChampionList, AttributeRatings::getDamage, 3);
+        double opponentAttack = getChampionInfoValue(opponentChampionList, AttributeRatings::getAttack, 10);
+        double opponentDefense = getChampionInfoValue(opponentChampionList, AttributeRatings::getDefense, 10);
+        double opponentMagic = getChampionInfoValue(opponentChampionList, AttributeRatings::getMagic, 10);
+        double opponentDifficulty = getChampionInfoValue(opponentChampionList, AttributeRatings::getDifficulty, 3);
+        double opponentControl = getChampionInfoValue(opponentChampionList, AttributeRatings::getControl, 3);
+        double opponentToughness = getChampionInfoValue(opponentChampionList, AttributeRatings::getToughness, 3);
+        double opponentMobility = getChampionInfoValue(opponentChampionList, AttributeRatings::getMobility, 3);
+        double opponentUtility = getChampionInfoValue(opponentChampionList, AttributeRatings::getUtility, 3);
+        double opponentAbilityReliance = getChampionInfoValue(opponentChampionList, AttributeRatings::getAbilityReliance, 100);
+
+        Text damageText = getStatText("Damage:", damage);
+        Text attackText = getStatText("Attack:", attack);
+        Text defenseText = getStatText("Defense:", defense);
+        Text magicText = getStatText("Magic:", magic);
+        Text difficultyText = getStatText("Difficulty:", difficulty);
+        Text controlText = getStatText("Control:", control);
+        Text toughnessText = getStatText("Toughness:", toughness);
+        Text mobilityText = getStatText("Mobility:", mobility);
+        Text utilityText = getStatText("Utility:", utility);
+        Text abilityRelianceText = getStatText("Ability Reliance:", abilityReliance);
+
+        colorStatText(damageText, damage, opponentDamage, Double::max);
+        colorStatText(attackText, attack, opponentAttack, Double::max);
+        colorStatText(defenseText, defense, opponentDefense, Double::max);
+        colorStatText(magicText, magic, opponentMagic, Double::max);
+        colorStatText(difficultyText, difficulty, opponentDifficulty, Double::min);
+        colorStatText(controlText, control, opponentControl, Double::max);
+        colorStatText(toughnessText, toughness, opponentToughness, Double::max);
+        colorStatText(mobilityText, mobility, opponentMobility, Double::max);
+        colorStatText(utilityText, utility, opponentUtility, Double::max);
+        colorStatText(abilityRelianceText, abilityReliance, opponentAbilityReliance, Double::min);
+
+        textFlow.getChildren().clear();
+        textFlow.getChildren().addAll(damageText, new Text("\n"));
+        textFlow.getChildren().addAll(attackText, new Text("\n"));
+        textFlow.getChildren().addAll(defenseText, new Text("\n"));
+        textFlow.getChildren().addAll(magicText, new Text("\n"));
+        textFlow.getChildren().addAll(difficultyText, new Text("\n"));
+        textFlow.getChildren().addAll(controlText, new Text("\n"));
+        textFlow.getChildren().addAll(toughnessText, new Text("\n"));
+        textFlow.getChildren().addAll(mobilityText, new Text("\n"));
+        textFlow.getChildren().addAll(utilityText, new Text("\n"));
+        textFlow.getChildren().add(abilityRelianceText);
+    }
+
+    private void colorStatText(
+        Text statText,
+        double value,
+        double opponentValue,
+        DoubleBinaryOperator operation
+    ) {
+        if (value == opponentValue) {
+            statText.setFill(BLACK);
+        } else if (operation.applyAsDouble(value, opponentValue) == value) {
+            statText.setFill(GREEN);
+        } else {
+            statText.setFill(RED);
+        }
+    }
+
+    private Text getStatText(String label, double value) {
+        return new Text(formatStatLabel(label) + formatStatValue(value));
+    }
+
+    private String formatStatLabel(String label) {
+        return String.format("%-18s", label);
+    }
+
+    private String formatStatValue(double value) {
+        return String.format("%4s / 10", String.format("%1$,.1f", value));
+    }
+
+    private double getChampionInfoValue(
+        ListView<String> championList,
+        ToDoubleFunction<AttributeRatings> getValue,
+        double valueScale
+    ) {
+        var allyListItems = championList.getItems();
+        double teamStatSum = allyListItems.stream()
             .map(championRepository::findChampionDataByKey)
             .flatMap(Optional::stream)
             .map(Champion::getAttributeRatings)
             .mapToDouble(getValue)
-            .reduce(0.0, Double::sum) / (double) allyListItems.size();
-        return String.format("%1$,.2f", value);
+            .reduce(0, Double::sum);
+        return championList.getItems().isEmpty() ? 0 : teamStatSum / allyListItems.size() / valueScale * OUTPUT_SCALE;
     }
 
     private ListCell<String> populateListCells() {
@@ -215,7 +321,8 @@ public class LeagueTeamCompController implements Initializable {
     @FXML
     protected void onGenerateButtonClick() {
         textArea.clear();
-        var summonerNames = List.of(tf1.getText(),
+        var summonerNames = List.of(
+            tf1.getText(),
             tf2.getText(),
             tf3.getText(),
             tf4.getText(),
@@ -240,8 +347,8 @@ public class LeagueTeamCompController implements Initializable {
         ).max().getAsInt());
         var rows = combinations.stream()
             .map(playerToRoleRow -> formatPLayerToRoleRow(playerToRoleRow, nameReservedSize))
-            .collect(toList());
-        var rowsWithSeparator = rows.stream().map(this::appendSeparator).collect(toList());
+            .toList();
+        var rowsWithSeparator = rows.stream().map(this::appendSeparator).toList();
         rowsWithSeparator.forEach(textArea::appendText);
         if (!rowsWithSeparator.isEmpty()) {
             var lastRow = rows.get(rowsWithSeparator.size() - 1);
