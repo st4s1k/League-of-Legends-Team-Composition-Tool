@@ -1,6 +1,6 @@
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/st4s1k/League-of-Legends-Team-Composition-Tool?label=Download)](https://github.com/st4s1k/League-of-Legends-Team-Composition-Tool/releases/latest)
 
-To build an executable you need:
+To build an executable locally you need:
 
 - Maven (https://maven.apache.org/install.html)
 
