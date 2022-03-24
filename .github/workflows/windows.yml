@@ -2,7 +2,8 @@ name: Windows
 
 on:
   push:
-    branches: [ master ]
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
   build:
@@ -29,14 +30,27 @@ jobs:
         with:
           gluon-license: ${{ secrets.GLUON_LICENSE }}
 
-      - name: Gluon Build and Package
+      - name: Gluon Build
         run: mvn -Pdesktop gluonfx:build
 
-      - name: Copy native bundles to staging
-        run: |
-          cp -r target/gluonfx/x86_64-windows/LeagueTeamComp.exe staging
-      - name: Upload
-        uses: actions/upload-artifact@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: Package
-          path: staging
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: target/gluonfx/x86_64-windows/LeagueTeamComp.exe
+          asset_name: LeagueTeamComp.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
