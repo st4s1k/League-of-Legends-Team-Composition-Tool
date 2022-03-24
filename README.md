@@ -1,3 +1,5 @@
+[![Windows](https://github.com/st4s1k/League-of-Legends-Team-Composition-Tool/actions/workflows/windows.yml/badge.svg)](https://github.com/st4s1k/League-of-Legends-Team-Composition-Tool/actions/workflows/windows.yml)
+
 To build an executable you need:
 
 - Maven (https://maven.apache.org/install.html)
