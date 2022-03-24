@@ -1,7 +1,7 @@
 name: Windows
 
 on:
-  create:
+  push:
     tags:
       - 'v*'
 
@@ -49,5 +49,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: target/gluonfx/x86_64-windows/LeagueTeamComp.exe
-          asset_name: LeagueTeamComp-${{ github.event.release.tag-name }}.exe
+          asset_name: LeagueTeamComp-${{github.ref_name}}.exe
           asset_content_type: application/vnd.microsoft.portable-executable
