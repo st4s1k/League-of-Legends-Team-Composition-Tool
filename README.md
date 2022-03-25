@@ -4,7 +4,7 @@ To build an executable locally you need:
 
 - Maven (https://maven.apache.org/install.html)
 
-- GraalVM (https://docs.gluonhq.com/#_graalvm_3114)
+- GraalVM (https://docs.gluonhq.com/#platforms_windows)
 
 - Visual Studio Community (yeah, that's weird I know)
 
