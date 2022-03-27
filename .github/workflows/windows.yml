@@ -28,7 +28,7 @@ jobs:
           gluon-license: ${{ secrets.GLUON_LICENSE }}
 
       - name: Gluon Build
-        run: mvn -Pdesktop gluonfx:build
+        run: mvn gluonfx:compile gluonfx:link
 
       - name: Create Release
         id: create_release

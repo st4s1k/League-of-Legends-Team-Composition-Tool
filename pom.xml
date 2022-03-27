@@ -18,12 +18,13 @@
     <lombok.version>1.18.22</lombok.version>
     <gson.version>2.9.0</gson.version>
     <controlsfx.version>11.1.1</controlsfx.version>
-    <javafx-fxml.version>13.0.2</javafx-fxml.version>
-    <javafx-controls.version>13.0.2</javafx-controls.version>
+    <javafx-fxml.version>17</javafx-fxml.version>
+    <javafx-controls.version>17</javafx-controls.version>
     <!-- plugins -->
     <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     <gluonfx.plugin.version>1.0.12</gluonfx.plugin.version>
     <javafx.plugin.version>0.0.8</javafx.plugin.version>
+    <sortpom.plugin.version>3.0.1</sortpom.plugin.version>
   </properties>
 
   <dependencies>
@@ -97,6 +98,7 @@
             <configuration>
               <mainClass>com.st4s1k.leagueteamcomp.LeagueTeamCompApplication</mainClass>
               <options>
+                <option>-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image</option>
                 <option>--add-exports</option>
                 <option>javafx.base/com.sun.javafx.event=org.controlsfx.controls</option>
                 <option>--add-exports</option>
@@ -126,10 +128,12 @@
             <list>com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController</list>
           </reflectionList>
           <nativeImageArgs>
+            <nativeImageArg>--allow-incomplete-classpath</nativeImageArg>
             <nativeImageArg>--add-exports</nativeImageArg>
             <nativeImageArg>javafx.base/com.sun.javafx.event=org.controlsfx.controls</nativeImageArg>
             <nativeImageArg>--add-exports</nativeImageArg>
-            <nativeImageArg>com.gluonhq.attach.util/com.gluonhq.attach.util.impl=com.st4s1k.leagueteamcomp</nativeImageArg>
+            <nativeImageArg>com.gluonhq.attach.util/com.gluonhq.attach.util.impl=com.st4s1k.leagueteamcomp
+            </nativeImageArg>
             <nativeImageArg>--add-exports</nativeImageArg>
             <nativeImageArg>javafx.base/com.sun.javafx.event=ALL-UNNAMED</nativeImageArg>
             <nativeImageArg>--add-exports</nativeImageArg>
@@ -141,7 +145,7 @@
       <plugin>
         <groupId>com.github.ekryd.sortpom</groupId>
         <artifactId>sortpom-maven-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>${sortpom.plugin.version}</version>
       </plugin>
 
     </plugins>
