@@ -35,7 +35,6 @@ public class LeagueTeamCompApplication extends Application {
     private static final boolean WINDOW_IS_RESIZABLE = false;
 
     public static void main(String[] args) {
-        System.setProperty("javafx.platform", "Desktop");
         launch();
     }
 

@@ -7,7 +7,7 @@
 <?import java.lang.String?>
 <AnchorPane stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController">
    <children>
-      <TabPane fx:id="tabPane" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabPane" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
             <Tab text="Role Compositions">
                <content>
@@ -17,7 +17,7 @@
                            <children>
                               <VBox alignment="TOP_CENTER">
                                  <children>
-                                    <GridPane fx:id="gridPane">
+                                    <GridPane fx:id="gridPane" stylesheets="@style.css">
                                        <columnConstraints>
                                           <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
                                           <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="10.0" />
@@ -38,31 +38,31 @@
                                           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <CheckBox fx:id="cbTop1" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="cbTop2" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <CheckBox fx:id="cbTop3" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <CheckBox fx:id="cbTop4" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                          <CheckBox fx:id="cbTop5" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                                          <CheckBox fx:id="cbMid1" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="cbMid2" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                          <CheckBox fx:id="cbMid3" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                          <CheckBox fx:id="cbMid4" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                          <CheckBox fx:id="cbMid5" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                          <CheckBox fx:id="cbAdc1" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="cbAdc2" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                          <CheckBox fx:id="cbAdc3" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                                          <CheckBox fx:id="cbAdc4" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                                          <CheckBox fx:id="cbAdc5" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                                          <CheckBox fx:id="cbSup1" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="cbSup2" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                                          <CheckBox fx:id="cbSup3" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                                          <CheckBox fx:id="cbSup4" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                                          <CheckBox fx:id="cbSup5" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-                                          <CheckBox fx:id="cbJgl1" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="cbJgl2" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                                          <CheckBox fx:id="cbJgl3" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-                                          <CheckBox fx:id="cbJgl4" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                                          <CheckBox fx:id="cbJgl5" centerShape="false" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+                                          <CheckBox fx:id="cbTop1" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="cbTop2" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <CheckBox fx:id="cbTop3" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <CheckBox fx:id="cbTop4" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <CheckBox fx:id="cbTop5" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                          <CheckBox fx:id="cbMid1" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="cbMid2" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <CheckBox fx:id="cbMid3" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <CheckBox fx:id="cbMid4" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                          <CheckBox fx:id="cbMid5" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                          <CheckBox fx:id="cbAdc1" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="cbAdc2" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                          <CheckBox fx:id="cbAdc3" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                          <CheckBox fx:id="cbAdc4" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                                          <CheckBox fx:id="cbAdc5" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                                          <CheckBox fx:id="cbSup1" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="cbSup2" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                                          <CheckBox fx:id="cbSup3" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                                          <CheckBox fx:id="cbSup4" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                                          <CheckBox fx:id="cbSup5" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                                          <CheckBox fx:id="cbJgl1" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="cbJgl2" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                                          <CheckBox fx:id="cbJgl3" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                                          <CheckBox fx:id="cbJgl4" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+                                          <CheckBox fx:id="cbJgl5" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="5" />
                                           <Label styleClass="team-label" text="TOP" GridPane.columnIndex="2">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
@@ -135,11 +135,11 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding>
                               </VBox>
-                              <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" text="Output" VBox.vgrow="ALWAYS">
+                              <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" stylesheets="@style.css" text="Output" VBox.vgrow="ALWAYS">
                                  <content>
                                     <AnchorPane>
                                        <children>
-                                          <TextArea fx:id="textArea" layoutX="48.0" layoutY="19.0" prefHeight="283.0" prefWidth="727.0" styleClass="output-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <TextArea fx:id="textArea" layoutX="48.0" layoutY="19.0" prefHeight="283.0" prefWidth="727.0" styleClass="output-text-area" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -185,10 +185,10 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="allyList" layoutX="20.0" layoutY="100.0" styleClass="champion-list-view" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
-                        <ListView fx:id="enemyList" layoutX="720.0" layoutY="100.0" styleClass="champion-list-view" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0" />
-                        <TextFlow fx:id="allyTeamResultTextFlow" layoutX="100.0" layoutY="125.0" styleClass="team-result" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="100.0" />
-                        <TextFlow fx:id="enemyTeamResultTextFlow" layoutX="450.0" layoutY="125.0" styleClass="team-result" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0" />
+                        <ListView fx:id="allyList" layoutX="20.0" layoutY="100.0" styleClass="champion-list-view" stylesheets="@style.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
+                        <ListView fx:id="enemyList" layoutX="720.0" layoutY="100.0" styleClass="champion-list-view" stylesheets="@style.css" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0" />
+                        <TextFlow fx:id="allyTeamResultTextFlow" layoutX="100.0" layoutY="125.0" styleClass="team-result" stylesheets="@style.css" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="100.0" />
+                        <TextFlow fx:id="enemyTeamResultTextFlow" layoutX="450.0" layoutY="125.0" styleClass="team-result" stylesheets="@style.css" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0" />
                      </children>
                   </AnchorPane>
                </content>
