@@ -1,13 +1,14 @@
 package com.st4s1k.leagueteamcomp;
 
 import com.google.gson.Gson;
+import com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController;
 import com.st4s1k.leagueteamcomp.model.champion.Champions;
 import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.SneakyThrows;
@@ -42,10 +43,10 @@ public class LeagueTeamCompApplication extends Application {
     @SneakyThrows
     public void start(Stage stage) {
         loadChampionData();
-        AnchorPane root = FXMLLoader.load(
-            requireNonNull(getClass().getResource(FXML_FILE_PATH)),
-            ResourceBundle.getBundle(BUNDLE_PATH)
-        );
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_FILE_PATH), ResourceBundle.getBundle(BUNDLE_PATH));
+        Parent root = loader.load();
+        LeagueTeamCompController controller = loader.getController();
+        controller.setStageAndSetupListeners(stage);
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setScene(scene);
         stage.getIcons().add(new Image(requireNonNull(getClass().getResourceAsStream(ICON_FILE_PATH))));

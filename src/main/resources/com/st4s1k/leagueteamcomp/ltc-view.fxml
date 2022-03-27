@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.String?>
-<AnchorPane fx:id="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController">
+<AnchorPane stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController">
    <children>
-      <TabPane onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabPane" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
             <Tab text="Role Compositions">
                <content>
@@ -16,9 +15,9 @@
                      <children>
                         <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox alignment="TOP_CENTER" fillWidth="false">
+                              <VBox alignment="TOP_CENTER">
                                  <children>
-                                    <GridPane>
+                                    <GridPane fx:id="gridPane">
                                        <columnConstraints>
                                           <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
                                           <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="10.0" />
@@ -119,12 +118,12 @@
                                                 <Insets />
                                              </GridPane.margin>
                                           </TextField>
-                                          <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onGenerateButtonClick" prefHeight="25.0" prefWidth="72.0" text="Generate" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" GridPane.rowIndex="6">
+                                          <Button fx:id="generateButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="72.0" text="Generate" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" GridPane.rowIndex="6">
                                              <GridPane.margin>
                                                 <Insets left="2.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#onResetButtonClick" prefHeight="25.0" prefWidth="72.0" text="Reset" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+                                          <Button fx:id="resetButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="72.0" text="Reset" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
                                              <GridPane.margin>
                                                 <Insets right="2.0" />
                                              </GridPane.margin>
@@ -168,7 +167,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="enemySearchField" layoutY="28.0" onAction="#onEnemySearchAction" prefHeight="26.0" prefWidth="200.0" promptText="champion name" />
+                              <TextField fx:id="enemySearchField" layoutY="28.0" prefHeight="26.0" prefWidth="200.0" promptText="champion name" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="100.0" layoutY="20.0">
@@ -178,7 +177,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="allySearchField" layoutY="28.0" onAction="#onAllySearchAction" prefHeight="26.0" prefWidth="200.0" promptText="champion name" />
+                              <TextField fx:id="allySearchField" layoutY="28.0" prefHeight="26.0" prefWidth="200.0" promptText="champion name" />
                            </children>
                         </AnchorPane>
                         <Label fx:id="teamCompResultLabel" alignment="CENTER" layoutX="296.0" layoutY="14.0" prefHeight="18.0" prefWidth="207.0" styleClass="team-label">
@@ -196,7 +195,7 @@
             </Tab>
          </tabs>
       </TabPane>
-      <Button layoutX="769.0" mnemonicParsing="false" onAction="#closeWindow" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Button fx:id="closeButton" layoutX="769.0" mnemonicParsing="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <graphic>
             <Region prefHeight="200.0" prefWidth="200.0" styleClass="icon" />
          </graphic>
@@ -205,7 +204,7 @@
             <String fx:value="close-button" />
          </styleClass>
       </Button>
-      <Button layoutX="779.0" layoutY="10.0" mnemonicParsing="false" onAction="#minimizeWindow" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+      <Button fx:id="minimizeButton" layoutX="779.0" layoutY="10.0" mnemonicParsing="false" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
          <graphic>
             <Region prefHeight="200.0" prefWidth="200.0" styleClass="icon" />
          </graphic>
