@@ -3,38 +3,42 @@ package com.st4s1k.leagueteamcomp.controller;
 import com.st4s1k.leagueteamcomp.model.SummonerRole;
 import com.st4s1k.leagueteamcomp.model.champion.AttributeRatings;
 import com.st4s1k.leagueteamcomp.model.champion.Champion;
-import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
+import com.st4s1k.leagueteamcomp.service.LeagueTeamCompService;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.shape.Shape;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import lombok.SneakyThrows;
-import org.controlsfx.control.textfield.TextFields;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.*;
 import java.util.function.DoubleBinaryOperator;
-import java.util.function.ToDoubleFunction;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.st4s1k.leagueteamcomp.model.SummonerRole.*;
 import static com.st4s1k.leagueteamcomp.service.SummonerRoleListGeneratorService.getCombinations;
+import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.*;
-import static javafx.scene.paint.Color.*;
+import static javafx.geometry.Pos.CENTER;
+import static javafx.scene.control.SelectionMode.MULTIPLE;
+import static org.controlsfx.control.textfield.TextFields.bindAutoCompletion;
 
 public class LeagueTeamCompController implements Initializable {
 
-    private static final double OUTPUT_SCALE = 10;
+    private static double xOffset = 0;
+    private static double yOffset = 0;
 
-    private ChampionRepository championRepository;
+    private LeagueTeamCompService service;
 
     /* Role Compositions */
 
@@ -109,7 +113,18 @@ public class LeagueTeamCompController implements Initializable {
     @FXML
     private CheckBox cbJgl5;
 
+    @FXML
+    private Button generateButton;
+    @FXML
+    private Button resetButton;
+
     /* Champion Suggestions  */
+
+    private static final PseudoClass CHAMPION_STAT_GOOD_PSEUDO_CLASS = PseudoClass.getPseudoClass("good");
+    private static final PseudoClass CHAMPION_STAT_BAD_PSEUDO_CLASS = PseudoClass.getPseudoClass("bad");
+
+    @FXML
+    private Label teamCompResultLabel;
 
     @FXML
     private TextField allySearchField;
@@ -126,29 +141,96 @@ public class LeagueTeamCompController implements Initializable {
     private TextFlow enemyTeamResultTextFlow;
 
     @FXML
-    private Label teamCompResultLabel;
+    private GridPane gridPane;
+    @FXML
+    private TabPane tabPane;
+    @FXML
+    private Button minimizeButton;
+    @FXML
+    private Button closeButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        championRepository = ChampionRepository.getInstance();
+        service = LeagueTeamCompService.getInstance();
         initializeRoleCompositions();
         initializeChampionSuggestions();
     }
 
-    private void initializeRoleCompositions() {
+    protected void onGenerateButtonClick() {
+        textArea.clear();
+        var summonerNames = List.of(
+            tf1.getText(),
+            tf2.getText(),
+            tf3.getText(),
+            tf4.getText(),
+            tf5.getText()
+        );
+        var playersToRoles = Stream.of(
+                Map.entry(tf1.getText(), getRoles(cbTop1, cbMid1, cbAdc1, cbSup1, cbJgl1)),
+                Map.entry(tf2.getText(), getRoles(cbTop2, cbMid2, cbAdc2, cbSup2, cbJgl2)),
+                Map.entry(tf3.getText(), getRoles(cbTop3, cbMid3, cbAdc3, cbSup3, cbJgl3)),
+                Map.entry(tf4.getText(), getRoles(cbTop4, cbMid4, cbAdc4, cbSup4, cbJgl4)),
+                Map.entry(tf5.getText(), getRoles(cbTop5, cbMid5, cbAdc5, cbSup5, cbJgl5))
+            ).filter(entry -> !entry.getKey().isBlank())
+            .filter(entry -> summonerNames.stream().filter(entry.getKey()::equals).count() == 1)
+            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+        var combinations = getCombinations(playersToRoles);
+        var nameReservedSize = Integer.min(16, IntStream.of(
+            tf1.getLength(),
+            tf2.getLength(),
+            tf3.getLength(),
+            tf4.getLength(),
+            tf5.getLength()
+        ).max().getAsInt());
+        var rows = combinations.stream()
+            .map(playerToRoleRow -> formatPLayerToRoleRow(playerToRoleRow, nameReservedSize))
+            .toList();
+        var rowsWithSeparator = rows.stream().map(this::appendSeparator).toList();
+        rowsWithSeparator.forEach(textArea::appendText);
+        if (!rowsWithSeparator.isEmpty()) {
+            var lastRow = rows.get(rowsWithSeparator.size() - 1);
+            textArea.appendText(getSeparator(lastRow));
+        }
+    }
+
+    protected void onResetButtonClick() {
+        textArea.clear();
         resetAllCheckboxes();
+    }
+
+
+    public void setStageAndSetupListeners(Stage stage) {
+        tabPane.setOnMousePressed(event -> {
+            xOffset = stage.getX() - event.getScreenX();
+            yOffset = stage.getY() - event.getScreenY();
+        });
+        tabPane.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() + xOffset);
+            stage.setY(event.getScreenY() + yOffset);
+        });
+        closeButton.setOnAction(actionEvent -> stage.close());
+        minimizeButton.setOnAction(actionEvent -> stage.setIconified(true));
+    }
+
+    private void initializeRoleCompositions() {
+        gridPane.setAlignment(CENTER);
         textArea.setEditable(false);
+        resetAllCheckboxes();
+        generateButton.setOnAction(actionEvent -> onGenerateButtonClick());
+        resetButton.setOnAction(actionEvent -> onResetButtonClick());
     }
 
     public void initializeChampionSuggestions() {
-        enemyList.setCellFactory(param -> populateListCells());
-        allyList.setCellFactory(param -> populateListCells());
+        allyList.getSelectionModel().setSelectionMode(MULTIPLE);
+        enemyList.getSelectionModel().setSelectionMode(MULTIPLE);
 
-        var championKeys = championRepository.getAllChampionKeys();
-        TextFields.bindAutoCompletion(enemySearchField, request ->
-            searchFieldAutoCompletion(request.getUserText(), championKeys));
-        TextFields.bindAutoCompletion(allySearchField, request ->
-            searchFieldAutoCompletion(request.getUserText(), championKeys));
+        allyList.setCellFactory(param -> populateListCells());
+        enemyList.setCellFactory(param -> populateListCells());
+
+        allySearchField.setOnAction(actionEvent -> onSearchAction(allyList.getItems(), allySearchField.getText()));
+        enemySearchField.setOnAction(actionEvent -> onSearchAction(enemyList.getItems(), enemySearchField.getText()));
+        bindAutoCompletion(enemySearchField, request -> searchFieldAutoCompletion(request.getUserText()));
+        bindAutoCompletion(allySearchField, request -> searchFieldAutoCompletion(request.getUserText()));
 
         allyList.setOnKeyPressed(event -> handleDeleteButton(event, allyList));
         enemyList.setOnKeyPressed(event -> handleDeleteButton(event, enemyList));
@@ -160,13 +242,13 @@ public class LeagueTeamCompController implements Initializable {
 
     private ListChangeListener<String> getChampionListChangeListener() {
         return change -> {
-            calculateTeamStats(allyList, enemyList, allyTeamResultTextFlow);
-            calculateTeamStats(enemyList, allyList, enemyTeamResultTextFlow);
-            long allyRedCount = getRedCount(allyTeamResultTextFlow);
-            long enemyRedCount = getRedCount(enemyTeamResultTextFlow);
-            if (allyRedCount > enemyRedCount) {
+            calculateTeamStats(allyList.getItems(), enemyList.getItems(), allyTeamResultTextFlow);
+            calculateTeamStats(enemyList.getItems(), allyList.getItems(), enemyTeamResultTextFlow);
+            long allyBadStatCount = getBadStatCount(allyTeamResultTextFlow);
+            long enemyBadStatCount = getBadStatCount(enemyTeamResultTextFlow);
+            if (allyBadStatCount > enemyBadStatCount) {
                 teamCompResultLabel.setText("Enemy Team is better");
-            } else if (allyRedCount < enemyRedCount) {
+            } else if (allyBadStatCount < enemyBadStatCount) {
                 teamCompResultLabel.setText("Ally Team is better");
             } else {
                 teamCompResultLabel.setText("Teams are similar");
@@ -174,36 +256,39 @@ public class LeagueTeamCompController implements Initializable {
         };
     }
 
-    private long getRedCount(TextFlow textFlow) {
+    private long getBadStatCount(TextFlow textFlow) {
         return textFlow.getChildren().stream()
-            .map(Text.class::cast)
-            .map(Shape::getFill)
-            .filter(RED::equals)
+            .map(Node::getPseudoClassStates)
+            .filter(pseudoClasses -> pseudoClasses.contains(CHAMPION_STAT_BAD_PSEUDO_CLASS))
             .count();
     }
 
-    private void calculateTeamStats(ListView<String> championList, ListView<String> opponentChampionList, TextFlow textFlow) {
-        double damage = getChampionInfoValue(championList, AttributeRatings::getDamage, 3);
-        double attack = getChampionInfoValue(championList, AttributeRatings::getAttack, 10);
-        double defense = getChampionInfoValue(championList, AttributeRatings::getDefense, 10);
-        double magic = getChampionInfoValue(championList, AttributeRatings::getMagic, 10);
-        double difficulty = getChampionInfoValue(championList, AttributeRatings::getDifficulty, 3);
-        double control = getChampionInfoValue(championList, AttributeRatings::getControl, 3);
-        double toughness = getChampionInfoValue(championList, AttributeRatings::getToughness, 3);
-        double mobility = getChampionInfoValue(championList, AttributeRatings::getMobility, 3);
-        double utility = getChampionInfoValue(championList, AttributeRatings::getUtility, 3);
-        double abilityReliance = getChampionInfoValue(championList, AttributeRatings::getAbilityReliance, 100);
+    private void calculateTeamStats(
+        List<? extends String> championList,
+        List<? extends String> opponentChampionList,
+        TextFlow textFlow
+    ) {
+        double damage = service.getChampionInfoValue(championList, AttributeRatings::getDamage, 3);
+        double attack = service.getChampionInfoValue(championList, AttributeRatings::getAttack, 10);
+        double defense = service.getChampionInfoValue(championList, AttributeRatings::getDefense, 10);
+        double magic = service.getChampionInfoValue(championList, AttributeRatings::getMagic, 10);
+        double difficulty = service.getChampionInfoValue(championList, AttributeRatings::getDifficulty, 3);
+        double control = service.getChampionInfoValue(championList, AttributeRatings::getControl, 3);
+        double toughness = service.getChampionInfoValue(championList, AttributeRatings::getToughness, 3);
+        double mobility = service.getChampionInfoValue(championList, AttributeRatings::getMobility, 3);
+        double utility = service.getChampionInfoValue(championList, AttributeRatings::getUtility, 3);
+        double abilityReliance = service.getChampionInfoValue(championList, AttributeRatings::getAbilityReliance, 100);
 
-        double opponentDamage = getChampionInfoValue(opponentChampionList, AttributeRatings::getDamage, 3);
-        double opponentAttack = getChampionInfoValue(opponentChampionList, AttributeRatings::getAttack, 10);
-        double opponentDefense = getChampionInfoValue(opponentChampionList, AttributeRatings::getDefense, 10);
-        double opponentMagic = getChampionInfoValue(opponentChampionList, AttributeRatings::getMagic, 10);
-        double opponentDifficulty = getChampionInfoValue(opponentChampionList, AttributeRatings::getDifficulty, 3);
-        double opponentControl = getChampionInfoValue(opponentChampionList, AttributeRatings::getControl, 3);
-        double opponentToughness = getChampionInfoValue(opponentChampionList, AttributeRatings::getToughness, 3);
-        double opponentMobility = getChampionInfoValue(opponentChampionList, AttributeRatings::getMobility, 3);
-        double opponentUtility = getChampionInfoValue(opponentChampionList, AttributeRatings::getUtility, 3);
-        double opponentAbilityReliance = getChampionInfoValue(opponentChampionList, AttributeRatings::getAbilityReliance, 100);
+        double opponentDamage = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getDamage, 3);
+        double opponentAttack = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getAttack, 10);
+        double opponentDefense = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getDefense, 10);
+        double opponentMagic = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getMagic, 10);
+        double opponentDifficulty = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getDifficulty, 3);
+        double opponentControl = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getControl, 3);
+        double opponentToughness = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getToughness, 3);
+        double opponentMobility = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getMobility, 3);
+        double opponentUtility = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getUtility, 3);
+        double opponentAbilityReliance = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getAbilityReliance, 100);
 
         Text damageText = getStatText("Damage:", damage);
         Text attackText = getStatText("Attack:", attack);
@@ -247,16 +332,23 @@ public class LeagueTeamCompController implements Initializable {
         DoubleBinaryOperator operation
     ) {
         if (value == opponentValue) {
-            statText.setFill(BLACK);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_BAD_PSEUDO_CLASS, false);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_GOOD_PSEUDO_CLASS, false);
         } else if (operation.applyAsDouble(value, opponentValue) == value) {
-            statText.setFill(GREEN);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_BAD_PSEUDO_CLASS, false);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_GOOD_PSEUDO_CLASS, true);
         } else {
-            statText.setFill(RED);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_BAD_PSEUDO_CLASS, true);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_GOOD_PSEUDO_CLASS, false);
         }
     }
 
     private Text getStatText(String label, double value) {
-        return new Text(formatStatLabel(label) + formatStatValue(value));
+        return new Text(getStatString(label, value));
+    }
+
+    private String getStatString(String label, double value) {
+        return formatStatLabel(label).concat(formatStatValue(value));
     }
 
     private String formatStatLabel(String label) {
@@ -267,21 +359,6 @@ public class LeagueTeamCompController implements Initializable {
         return String.format("%4s / 10", String.format("%1$,.1f", value));
     }
 
-    private double getChampionInfoValue(
-        ListView<String> championList,
-        ToDoubleFunction<AttributeRatings> getValue,
-        double valueScale
-    ) {
-        var allyListItems = championList.getItems();
-        double teamStatSum = allyListItems.stream()
-            .map(championRepository::findChampionDataByKey)
-            .flatMap(Optional::stream)
-            .map(Champion::getAttributeRatings)
-            .mapToDouble(getValue)
-            .reduce(0, Double::sum);
-        return championList.getItems().isEmpty() ? 0 : teamStatSum / allyListItems.size() / valueScale * OUTPUT_SCALE;
-    }
-
     private ListCell<String> populateListCells() {
         return new ListCell<>() {
             private final ImageView imageView = new ImageView();
@@ -289,16 +366,15 @@ public class LeagueTeamCompController implements Initializable {
             @Override
             public void updateItem(String championKey, boolean empty) {
                 super.updateItem(championKey, empty);
-                var championDataOptional = championRepository.findChampionDataByKey(championKey);
+                var championDataOptional = service.findChampionDataByKey(championKey);
                 if (empty || championKey == null || championDataOptional.isEmpty()) {
-                    setText(null);
+                    setPrefHeight(60);
                     setGraphic(null);
                 } else {
                     var championData = championDataOptional.get();
-                    setText(championData.getName());
                     imageView.setImage(championData.getImage());
-                    imageView.setFitWidth(30);
-                    imageView.setFitHeight(30);
+                    imageView.setFitWidth(50);
+                    imageView.setFitHeight(50);
                     setGraphic(imageView);
                 }
             }
@@ -307,52 +383,11 @@ public class LeagueTeamCompController implements Initializable {
 
     public void handleDeleteButton(KeyEvent event, ListView<String> listView) {
         if (event.getCode() == KeyCode.DELETE) {
-            var selectedIdx = listView.getSelectionModel().getSelectedIndex();
-            if (selectedIdx != -1) {
-                var newSelectedIdx = selectedIdx == listView.getItems().size() - 1
-                    ? selectedIdx - 1
-                    : selectedIdx;
-                listView.getItems().remove(selectedIdx);
-                listView.getSelectionModel().select(newSelectedIdx);
+            var selectedItems = listView.getSelectionModel().getSelectedItems();
+            if (!selectedItems.isEmpty()) {
+                listView.getItems().removeAll(selectedItems);
+                listView.getSelectionModel().clearSelection();
             }
-        }
-    }
-
-    @FXML
-    protected void onGenerateButtonClick() {
-        textArea.clear();
-        var summonerNames = List.of(
-            tf1.getText(),
-            tf2.getText(),
-            tf3.getText(),
-            tf4.getText(),
-            tf5.getText()
-        );
-        var playersToRoles = Stream.of(
-                Map.entry(tf1.getText(), getRoles(cbTop1, cbMid1, cbAdc1, cbSup1, cbJgl1)),
-                Map.entry(tf2.getText(), getRoles(cbTop2, cbMid2, cbAdc2, cbSup2, cbJgl2)),
-                Map.entry(tf3.getText(), getRoles(cbTop3, cbMid3, cbAdc3, cbSup3, cbJgl3)),
-                Map.entry(tf4.getText(), getRoles(cbTop4, cbMid4, cbAdc4, cbSup4, cbJgl4)),
-                Map.entry(tf5.getText(), getRoles(cbTop5, cbMid5, cbAdc5, cbSup5, cbJgl5))
-            ).filter(entry -> !entry.getKey().isBlank())
-            .filter(entry -> summonerNames.stream().filter(entry.getKey()::equals).count() == 1)
-            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
-        var combinations = getCombinations(playersToRoles);
-        var nameReservedSize = Integer.min(16, IntStream.of(
-            tf1.getLength(),
-            tf2.getLength(),
-            tf3.getLength(),
-            tf4.getLength(),
-            tf5.getLength()
-        ).max().getAsInt());
-        var rows = combinations.stream()
-            .map(playerToRoleRow -> formatPLayerToRoleRow(playerToRoleRow, nameReservedSize))
-            .toList();
-        var rowsWithSeparator = rows.stream().map(this::appendSeparator).toList();
-        rowsWithSeparator.forEach(textArea::appendText);
-        if (!rowsWithSeparator.isEmpty()) {
-            var lastRow = rows.get(rowsWithSeparator.size() - 1);
-            textArea.appendText(getSeparator(lastRow));
         }
     }
 
@@ -374,28 +409,12 @@ public class LeagueTeamCompController implements Initializable {
         return "-".repeat(playerToRoleRow.length()) + "\n";
     }
 
-    @FXML
-    protected void onResetButtonClick() {
-        textArea.clear();
-        resetAllCheckboxes();
-    }
-
-    @FXML
-    protected void onEnemySearchAction() {
-        onSearchAction(enemyList.getItems(), enemySearchField.getText());
-    }
-
-    @FXML
-    protected void onAllySearchAction() {
-        onSearchAction(allyList.getItems(), allySearchField.getText());
-    }
-
     private void onSearchAction(
         ObservableList<String> listItems,
         String searchFieldText
     ) {
         if (isValidSearchFieldText(listItems, searchFieldText)) {
-            championRepository.findChampionDataByName(searchFieldText)
+            service.findChampionDataByName(searchFieldText)
                 .map(Champion::getKey)
                 .ifPresent(listItems::add);
         }
@@ -404,8 +423,8 @@ public class LeagueTeamCompController implements Initializable {
     private boolean isValidSearchFieldText(ObservableList<String> listItems, String searchFieldText) {
         return listItems.size() < 5
             && !listItems.contains(searchFieldText)
-            && championRepository.existsChampionDataByName(searchFieldText)
-            && !championRepository.findChampionDataByName(searchFieldText)
+            && service.existsChampionDataByName(searchFieldText)
+            && !service.findChampionDataByName(searchFieldText)
             .map(Champion::getKey)
             .map(getChampionPool()::contains)
             .orElse(false);
@@ -418,12 +437,10 @@ public class LeagueTeamCompController implements Initializable {
         ).collect(toList());
     }
 
-    @SneakyThrows
-    private List<String> searchFieldAutoCompletion(
-        String userText, List<String> championKeys
-    ) {
-        return championKeys.stream()
-            .map(championRepository::findChampionDataByKey)
+    private List<String> searchFieldAutoCompletion(String userText) {
+        return service.getAllChampionKeys().stream()
+            .filter(not(getChampionPool()::contains))
+            .map(service::findChampionDataByKey)
             .flatMap(Optional::stream)
             .map(Champion::getName)
             .filter(championName -> championName.toLowerCase().startsWith(userText.toLowerCase()))

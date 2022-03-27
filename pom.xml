@@ -18,8 +18,8 @@
     <lombok.version>1.18.22</lombok.version>
     <gson.version>2.9.0</gson.version>
     <controlsfx.version>11.1.1</controlsfx.version>
-    <javafx-fxml.version>13.0.2</javafx-fxml.version>
-    <javafx-controls.version>13.0.2</javafx-controls.version>
+    <javafx-fxml.version>17</javafx-fxml.version>
+    <javafx-controls.version>17</javafx-controls.version>
     <!-- plugins -->
     <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     <gluonfx.plugin.version>1.0.12</gluonfx.plugin.version>
@@ -126,6 +126,7 @@
             <list>com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController</list>
           </reflectionList>
           <nativeImageArgs>
+            <nativeImageArg>--allow-incomplete-classpath</nativeImageArg>
             <nativeImageArg>--add-exports</nativeImageArg>
             <nativeImageArg>javafx.base/com.sun.javafx.event=org.controlsfx.controls</nativeImageArg>
             <nativeImageArg>--add-exports</nativeImageArg>
