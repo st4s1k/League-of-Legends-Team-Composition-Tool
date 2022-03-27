@@ -126,6 +126,7 @@
             <list>com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController</list>
           </reflectionList>
           <nativeImageArgs>
+            <nativeImageArg>--allow-incomplete-classpath</nativeImageArg>
             <nativeImageArg>--add-exports</nativeImageArg>
             <nativeImageArg>javafx.base/com.sun.javafx.event=org.controlsfx.controls</nativeImageArg>
             <nativeImageArg>--add-exports</nativeImageArg>
