@@ -197,6 +197,8 @@
     -fx-pref-height: 30;
     -fx-alignment: center;
     -fx-prompt-text-fill: -ltc-color-2;
+    -fx-highlight-fill: -ltc-text-color;
+    -fx-highlight-text-fill: -ltc-color-2;
 }
 
 
