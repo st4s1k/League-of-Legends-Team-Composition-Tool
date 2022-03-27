@@ -30,6 +30,19 @@ jobs:
       - name: Gluon Build
         run: mvn gluonfx:compile gluonfx:link
 
+      - name: Copy native image to staging
+        run: cp -r target/gluonfx/x86_64-windows/LeagueTeamComp.exe staging
+
+      - name: Sign executable with pfx certificate
+        uses: DanaBear/code-sign-action@v4
+        with:
+          certificate: ${{ secrets.CERTIFICATE }}
+          password: ${{ secrets.PASSWORD }}
+          certificatesha1: ${{ secrets.CERTHASH }}
+          certificatename: ${{ secrets.CERTNAME }}
+          folder: staging
+          recursive: true
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -48,6 +61,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/gluonfx/x86_64-windows/LeagueTeamComp.exe
+          asset_path: staging/LeagueTeamComp.exe
           asset_name: LeagueTeamComp-${{github.ref_name}}.exe
           asset_content_type: application/vnd.microsoft.portable-executable
