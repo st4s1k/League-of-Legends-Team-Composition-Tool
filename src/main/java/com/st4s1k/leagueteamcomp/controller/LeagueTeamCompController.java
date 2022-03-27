@@ -4,19 +4,22 @@ import com.st4s1k.leagueteamcomp.model.SummonerRole;
 import com.st4s1k.leagueteamcomp.model.champion.AttributeRatings;
 import com.st4s1k.leagueteamcomp.model.champion.Champion;
 import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
+import com.st4s1k.leagueteamcomp.service.LeagueTeamCompService;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.shape.Shape;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import lombok.SneakyThrows;
-import org.controlsfx.control.textfield.TextFields;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.*;
@@ -27,8 +30,10 @@ import java.util.stream.Stream;
 
 import static com.st4s1k.leagueteamcomp.model.SummonerRole.*;
 import static com.st4s1k.leagueteamcomp.service.SummonerRoleListGeneratorService.getCombinations;
+import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.*;
-import static javafx.scene.paint.Color.*;
+import static javafx.scene.control.SelectionMode.MULTIPLE;
+import static org.controlsfx.control.textfield.TextFields.bindAutoCompletion;
 
 public class LeagueTeamCompController implements Initializable {
 
@@ -111,6 +116,12 @@ public class LeagueTeamCompController implements Initializable {
 
     /* Champion Suggestions  */
 
+    private static final PseudoClass CHAMPION_STAT_GOOD_PSEUDO_CLASS = PseudoClass.getPseudoClass("good");
+    private static final PseudoClass CHAMPION_STAT_BAD_PSEUDO_CLASS = PseudoClass.getPseudoClass("bad");
+
+    @FXML
+    private Label teamCompResultLabel;
+
     @FXML
     private TextField allySearchField;
     @FXML
@@ -126,7 +137,7 @@ public class LeagueTeamCompController implements Initializable {
     private TextFlow enemyTeamResultTextFlow;
 
     @FXML
-    private Label teamCompResultLabel;
+    private AnchorPane root;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -135,20 +146,44 @@ public class LeagueTeamCompController implements Initializable {
         initializeChampionSuggestions();
     }
 
+    @FXML
+    public void onMousePressed(MouseEvent event) {
+        Stage stage = (Stage) root.getScene().getWindow();
+        LeagueTeamCompService.onMousePressed(stage, event);
+    }
+
+    @FXML
+    public void onMouseDragged(MouseEvent event) {
+        Stage stage = (Stage) root.getScene().getWindow();
+        LeagueTeamCompService.onMouseDragged(stage, event);
+    }
+
+    @FXML
+    public void closeWindow() {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void minimizeWindow() {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
     private void initializeRoleCompositions() {
         resetAllCheckboxes();
         textArea.setEditable(false);
     }
 
     public void initializeChampionSuggestions() {
+        enemyList.getSelectionModel().setSelectionMode(MULTIPLE);
+        allyList.getSelectionModel().setSelectionMode(MULTIPLE);
+
         enemyList.setCellFactory(param -> populateListCells());
         allyList.setCellFactory(param -> populateListCells());
 
-        var championKeys = championRepository.getAllChampionKeys();
-        TextFields.bindAutoCompletion(enemySearchField, request ->
-            searchFieldAutoCompletion(request.getUserText(), championKeys));
-        TextFields.bindAutoCompletion(allySearchField, request ->
-            searchFieldAutoCompletion(request.getUserText(), championKeys));
+        bindAutoCompletion(enemySearchField, request -> searchFieldAutoCompletion(request.getUserText()));
+        bindAutoCompletion(allySearchField, request -> searchFieldAutoCompletion(request.getUserText()));
 
         allyList.setOnKeyPressed(event -> handleDeleteButton(event, allyList));
         enemyList.setOnKeyPressed(event -> handleDeleteButton(event, enemyList));
@@ -162,8 +197,8 @@ public class LeagueTeamCompController implements Initializable {
         return change -> {
             calculateTeamStats(allyList, enemyList, allyTeamResultTextFlow);
             calculateTeamStats(enemyList, allyList, enemyTeamResultTextFlow);
-            long allyRedCount = getRedCount(allyTeamResultTextFlow);
-            long enemyRedCount = getRedCount(enemyTeamResultTextFlow);
+            long allyRedCount = getBadStatCount(allyTeamResultTextFlow);
+            long enemyRedCount = getBadStatCount(enemyTeamResultTextFlow);
             if (allyRedCount > enemyRedCount) {
                 teamCompResultLabel.setText("Enemy Team is better");
             } else if (allyRedCount < enemyRedCount) {
@@ -174,15 +209,18 @@ public class LeagueTeamCompController implements Initializable {
         };
     }
 
-    private long getRedCount(TextFlow textFlow) {
+    private long getBadStatCount(TextFlow textFlow) {
         return textFlow.getChildren().stream()
-            .map(Text.class::cast)
-            .map(Shape::getFill)
-            .filter(RED::equals)
+            .map(Node::getPseudoClassStates)
+            .filter(pseudoClasses -> pseudoClasses.contains(CHAMPION_STAT_BAD_PSEUDO_CLASS))
             .count();
     }
 
-    private void calculateTeamStats(ListView<String> championList, ListView<String> opponentChampionList, TextFlow textFlow) {
+    private void calculateTeamStats(
+        ListView<String> championList,
+        ListView<String> opponentChampionList,
+        TextFlow textFlow
+    ) {
         double damage = getChampionInfoValue(championList, AttributeRatings::getDamage, 3);
         double attack = getChampionInfoValue(championList, AttributeRatings::getAttack, 10);
         double defense = getChampionInfoValue(championList, AttributeRatings::getDefense, 10);
@@ -247,11 +285,14 @@ public class LeagueTeamCompController implements Initializable {
         DoubleBinaryOperator operation
     ) {
         if (value == opponentValue) {
-            statText.setFill(BLACK);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_BAD_PSEUDO_CLASS, false);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_GOOD_PSEUDO_CLASS, false);
         } else if (operation.applyAsDouble(value, opponentValue) == value) {
-            statText.setFill(GREEN);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_BAD_PSEUDO_CLASS, false);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_GOOD_PSEUDO_CLASS, true);
         } else {
-            statText.setFill(RED);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_BAD_PSEUDO_CLASS, true);
+            statText.pseudoClassStateChanged(CHAMPION_STAT_GOOD_PSEUDO_CLASS, false);
         }
     }
 
@@ -291,14 +332,13 @@ public class LeagueTeamCompController implements Initializable {
                 super.updateItem(championKey, empty);
                 var championDataOptional = championRepository.findChampionDataByKey(championKey);
                 if (empty || championKey == null || championDataOptional.isEmpty()) {
-                    setText(null);
+                    setPrefHeight(60);
                     setGraphic(null);
                 } else {
                     var championData = championDataOptional.get();
-                    setText(championData.getName());
                     imageView.setImage(championData.getImage());
-                    imageView.setFitWidth(30);
-                    imageView.setFitHeight(30);
+                    imageView.setFitWidth(50);
+                    imageView.setFitHeight(50);
                     setGraphic(imageView);
                 }
             }
@@ -307,13 +347,10 @@ public class LeagueTeamCompController implements Initializable {
 
     public void handleDeleteButton(KeyEvent event, ListView<String> listView) {
         if (event.getCode() == KeyCode.DELETE) {
-            var selectedIdx = listView.getSelectionModel().getSelectedIndex();
-            if (selectedIdx != -1) {
-                var newSelectedIdx = selectedIdx == listView.getItems().size() - 1
-                    ? selectedIdx - 1
-                    : selectedIdx;
-                listView.getItems().remove(selectedIdx);
-                listView.getSelectionModel().select(newSelectedIdx);
+            var selectedItems = listView.getSelectionModel().getSelectedItems();
+            if (!selectedItems.isEmpty()) {
+                listView.getItems().removeAll(selectedItems);
+                listView.getSelectionModel().clearSelection();
             }
         }
     }
@@ -418,11 +455,9 @@ public class LeagueTeamCompController implements Initializable {
         ).collect(toList());
     }
 
-    @SneakyThrows
-    private List<String> searchFieldAutoCompletion(
-        String userText, List<String> championKeys
-    ) {
-        return championKeys.stream()
+    private List<String> searchFieldAutoCompletion(String userText) {
+        return championRepository.getAllChampionKeys().stream()
+            .filter(not(getChampionPool()::contains))
             .map(championRepository::findChampionDataByKey)
             .flatMap(Optional::stream)
             .map(Champion::getName)
