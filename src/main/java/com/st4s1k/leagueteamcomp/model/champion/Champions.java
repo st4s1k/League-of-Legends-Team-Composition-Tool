@@ -9,5 +9,5 @@ import java.util.Map;
 public class Champions {
 
     @SerializedName("champions")
-    private Map<String, Champion> champions;
+    private final Map<String, Champion> champions;
 }
