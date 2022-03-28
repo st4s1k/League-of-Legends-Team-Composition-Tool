@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.st4s1k</groupId>
-  <artifactId>LeagueTeamComp</artifactId>
+  <artifactId>league-team-comp</artifactId>
   <version>12.5.1</version>
   <packaging>jar</packaging>
 
