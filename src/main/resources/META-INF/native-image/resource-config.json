@@ -6,6 +6,21 @@
     }, 
     {
       "pattern":"\\Qcom/st4s1k/leagueteamcomp/ltc-view.fxml\\E"
+    }, 
+    {
+      "pattern":"\\Qcom/stirante/lolclient/libs/org/apache/http/client/version.properties\\E"
+    }, 
+    {
+      "pattern":"\\Qcom/stirante/lolclient/libs/org/slf4j/impl/StaticLoggerBinder.class\\E"
+    }, 
+    {
+      "pattern":"\\Qmozilla/public-suffix-list.txt\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/controlsfx/control/textfield/autocompletion.css\\E"
+    }, 
+    {
+      "pattern":"\\Qriotgames.jks\\E"
     }
   ]},
   "bundles":[
@@ -18,10 +33,7 @@
     }, 
     {
       "name":"com.sun.javafx.tk.quantum.QuantumMessagesBundle",
-      "locales":[
-        "", 
-        "und"
-      ]
+      "locales":["und"]
     }, 
     {
       "name":"com/sun/glass/ui/win/themes",
@@ -33,10 +45,7 @@
     }, 
     {
       "name":"com/sun/javafx/scene/control/skin/resources/controls",
-      "locales":[
-        "", 
-        "und"
-      ]
+      "locales":["und"]
     }
   ]
 }

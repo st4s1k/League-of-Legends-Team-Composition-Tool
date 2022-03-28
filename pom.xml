@@ -56,12 +56,21 @@
       <artifactId>gson</artifactId>
       <version>${gson.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.github.stirante</groupId>
+      <artifactId>lol-client-java-api</artifactId>
+      <version>1.2.3</version>
+    </dependency>
   </dependencies>
 
   <repositories>
     <repository>
       <id>Gluon</id>
       <url>https://nexus.gluonhq.com/nexus/content/repositories/releases</url>
+    </repository>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
     </repository>
   </repositories>
 

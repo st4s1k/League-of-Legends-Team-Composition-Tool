@@ -36,6 +36,16 @@ public class ChampionRepository {
             .getNow(new ArrayList<>());
     }
 
+    public Optional<Champion> findChampionDataById(Integer championId) {
+        return champions
+            .thenApply(Champions::getChampions)
+            .thenApply(Map::values)
+            .thenApply(values -> values.stream()
+                .filter(championData -> championData.getId().equals(championId.longValue()))
+                .findFirst())
+            .getNow(Optional.empty());
+    }
+
     public Optional<Champion> findChampionDataByKey(String championKey) {
         return champions
             .thenApply(Champions::getChampions)

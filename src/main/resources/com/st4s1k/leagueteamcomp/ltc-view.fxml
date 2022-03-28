@@ -185,10 +185,10 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="allyList" layoutX="20.0" layoutY="100.0" styleClass="champion-list-view" stylesheets="@style.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
-                        <ListView fx:id="enemyList" layoutX="720.0" layoutY="100.0" styleClass="champion-list-view" stylesheets="@style.css" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0" />
+                        <ListView fx:id="allyListView" layoutX="20.0" layoutY="100.0" styleClass="champion-list-view" stylesheets="@style.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
+                        <ListView fx:id="enemyListView" layoutX="720.0" layoutY="100.0" styleClass="champion-list-view" stylesheets="@style.css" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0" />
                         <TextFlow fx:id="allyTeamResultTextFlow" layoutX="100.0" layoutY="125.0" styleClass="team-result" stylesheets="@style.css" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="100.0" />
-                        <TextFlow fx:id="enemyTeamResultTextFlow" layoutX="450.0" layoutY="125.0" styleClass="team-result" stylesheets="@style.css" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0" />
+                        <TextFlow fx:id="enemyTeamResultTextFlow" layoutX="450.0" layoutY="125.0" styleClass="team-result" stylesheets="@style.css" textAlignment="RIGHT" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0" />
                      </children>
                   </AnchorPane>
                </content>

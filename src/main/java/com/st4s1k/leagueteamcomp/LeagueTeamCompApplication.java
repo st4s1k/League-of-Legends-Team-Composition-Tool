@@ -5,6 +5,7 @@ import com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController;
 import com.st4s1k.leagueteamcomp.model.champion.Champions;
 import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -51,7 +52,7 @@ public class LeagueTeamCompApplication extends Application {
         stage.getIcons().add(new Image(requireNonNull(getClass().getResourceAsStream(ICON_FILE_PATH))));
         stage.setTitle(WINDOW_TITLE);
         stage.setResizable(WINDOW_IS_RESIZABLE);
-        stage.setOnCloseRequest(event -> closeProgram());
+        stage.setOnCloseRequest(event -> closeProgram(controller));
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
@@ -79,7 +80,8 @@ public class LeagueTeamCompApplication extends Application {
         return champions;
     }
 
-    private void closeProgram() {
-        // TODO: Implement state saving
+    private void closeProgram(LeagueTeamCompController controller) {
+        controller.stop();
+        Platform.exit();
     }
 }

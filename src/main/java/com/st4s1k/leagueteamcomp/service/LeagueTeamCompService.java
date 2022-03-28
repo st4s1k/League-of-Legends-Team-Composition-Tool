@@ -27,6 +27,10 @@ public class LeagueTeamCompService {
         return championRepository.getAllChampionKeys();
     }
 
+    public Optional<Champion> findChampionDataById(Integer championId) {
+        return championRepository.findChampionDataById(championId);
+    }
+
     public Optional<Champion> findChampionDataByKey(String championKey) {
         return championRepository.findChampionDataByKey(championKey);
     }
