@@ -3,7 +3,18 @@ package com.st4s1k.leagueteamcomp.controller;
 import com.st4s1k.leagueteamcomp.model.SummonerRole;
 import com.st4s1k.leagueteamcomp.model.champion.AttributeRatings;
 import com.st4s1k.leagueteamcomp.model.champion.Champion;
+import com.st4s1k.leagueteamcomp.model.champion.select.ChampSelectDTO;
+import com.st4s1k.leagueteamcomp.model.champion.select.SlotDTO;
+import com.st4s1k.leagueteamcomp.model.champion.select.TeamDTO;
 import com.st4s1k.leagueteamcomp.service.LeagueTeamCompService;
+import com.stirante.lolclient.ClientApi;
+import com.stirante.lolclient.ClientConnectionListener;
+import com.stirante.lolclient.ClientWebSocket;
+import generated.LolChampSelectChampSelectPlayerSelection;
+import generated.LolChampSelectChampSelectSession;
+import generated.LolSummonerSummoner;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
@@ -18,6 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import lombok.SneakyThrows;
 
 import java.net.URL;
 import java.util.*;
@@ -129,14 +141,14 @@ public class LeagueTeamCompController implements Initializable {
     @FXML
     private TextField allySearchField;
     @FXML
-    private ListView<String> allyList;
+    private ListView<SlotDTO> allyListView;
     @FXML
     private TextFlow allyTeamResultTextFlow;
 
     @FXML
     private TextField enemySearchField;
     @FXML
-    private ListView<String> enemyList;
+    private ListView<SlotDTO> enemyListView;
     @FXML
     private TextFlow enemyTeamResultTextFlow;
 
@@ -149,11 +161,88 @@ public class LeagueTeamCompController implements Initializable {
     @FXML
     private Button closeButton;
 
+    private ChampSelectDTO champSelect;
+
+    private ClientWebSocket socket;
+    private ClientApi api;
+
     @Override
+    @SneakyThrows
     public void initialize(URL url, ResourceBundle resourceBundle) {
         service = LeagueTeamCompService.getInstance();
+        api = new ClientApi();
         initializeRoleCompositions();
         initializeChampionSuggestions();
+    }
+
+    public void stop() {
+        api.stop();
+        socket.close();
+    }
+
+    @SneakyThrows
+    private void registerLCUListeners() {
+        api.addClientConnectionListener(new ClientConnectionListener() {
+            @Override
+            public void onClientConnected() {
+                registerSocketListener(api);
+            }
+
+            @Override
+            public void onClientDisconnected() {
+                socket.close();
+            }
+        });
+    }
+
+    @SneakyThrows
+    private void registerSocketListener(ClientApi api) {
+        if (!api.isAuthorized()) {
+            System.out.println("Not logged in!");
+            return;
+        }
+        socket = api.openWebSocket();
+        socket.setSocketListener(new ClientWebSocket.SocketListener() {
+            @Override
+            public void onEvent(ClientWebSocket.Event event) {
+                Platform.runLater(() -> {
+                    if (event.getEventType().equals("Update") &&
+                        event.getUri().equals("/lol-champ-select/v1/session") &&
+                        event.getData() instanceof LolChampSelectChampSelectSession session) {
+                        updateTeam(session.myTeam, champSelect.getAllyTeam());
+                        updateTeam(session.theirTeam, champSelect.getEnemyTeam());
+                    }
+                });
+            }
+
+            @Override
+            public void onClose(int code, String reason) {
+                System.out.println("Socket closed, reason: " + reason);
+            }
+        });
+    }
+
+    private void updateTeam(List<LolChampSelectChampSelectPlayerSelection> session, TeamDTO team) {
+        session.forEach(playerSelection -> service.findChampionDataById(playerSelection.championId)
+            .ifPresent(champion -> {
+                int slotId = playerSelection.cellId.intValue();
+                int slotIndex = slotId % 5;
+                SlotDTO slot = team.getSlot(slotIndex);
+                slot.setSlotId(slotId);
+                String summonerName = getSummonerName(playerSelection.summonerId);
+                slot.setSummonerName(summonerName);
+                slot.setChampion(champion);
+            }));
+    }
+
+    @SneakyThrows
+    private String getSummonerName(Long summonerId) {
+        return Optional.ofNullable(api.executeGet(
+                "/lol-summoner/v1/summoners/" + summonerId,
+                LolSummonerSummoner.class
+            ).getResponseObject())
+            .map(summoner -> summoner.displayName)
+            .orElse("");
     }
 
     protected void onGenerateButtonClick() {
@@ -221,29 +310,52 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     public void initializeChampionSuggestions() {
-        allyList.getSelectionModel().setSelectionMode(MULTIPLE);
-        enemyList.getSelectionModel().setSelectionMode(MULTIPLE);
+        registerLCUListeners();
+        champSelect = new ChampSelectDTO();
+        ObservableList<SlotDTO> allyItems = FXCollections.observableArrayList(SlotDTO.extractor());
+        ObservableList<SlotDTO> enemyItems = FXCollections.observableArrayList(SlotDTO.extractor());
+        allyItems.addAll(champSelect.getAllyTeam().getSlots());
+        enemyItems.addAll(champSelect.getEnemyTeam().getSlots());
+        allyListView.setItems(allyItems);
+        enemyListView.setItems(enemyItems);
+        allyListView.setCellFactory(param -> populateListCells());
+        enemyListView.setCellFactory(param -> populateListCells());
 
-        allyList.setCellFactory(param -> populateListCells());
-        enemyList.setCellFactory(param -> populateListCells());
+        initializeTemporaryTeamStats();
+    }
 
-        allySearchField.setOnAction(actionEvent -> onSearchAction(allyList.getItems(), allySearchField.getText()));
-        enemySearchField.setOnAction(actionEvent -> onSearchAction(enemyList.getItems(), enemySearchField.getText()));
+    private void initializeTemporaryTeamStats() {
+        allyListView.getSelectionModel().setSelectionMode(MULTIPLE);
+        enemyListView.getSelectionModel().setSelectionMode(MULTIPLE);
+
+        allySearchField.setOnAction(actionEvent -> onSearchAction(allyListView, allySearchField.getText()));
+        enemySearchField.setOnAction(actionEvent -> onSearchAction(enemyListView, enemySearchField.getText()));
+
         bindAutoCompletion(enemySearchField, request -> searchFieldAutoCompletion(request.getUserText()));
         bindAutoCompletion(allySearchField, request -> searchFieldAutoCompletion(request.getUserText()));
 
-        allyList.setOnKeyPressed(event -> handleDeleteButton(event, allyList));
-        enemyList.setOnKeyPressed(event -> handleDeleteButton(event, enemyList));
+        allyListView.setOnKeyPressed(event -> handleDeleteButton(event, allyListView));
+        enemyListView.setOnKeyPressed(event -> handleDeleteButton(event, enemyListView));
 
         getChampionListChangeListener().onChanged(null);
-        allyList.getItems().addListener(getChampionListChangeListener());
-        enemyList.getItems().addListener(getChampionListChangeListener());
+        allyListView.getItems().addListener(getChampionListChangeListener());
+        enemyListView.getItems().addListener(getChampionListChangeListener());
     }
 
-    private ListChangeListener<String> getChampionListChangeListener() {
+    private ListChangeListener<SlotDTO> getChampionListChangeListener() {
         return change -> {
-            calculateTeamStats(allyList.getItems(), enemyList.getItems(), allyTeamResultTextFlow);
-            calculateTeamStats(enemyList.getItems(), allyList.getItems(), enemyTeamResultTextFlow);
+            setTeamAttributeRatings(champSelect.getAllyTeam());
+            setTeamAttributeRatings(champSelect.getEnemyTeam());
+            calculateTeamStats(
+                champSelect.getAllyTeam().getAttributeRatings(),
+                champSelect.getEnemyTeam().getAttributeRatings(),
+                allyTeamResultTextFlow
+            );
+            calculateTeamStats(
+                champSelect.getEnemyTeam().getAttributeRatings(),
+                champSelect.getAllyTeam().getAttributeRatings(),
+                enemyTeamResultTextFlow
+            );
             long allyBadStatCount = getBadStatCount(allyTeamResultTextFlow);
             long enemyBadStatCount = getBadStatCount(enemyTeamResultTextFlow);
             if (allyBadStatCount > enemyBadStatCount) {
@@ -264,53 +376,31 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     private void calculateTeamStats(
-        List<? extends String> championList,
-        List<? extends String> opponentChampionList,
+        AttributeRatings stats,
+        AttributeRatings opponentStats,
         TextFlow textFlow
     ) {
-        double damage = service.getChampionInfoValue(championList, AttributeRatings::getDamage, 3);
-        double attack = service.getChampionInfoValue(championList, AttributeRatings::getAttack, 10);
-        double defense = service.getChampionInfoValue(championList, AttributeRatings::getDefense, 10);
-        double magic = service.getChampionInfoValue(championList, AttributeRatings::getMagic, 10);
-        double difficulty = service.getChampionInfoValue(championList, AttributeRatings::getDifficulty, 3);
-        double control = service.getChampionInfoValue(championList, AttributeRatings::getControl, 3);
-        double toughness = service.getChampionInfoValue(championList, AttributeRatings::getToughness, 3);
-        double mobility = service.getChampionInfoValue(championList, AttributeRatings::getMobility, 3);
-        double utility = service.getChampionInfoValue(championList, AttributeRatings::getUtility, 3);
-        double abilityReliance = service.getChampionInfoValue(championList, AttributeRatings::getAbilityReliance, 100);
+        Text damageText = getStatText("Damage:", stats.getDamage());
+        Text attackText = getStatText("Attack:", stats.getAttack());
+        Text defenseText = getStatText("Defense:", stats.getDefense());
+        Text magicText = getStatText("Magic:", stats.getMagic());
+        Text difficultyText = getStatText("Difficulty:", stats.getDifficulty());
+        Text controlText = getStatText("Control:", stats.getControl());
+        Text toughnessText = getStatText("Toughness:", stats.getToughness());
+        Text mobilityText = getStatText("Mobility:", stats.getMobility());
+        Text utilityText = getStatText("Utility:", stats.getUtility());
+        Text abilityRelianceText = getStatText("Ability Reliance:", stats.getAbilityReliance());
 
-        double opponentDamage = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getDamage, 3);
-        double opponentAttack = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getAttack, 10);
-        double opponentDefense = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getDefense, 10);
-        double opponentMagic = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getMagic, 10);
-        double opponentDifficulty = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getDifficulty, 3);
-        double opponentControl = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getControl, 3);
-        double opponentToughness = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getToughness, 3);
-        double opponentMobility = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getMobility, 3);
-        double opponentUtility = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getUtility, 3);
-        double opponentAbilityReliance = service.getChampionInfoValue(opponentChampionList, AttributeRatings::getAbilityReliance, 100);
-
-        Text damageText = getStatText("Damage:", damage);
-        Text attackText = getStatText("Attack:", attack);
-        Text defenseText = getStatText("Defense:", defense);
-        Text magicText = getStatText("Magic:", magic);
-        Text difficultyText = getStatText("Difficulty:", difficulty);
-        Text controlText = getStatText("Control:", control);
-        Text toughnessText = getStatText("Toughness:", toughness);
-        Text mobilityText = getStatText("Mobility:", mobility);
-        Text utilityText = getStatText("Utility:", utility);
-        Text abilityRelianceText = getStatText("Ability Reliance:", abilityReliance);
-
-        colorStatText(damageText, damage, opponentDamage, Double::max);
-        colorStatText(attackText, attack, opponentAttack, Double::max);
-        colorStatText(defenseText, defense, opponentDefense, Double::max);
-        colorStatText(magicText, magic, opponentMagic, Double::max);
-        colorStatText(difficultyText, difficulty, opponentDifficulty, Double::min);
-        colorStatText(controlText, control, opponentControl, Double::max);
-        colorStatText(toughnessText, toughness, opponentToughness, Double::max);
-        colorStatText(mobilityText, mobility, opponentMobility, Double::max);
-        colorStatText(utilityText, utility, opponentUtility, Double::max);
-        colorStatText(abilityRelianceText, abilityReliance, opponentAbilityReliance, Double::min);
+        colorStatText(damageText, stats.getDamage(), opponentStats.getDamage(), Double::max);
+        colorStatText(attackText, stats.getAttack(), opponentStats.getAttack(), Double::max);
+        colorStatText(defenseText, stats.getDefense(), opponentStats.getDefense(), Double::max);
+        colorStatText(magicText, stats.getMagic(), opponentStats.getMagic(), Double::max);
+        colorStatText(difficultyText, stats.getDifficulty(), opponentStats.getDifficulty(), Double::min);
+        colorStatText(controlText, stats.getControl(), opponentStats.getControl(), Double::max);
+        colorStatText(toughnessText, stats.getToughness(), opponentStats.getToughness(), Double::max);
+        colorStatText(mobilityText, stats.getMobility(), opponentStats.getMobility(), Double::max);
+        colorStatText(utilityText, stats.getUtility(), opponentStats.getUtility(), Double::max);
+        colorStatText(abilityRelianceText, stats.getAbilityReliance(), opponentStats.getAbilityReliance(), Double::min);
 
         textFlow.getChildren().clear();
         textFlow.getChildren().addAll(damageText, new Text("\n"));
@@ -323,6 +413,25 @@ public class LeagueTeamCompController implements Initializable {
         textFlow.getChildren().addAll(mobilityText, new Text("\n"));
         textFlow.getChildren().addAll(utilityText, new Text("\n"));
         textFlow.getChildren().add(abilityRelianceText);
+    }
+
+    private void setTeamAttributeRatings(TeamDTO champSelect) {
+        AttributeRatings enemyTeamStats = champSelect.getAttributeRatings();
+        List<String> enemyChampionKeys = champSelect.getSlots().stream()
+            .map(SlotDTO::getChampion)
+            .flatMap(Optional::stream)
+            .map(Champion::getKey)
+            .toList();
+        enemyTeamStats.setDamage(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getDamage, 3));
+        enemyTeamStats.setAttack(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getAttack, 10));
+        enemyTeamStats.setDefense(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getDefense, 10));
+        enemyTeamStats.setMagic(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getMagic, 10));
+        enemyTeamStats.setDifficulty(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getDifficulty, 3));
+        enemyTeamStats.setControl(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getControl, 3));
+        enemyTeamStats.setToughness(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getToughness, 3));
+        enemyTeamStats.setMobility(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getMobility, 3));
+        enemyTeamStats.setUtility(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getUtility, 3));
+        enemyTeamStats.setAbilityReliance(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getAbilityReliance, 100));
     }
 
     private void colorStatText(
@@ -359,34 +468,31 @@ public class LeagueTeamCompController implements Initializable {
         return String.format("%4s / 10", String.format("%1$,.1f", value));
     }
 
-    private ListCell<String> populateListCells() {
+    private ListCell<SlotDTO> populateListCells() {
         return new ListCell<>() {
             private final ImageView imageView = new ImageView();
 
             @Override
-            public void updateItem(String championKey, boolean empty) {
-                super.updateItem(championKey, empty);
-                var championDataOptional = service.findChampionDataByKey(championKey);
-                if (empty || championKey == null || championDataOptional.isEmpty()) {
+            public void updateItem(SlotDTO slot, boolean empty) {
+                super.updateItem(slot, empty);
+                if (empty || slot == null) {
                     setPrefHeight(60);
                     setGraphic(null);
                 } else {
-                    var championData = championDataOptional.get();
-                    imageView.setImage(championData.getImage());
                     imageView.setFitWidth(50);
                     imageView.setFitHeight(50);
+                    imageView.setImage(slot.getImage());
                     setGraphic(imageView);
                 }
             }
         };
     }
 
-    public void handleDeleteButton(KeyEvent event, ListView<String> listView) {
+    public void handleDeleteButton(KeyEvent event, ListView<SlotDTO> listView) {
         if (event.getCode() == KeyCode.DELETE) {
             var selectedItems = listView.getSelectionModel().getSelectedItems();
             if (!selectedItems.isEmpty()) {
-                listView.getItems().removeAll(selectedItems);
-                listView.getSelectionModel().clearSelection();
+                selectedItems.forEach(SlotDTO::clear);
             }
         }
     }
@@ -410,36 +516,49 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     private void onSearchAction(
-        ObservableList<String> listItems,
+        ListView<SlotDTO> championListView,
         String searchFieldText
     ) {
-        if (isValidSearchFieldText(listItems, searchFieldText)) {
+
+        if (isValidSearchFieldText(championListView.getItems(), searchFieldText)) {
             service.findChampionDataByName(searchFieldText)
-                .map(Champion::getKey)
-                .ifPresent(listItems::add);
+                .ifPresent(champion -> getSearchActionItems(championListView).stream()
+                    .filter(slot -> slot.getChampion().isEmpty())
+                    .findFirst()
+                    .ifPresent(slot -> slot.setChampion(champion)));
         }
     }
 
-    private boolean isValidSearchFieldText(ObservableList<String> listItems, String searchFieldText) {
-        return listItems.size() < 5
-            && !listItems.contains(searchFieldText)
+    private ObservableList<SlotDTO> getSearchActionItems(ListView<SlotDTO> championListView) {
+        ObservableList<SlotDTO> selectedItems = championListView.getSelectionModel().getSelectedItems();
+        return selectedItems.isEmpty() || selectedItems.stream()
+            .map(SlotDTO::getChampion)
+            .noneMatch(Optional::isEmpty)
+            ? championListView.getItems()
+            : selectedItems;
+    }
+
+    private boolean isValidSearchFieldText(List<SlotDTO> slots, String searchFieldText) {
+        List<String> championKeys = slots.stream()
+            .map(SlotDTO::getChampion)
+            .flatMap(Optional::stream)
+            .map(Champion::getKey)
+            .toList();
+        long filledSlots = slots.stream().filter(SlotDTO::isFilled).count();
+        return filledSlots < 5
+            && !championKeys.contains(searchFieldText)
             && service.existsChampionDataByName(searchFieldText)
             && !service.findChampionDataByName(searchFieldText)
-            .map(Champion::getKey)
-            .map(getChampionPool()::contains)
+            .map(champSelect.getChampionPool()::contains)
             .orElse(false);
     }
 
-    private List<String> getChampionPool() {
-        return Stream.concat(
-            allyList.getItems().stream(),
-            enemyList.getItems().stream()
-        ).collect(toList());
-    }
-
     private List<String> searchFieldAutoCompletion(String userText) {
+        List<String> championPoolKeys = champSelect.getChampionPool().stream()
+            .map(Champion::getKey)
+            .toList();
         return service.getAllChampionKeys().stream()
-            .filter(not(getChampionPool()::contains))
+            .filter(not(championPoolKeys::contains))
             .map(service::findChampionDataByKey)
             .flatMap(Optional::stream)
             .map(Champion::getName)

@@ -1,5 +1,38 @@
 [
 {
+  "name":"[B"
+},
+{
+  "name":"[Lgenerated.LolChampSelectSfxNotification;"
+},
+{
+  "name":"[Lgenerated.LolChampSelectSkinSelectorSkin;"
+},
+{
+  "name":"[Lgenerated.LolChatUserResource;"
+},
+{
+  "name":"[Lgenerated.LolHonorV2Honor;"
+},
+{
+  "name":"[Lgenerated.LolLootLootGrantNotification;"
+},
+{
+  "name":"[Lgenerated.LolPerksPerkPageResource;"
+},
+{
+  "name":"[Lgenerated.LolSimpleDialogMessagesMessage;"
+},
+{
+  "name":"[Ljava.lang.Integer;"
+},
+{
+  "name":"[Ljava.lang.String;"
+},
+{
+  "name":"[Lsun.security.pkcs.SignerInfo;"
+},
+{
   "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication",
   "methods":[
     {"name":"<init>","parameterTypes":[] }, 
@@ -53,6 +86,24 @@
   "allDeclaredFields":true
 },
 {
+  "name":"com.stirante.lolclient.libs.org.apache.commons.logging.LogFactory"
+},
+{
+  "name":"com.stirante.lolclient.libs.org.apache.commons.logging.impl.Jdk14Logger",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"com.stirante.lolclient.libs.org.apache.commons.logging.impl.Log4JLogger"
+},
+{
+  "name":"com.stirante.lolclient.libs.org.apache.commons.logging.impl.LogFactoryImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.stirante.lolclient.libs.org.apache.commons.logging.impl.WeakHashtable",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"com.sun.crypto.provider.AESCipher$General",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -78,6 +129,26 @@
 },
 {
   "name":"com.sun.crypto.provider.GaloisCounterMode$AESGCM",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.HmacCore$HmacSHA384",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.HmacPKCS12PBECore$HmacPKCS12PBE_SHA1",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.PBEKeyFactory$PBEWithMD5AndDES",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.PBEParameters",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.PKCS12PBECipherCore$PBEWithSHA1AndRC2_40",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -185,6 +256,574 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"generated.LolChampSelectChampGridChampion",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectChampSelectBannedChampions",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectChampSelectChatRoomDetails",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectChampSelectPinDropNotification",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectChampSelectPinDropSummoner",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectChampSelectPlayerSelection",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectChampSelectSession",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectChampSelectSummoner",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectChampSelectTimer",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectChampSelectTradeContract",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectChampSelectTradeState",
+  "fields":[
+    {"name":"AVAILABLE"}, 
+    {"name":"BUSY"}, 
+    {"name":"INVALID"}, 
+    {"name":"RECEIVED"}, 
+    {"name":"SENT"}
+  ]
+},
+{
+  "name":"generated.LolChampSelectChampionSelection",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectCollectionsChampionSkinEmblem",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectCollectionsChampionSkinEmblemPath",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectCollectionsChampionSkinEmblemPosition",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectCollectionsOwnership",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectCollectionsRental",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectEntitledFeatureState",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectLegacyChampSelectBannedChampions",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectLegacyChampSelectChatRoomDetails",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectLegacyChampSelectPlayerSelection",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectLegacyChampSelectSession",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectLegacyChampSelectTimer",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectLegacyChampSelectTradeContract",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectLegacyChampSelectTradeState",
+  "fields":[
+    {"name":"AVAILABLE"}, 
+    {"name":"BUSY"}, 
+    {"name":"INVALID"}, 
+    {"name":"RECEIVED"}, 
+    {"name":"SENT"}
+  ]
+},
+{
+  "name":"generated.LolChampSelectLegacyTeamBoost",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectSfxNotification",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectSkinSelectorChildSkin",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectSkinSelectorSkin",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectTeamBoost",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChatConversationMessageResource",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChatConversationResource",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChatUserResource",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolClashPlaymodeRestrictedInfo",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolClashPresenceState",
+  "fields":[
+    {"name":"LOCKED_IN"}, 
+    {"name":"NONE"}, 
+    {"name":"SCOUTING"}
+  ]
+},
+{
+  "name":"generated.LolGameflowGameflowAvailability",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolGameflowGameflowAvailabilityState",
+  "fields":[
+    {"name":"AVAILABLE"}, 
+    {"name":"CONFIGURATION"}, 
+    {"name":"ELIGIBILITYINFOMISSING"}, 
+    {"name":"INGAMEFLOW"}, 
+    {"name":"INITIALIZING"}, 
+    {"name":"PATCHING"}, 
+    {"name":"PLAYERBANNED"}
+  ]
+},
+{
+  "name":"generated.LolGameflowGameflowGameClient",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolGameflowGameflowGameData",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolGameflowGameflowGameDodge",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolGameflowGameflowGameDodgeState",
+  "fields":[
+    {"name":"INVALID"}, 
+    {"name":"PARTYDODGED"}, 
+    {"name":"STRANGERDODGED"}, 
+    {"name":"TOURNAMENTDODGED"}
+  ]
+},
+{
+  "name":"generated.LolGameflowGameflowGameMap",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolGameflowGameflowPhase",
+  "fields":[
+    {"name":"CHAMPSELECT"}, 
+    {"name":"CHECKEDINTOTOURNAMENT"}, 
+    {"name":"ENDOFGAME"}, 
+    {"name":"FAILEDTOLAUNCH"}, 
+    {"name":"GAMESTART"}, 
+    {"name":"INPROGRESS"}, 
+    {"name":"LOBBY"}, 
+    {"name":"MATCHMAKING"}, 
+    {"name":"NONE"}, 
+    {"name":"PREENDOFGAME"}, 
+    {"name":"READYCHECK"}, 
+    {"name":"RECONNECT"}, 
+    {"name":"TERMINATEDINERROR"}, 
+    {"name":"WAITINGFORSTATS"}
+  ]
+},
+{
+  "name":"generated.LolGameflowGameflowSession",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolGameflowLobbyStatus",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolGameflowPlayerStatus",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolGameflowQueue",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolGameflowQueueAvailability",
+  "fields":[
+    {"name":"AVAILABLE"}, 
+    {"name":"DOESNTMEETREQUIREMENTS"}, 
+    {"name":"PLATFORMDISABLED"}
+  ]
+},
+{
+  "name":"generated.LolGameflowQueueCustomGameSpectatorPolicy",
+  "fields":[
+    {"name":"ALLALLOWED"}, 
+    {"name":"FRIENDSALLOWED"}, 
+    {"name":"LOBBYALLOWED"}, 
+    {"name":"NOTALLOWED"}
+  ]
+},
+{
+  "name":"generated.LolGameflowQueueGameCategory",
+  "fields":[
+    {"name":"ALPHA"}, 
+    {"name":"CUSTOM"}, 
+    {"name":"NONE"}, 
+    {"name":"PVP"}, 
+    {"name":"VERSUSAI"}
+  ]
+},
+{
+  "name":"generated.LolGameflowQueueGameTypeConfig",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolGameflowQueueReward",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolHonorV2Honor",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolHonorV2MutualHonor",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolHonorV2MutualHonorPlayer",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolHovercardHovercardUserInfo",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolLobbyEligibilityRestriction",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolLobbyEligibilityRestrictionCode",
+  "fields":[
+    {"name":"BANINFONOTAVAILABLE"}, 
+    {"name":"GAMEVERSIONMISMATCH"}, 
+    {"name":"GAMEVERSIONMISSING"}, 
+    {"name":"GAMEVERSIONNOTSUPPORTED"}, 
+    {"name":"INVENTORYCHAMPSINFONOTAVAILABLE"}, 
+    {"name":"INVENTORYQUEUESINFONOTAVAILABLE"}, 
+    {"name":"LEAGUESINFONOTAVAILABLE"}, 
+    {"name":"MINORINFONOTAVAILABLE"}, 
+    {"name":"MMRSTANDARDDEVIATIONTOOLARGE"}, 
+    {"name":"PLAYERAVAILABLECHAMPIONRESTRICTION"}, 
+    {"name":"PLAYERBANNEDRESTRICTION"}, 
+    {"name":"PLAYERBINGERESTRICTION"}, 
+    {"name":"PLAYERDODGERESTRICTION"}, 
+    {"name":"PLAYERINGAMERESTRICTION"}, 
+    {"name":"PLAYERLEAVERBUSTEDRESTRICTION"}, 
+    {"name":"PLAYERLEAVERTAINTEDWARNINGRESTRICTION"}, 
+    {"name":"PLAYERLEVELRESTRICTION"}, 
+    {"name":"PLAYERMAXLEVELRESTRICTION"}, 
+    {"name":"PLAYERMINLEVELRESTRICTION"}, 
+    {"name":"PLAYERMINORRESTRICTION"}, 
+    {"name":"PLAYERRANKEDSUSPENSIONRESTRICTION"}, 
+    {"name":"PLAYERRANKSOLOONLYRESTRICTION"}, 
+    {"name":"PLAYERTIMEDRESTRICTION"}, 
+    {"name":"PLAYERTIMEPLAYEDRESTRICTION"}, 
+    {"name":"PREREQUISITEQUEUESNOTPLAYEDRESTRICTION"}, 
+    {"name":"QUEUEDISABLED"}, 
+    {"name":"QUEUEENTRYNOTENTITLEDRESTRICTION"}, 
+    {"name":"QUEUEUNSUPPORTED"}, 
+    {"name":"SUMMONERINFONOTAVAILABLE"}, 
+    {"name":"TEAMDIVISIONRESTRICTION"}, 
+    {"name":"TEAMHIGHMMRMAXSIZERESTRICTION"}, 
+    {"name":"TEAMMAXSIZERESTRICTION"}, 
+    {"name":"TEAMMINSIZERESTRICTION"}, 
+    {"name":"TEAMSIZERESTRICTION"}, 
+    {"name":"UNKNOWNRESTRICTION"}
+  ]
+},
+{
+  "name":"generated.LolLobbyLobbyBotDifficulty",
+  "fields":[
+    {"name":"EASY"}, 
+    {"name":"HARD"}, 
+    {"name":"INTRO"}, 
+    {"name":"MEDIUM"}, 
+    {"name":"NONE"}, 
+    {"name":"TUTORIAL"}, 
+    {"name":"UBER"}
+  ]
+},
+{
+  "name":"generated.LolLobbyLobbyDto",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolLobbyLobbyGameConfigDto",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolLobbyLobbyInvitationDto",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolLobbyLobbyInvitationState",
+  "fields":[
+    {"name":"ACCEPTED"}, 
+    {"name":"DECLINED"}, 
+    {"name":"ERROR"}, 
+    {"name":"JOINED"}, 
+    {"name":"KICKED"}, 
+    {"name":"ONHOLD"}, 
+    {"name":"PENDING"}, 
+    {"name":"REQUESTED"}
+  ]
+},
+{
+  "name":"generated.LolLobbyLobbyParticipantDto",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolLobbyLobbyPartyRewardType",
+  "fields":[
+    {"name":"ICON"}, 
+    {"name":"IP"}, 
+    {"name":"NONE"}
+  ]
+},
+{
+  "name":"generated.LolLobbyLobbyPartyRewards",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolLobbyPartyReward",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolLobbyQueueCustomGameSpectatorPolicy",
+  "fields":[
+    {"name":"ALLALLOWED"}, 
+    {"name":"FRIENDSALLOWED"}, 
+    {"name":"LOBBYALLOWED"}, 
+    {"name":"NOTALLOWED"}
+  ]
+},
+{
+  "name":"generated.LolLootLootGrantNotification",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolPatchComponentActionProgress",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolPatchComponentState",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolPatchComponentStateAction",
+  "fields":[
+    {"name":"CHECKINGFORUPDATES"}, 
+    {"name":"IDLE"}, 
+    {"name":"MIGRATING"}, 
+    {"name":"PATCHING"}, 
+    {"name":"REPAIRING"}
+  ]
+},
+{
+  "name":"generated.LolPatchComponentStateProgress",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolPatchComponentStateWorkType",
+  "fields":[
+    {"name":"DISK"}, 
+    {"name":"NETWORK"}, 
+    {"name":"SCANNING"}
+  ]
+},
+{
+  "name":"generated.LolPatchProductState",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolPerksPerkPageResource",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolPerksServiceSettings",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolPerksUISettings",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolReplaysReplaysConfiguration",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolSimpleDialogMessagesMessage",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolSummonerSummoner",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolSummonerSummonerRerollPoints",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.PatcherComponentActionProgress",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.PatcherComponentState",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.PatcherComponentStateAction",
+  "fields":[
+    {"name":"CHECKINGFORUPDATES"}, 
+    {"name":"IDLE"}, 
+    {"name":"MIGRATING"}, 
+    {"name":"PATCHING"}, 
+    {"name":"REPAIRING"}
+  ]
+},
+{
+  "name":"generated.PatcherComponentStateProgress",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.PatcherComponentStateWorkType",
+  "fields":[
+    {"name":"DISK"}, 
+    {"name":"NETWORK"}, 
+    {"name":"SCANNING"}
+  ]
+},
+{
+  "name":"generated.PatcherProductState",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.RmsMessage",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"java.lang.Character",
   "methods":[{"name":"isIdeographic","parameterTypes":["int"] }]
 },
@@ -217,7 +856,16 @@
   "name":"java.security.SecureRandomParameters"
 },
 {
+  "name":"java.security.interfaces.RSAPrivateKey"
+},
+{
+  "name":"java.security.interfaces.RSAPublicKey"
+},
+{
   "name":"java.sql.Date"
+},
+{
+  "name":"java.util.Date"
 },
 {
   "name":"javafx.fxml.FXMLLoader"
@@ -366,6 +1014,9 @@
 },
 {
   "name":"javafx.scene.image.Image"
+},
+{
+  "name":"javafx.scene.image.ImageView"
 },
 {
   "name":"javafx.scene.layout.AnchorPane",
@@ -519,7 +1170,7 @@
 {
   "name":"javax.security.auth.x500.X500Principal",
   "fields":[{"name":"thisX500Name"}],
-  "queriedMethods":[{"name":"<init>","parameterTypes":["sun.security.x509.X500Name"] }]
+  "methods":[{"name":"<init>","parameterTypes":["sun.security.x509.X500Name"] }]
 },
 {
   "name":"sun.misc.Unsafe",
@@ -543,6 +1194,10 @@
 },
 {
   "name":"sun.security.provider.DSA$SHA256withDSA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.provider.JavaKeyStore$DualFormatJKS",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -578,6 +1233,10 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"sun.security.provider.certpath.PKIXCertPathValidator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"sun.security.rsa.PSSParameters",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -594,6 +1253,10 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"sun.security.rsa.RSASignature$SHA256withRSA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"sun.security.ssl.KeyManagerFactoryImpl$SunX509",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -602,8 +1265,15 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"sun.security.ssl.SSLContextImpl$TLSContext",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"sun.security.ssl.TrustManagerFactoryImpl$PKIXFactory",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.util.ObjectIdentifier"
 },
 {
   "name":"sun.security.x509.AuthorityInfoAccessExtension",
@@ -620,6 +1290,9 @@
 {
   "name":"sun.security.x509.CRLDistributionPointsExtension",
   "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+},
+{
+  "name":"sun.security.x509.CertificateExtensions"
 },
 {
   "name":"sun.security.x509.CertificatePoliciesExtension",
