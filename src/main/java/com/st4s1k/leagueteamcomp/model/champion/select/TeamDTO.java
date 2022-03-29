@@ -9,6 +9,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class TeamDTO {
+    enum Team {
+        UNDEFINED,
+        ALLY_TEAM,
+        ENEMY_TEAM
+    }
 
     private final List<SlotDTO> slots = List.of(
         new SlotDTO(),
@@ -17,6 +22,11 @@ public class TeamDTO {
         new SlotDTO(),
         new SlotDTO()
     );
+    private Team team = Team.UNDEFINED;
+
+    public TeamDTO(Team team) {
+        this.team = team;
+    }
 
     private final AttributeRatings attributeRatings = new AttributeRatings();
 

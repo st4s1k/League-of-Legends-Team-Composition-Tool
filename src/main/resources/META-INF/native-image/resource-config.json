@@ -2,6 +2,21 @@
   "resources":{
   "includes":[
     {
+      "pattern":"\\QMETA-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat\\E"
+    }, 
+    {
+      "pattern":"\\QMETA-INF/services/org.apache.logging.log4j.core.util.ContextDataProvider\\E"
+    }, 
+    {
+      "pattern":"\\QMETA-INF/services/org.apache.logging.log4j.spi.Provider\\E"
+    }, 
+    {
+      "pattern":"\\QMETA-INF/services/org.apache.logging.log4j.util.PropertySource\\E"
+    }, 
+    {
+      "pattern":"\\Qcom/st4s1k/leagueteamcomp/helmet_bro.png\\E"
+    }, 
+    {
       "pattern":"\\Qcom/st4s1k/leagueteamcomp/icon.png\\E"
     }, 
     {
@@ -20,10 +35,20 @@
       "pattern":"\\Qorg/controlsfx/control/textfield/autocompletion.css\\E"
     }, 
     {
+      "pattern":"\\Qorg/slf4j/impl/StaticLoggerBinder.class\\E"
+    }, 
+    {
       "pattern":"\\Qriotgames.jks\\E"
     }
   ]},
   "bundles":[
+    {
+      "name":"com.st4s1k.leagueteamcomp.ltc",
+      "locales":[
+        "", 
+        "und"
+      ]
+    }, 
     {
       "name":"com.st4s1k.leagueteamcomp.ltc-view",
       "locales":[
@@ -33,7 +58,10 @@
     }, 
     {
       "name":"com.sun.javafx.tk.quantum.QuantumMessagesBundle",
-      "locales":["und"]
+      "locales":[
+        "", 
+        "und"
+      ]
     }, 
     {
       "name":"com/sun/glass/ui/win/themes",
@@ -45,7 +73,10 @@
     }, 
     {
       "name":"com/sun/javafx/scene/control/skin/resources/controls",
-      "locales":["und"]
+      "locales":[
+        "", 
+        "und"
+      ]
     }
   ]
 }

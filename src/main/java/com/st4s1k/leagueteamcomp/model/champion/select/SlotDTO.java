@@ -40,8 +40,12 @@ public class SlotDTO {
         return getChampion().map(Champion::getImage).orElse(EMPTY_SLOT_IMAGE);
     }
 
-    public boolean isFilled() {
+    public boolean isChampionSelected() {
         return getChampion().isPresent();
+    }
+
+    public boolean isChampionNotSelected() {
+        return getChampion().isEmpty();
     }
 
     public void clear() {

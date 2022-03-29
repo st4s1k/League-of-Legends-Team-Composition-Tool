@@ -15,7 +15,7 @@
                      <children>
                         <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox alignment="TOP_CENTER">
+                              <VBox alignment="TOP_CENTER" fillWidth="false">
                                  <children>
                                     <GridPane fx:id="gridPane" stylesheets="@style.css">
                                        <columnConstraints>
@@ -162,7 +162,7 @@
                      <children>
                         <AnchorPane layoutX="500.0" layoutY="20.0">
                            <children>
-                              <Label layoutX="58.0" layoutY="4.0" styleClass="team-label" text="Enemy Team">
+                              <Label layoutX="58.0" layoutY="4.0" styleClass="team-label" text="Enemy Team" textAlignment="CENTER" AnchorPane.leftAnchor="67.0" AnchorPane.rightAnchor="67.4" AnchorPane.topAnchor="4.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -172,7 +172,7 @@
                         </AnchorPane>
                         <AnchorPane layoutX="100.0" layoutY="20.0">
                            <children>
-                              <Label layoutX="67.0" layoutY="4.0" styleClass="team-label" text="Ally Team">
+                              <Label layoutX="67.0" layoutY="4.0" styleClass="team-label" text="Ally Team" textAlignment="CENTER" AnchorPane.leftAnchor="67.0" AnchorPane.rightAnchor="67.4" AnchorPane.topAnchor="4.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -189,6 +189,13 @@
                         <ListView fx:id="enemyListView" layoutX="720.0" layoutY="100.0" styleClass="champion-list-view" stylesheets="@style.css" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0" />
                         <TextFlow fx:id="allyTeamResultTextFlow" layoutX="100.0" layoutY="125.0" styleClass="team-result" stylesheets="@style.css" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="100.0" />
                         <TextFlow fx:id="enemyTeamResultTextFlow" layoutX="450.0" layoutY="125.0" styleClass="team-result" stylesheets="@style.css" textAlignment="RIGHT" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0" />
+                        <ListView fx:id="allyBanListView" layoutX="100.0" layoutY="355.0" orientation="HORIZONTAL" styleClass="champion-ban-list-view" stylesheets="@style.css" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="355.0" />
+                        <ListView fx:id="enemyBanListView" layoutX="449.0" layoutY="355.0" orientation="HORIZONTAL" styleClass="champion-ban-list-view" stylesheets="@style.css" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="355.0" />
+                        <Label alignment="CENTER" layoutX="320.0" layoutY="316.0" styleClass="team-label" text="Banned Champions" textAlignment="CENTER" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="316.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </content>

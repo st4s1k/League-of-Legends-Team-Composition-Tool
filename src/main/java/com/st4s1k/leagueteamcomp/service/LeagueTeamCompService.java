@@ -6,6 +6,7 @@ import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.ToDoubleFunction;
 
 public class LeagueTeamCompService {
@@ -23,7 +24,7 @@ public class LeagueTeamCompService {
         return INSTANCE;
     }
 
-    public List<String> getAllChampionKeys() {
+    public Set<String> getAllChampionKeys() {
         return championRepository.getAllChampionKeys();
     }
 
