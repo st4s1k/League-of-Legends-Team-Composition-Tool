@@ -14,7 +14,7 @@ import java.util.List;
 public class Champion {
 
     @SerializedName("id")
-    private Long id;
+    private Integer id;
     @SerializedName("key")
     private String key;
     @SerializedName("name")

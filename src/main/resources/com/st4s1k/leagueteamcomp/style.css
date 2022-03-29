@@ -128,34 +128,6 @@
 }
 
 
-/* Temporary */
-
-.team-result {
-    -width: 250;
-    -height: 304;
-    -fx-pref-width: -width;
-    -fx-pref-height: -height;
-    -fx-min-width: -width;
-    -fx-min-height: -height;
-    -fx-max-width: -width;
-    -fx-max-height: -height;
-}
-
-.team-result Text {
-    -fx-fill: -ltc-text-color;
-    -fx-font-family: 'monospaced';
-    -fx-font-size: 14;
-}
-
-.team-result Text:bad {
-    -fx-fill: #b15757;
-}
-
-.team-result Text:good {
-    -fx-fill: #54a854;
-}
-
-
 /* Label */
 
 .team-label {
@@ -308,17 +280,34 @@
 .champion-list-view .scroll-bar:vertical .increment-arrow,
 .champion-list-view .scroll-bar:vertical .decrement-arrow,
 .champion-list-view .scroll-bar:vertical .increment-button,
-.champion-list-view .scroll-bar:vertical .decrement-button {
+.champion-list-view .scroll-bar:vertical .decrement-button,
+.champion-ban-list-view .scroll-bar:horizontal .increment-arrow,
+.champion-ban-list-view .scroll-bar:horizontal .decrement-arrow,
+.champion-ban-list-view .scroll-bar:horizontal .increment-button,
+.champion-ban-list-view .scroll-bar:horizontal .decrement-button,
+.champion-ban-list-view .scroll-bar:vertical .increment-arrow,
+.champion-ban-list-view .scroll-bar:vertical .decrement-arrow,
+.champion-ban-list-view .scroll-bar:vertical .increment-button,
+.champion-ban-list-view .scroll-bar:vertical .decrement-button {
     -fx-padding: 0;
 }
 
 .champion-list-view {
-    -fx-background-insets: 0;
-    -fx-background-color: -ltc-color-1;
+    -width: 66;
+    -height: 306;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-max-width: -width;
+    -fx-max-height: -height;
+    -fx-min-width: -width;
+    -fx-min-height: -height;
     -fx-border-color: -ltc-accent-color;
     -fx-border-width: 2;
-    -width: 64;
-    -height: 306;
+}
+
+.champion-ban-list-view {
+    -width: 252;
+    -height: 52;
     -fx-pref-width: -width;
     -fx-pref-height: -height;
     -fx-max-width: -width;
@@ -327,14 +316,50 @@
     -fx-min-height: -height;
 }
 
+.champion-list-view,
+.champion-ban-list-view {
+    -fx-background-insets: 0;
+    -fx-background-color: -ltc-color-1;
+}
+
+.champion-ban-list-view .list-cell,
 .champion-list-view .list-cell {
     -fx-padding: 0;
     -fx-alignment: center;
     -fx-background-color: -ltc-color-1;
 }
 
+.champion-ban-list-view .list-cell:selected,
 .champion-list-view .list-cell:selected {
     -fx-background-color: -ltc-accent-color;
+}
+
+
+/* Temporary */
+
+.team-result {
+    -width: 250;
+    -height: 200;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-min-width: -width;
+    -fx-min-height: -height;
+    -fx-max-width: -width;
+    -fx-max-height: -height;
+}
+
+.team-result Text {
+    -fx-fill: -ltc-text-color;
+    -fx-font-family: 'monospaced';
+    -fx-font-size: 14;
+}
+
+.team-result Text:bad {
+    -fx-fill: #b15757;
+}
+
+.team-result Text:good {
+    -fx-fill: #54a854;
 }
 
 

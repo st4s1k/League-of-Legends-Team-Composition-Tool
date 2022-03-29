@@ -30,6 +30,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.URL;
 import java.util.*;
@@ -45,6 +46,7 @@ import static javafx.geometry.Pos.CENTER;
 import static javafx.scene.control.SelectionMode.MULTIPLE;
 import static org.controlsfx.control.textfield.TextFields.bindAutoCompletion;
 
+@Slf4j
 public class LeagueTeamCompController implements Initializable {
 
     private static double xOffset = 0;
@@ -143,12 +145,16 @@ public class LeagueTeamCompController implements Initializable {
     @FXML
     private ListView<SlotDTO> allyListView;
     @FXML
+    private ListView<SlotDTO> allyBanListView;
+    @FXML
     private TextFlow allyTeamResultTextFlow;
 
     @FXML
     private TextField enemySearchField;
     @FXML
     private ListView<SlotDTO> enemyListView;
+    @FXML
+    private ListView<SlotDTO> enemyBanListView;
     @FXML
     private TextFlow enemyTeamResultTextFlow;
 
@@ -162,7 +168,6 @@ public class LeagueTeamCompController implements Initializable {
     private Button closeButton;
 
     private ChampSelectDTO champSelect;
-
     private ClientWebSocket socket;
     private ClientApi api;
 
@@ -172,12 +177,12 @@ public class LeagueTeamCompController implements Initializable {
         service = LeagueTeamCompService.getInstance();
         api = new ClientApi();
         initializeRoleCompositions();
+        registerLCUListeners();
         initializeChampionSuggestions();
     }
 
     public void stop() {
         api.stop();
-        socket.close();
     }
 
     @SneakyThrows
@@ -185,20 +190,22 @@ public class LeagueTeamCompController implements Initializable {
         api.addClientConnectionListener(new ClientConnectionListener() {
             @Override
             public void onClientConnected() {
-                registerSocketListener(api);
+                registerSocketListener();
             }
 
             @Override
             public void onClientDisconnected() {
-                socket.close();
+                if (socket != null) {
+                    socket.close();
+                }
             }
         });
     }
 
     @SneakyThrows
-    private void registerSocketListener(ClientApi api) {
+    private void registerSocketListener() {
         if (!api.isAuthorized()) {
-            System.out.println("Not logged in!");
+            log.warn("Not logged in!");
             return;
         }
         socket = api.openWebSocket();
@@ -210,16 +217,42 @@ public class LeagueTeamCompController implements Initializable {
                         event.getUri().equals("/lol-champ-select/v1/session") &&
                         event.getData() instanceof LolChampSelectChampSelectSession session) {
                         updateTeam(session.myTeam, champSelect.getAllyTeam());
+                        updateBans(session.bans.myTeamBans, champSelect.getAllyBanList());
                         updateTeam(session.theirTeam, champSelect.getEnemyTeam());
+                        updateBans(session.bans.theirTeamBans, champSelect.getEnemyBanList());
                     }
                 });
             }
 
             @Override
             public void onClose(int code, String reason) {
-                System.out.println("Socket closed, reason: " + reason);
+                log.warn("Socket closed, reason: " + reason);
             }
         });
+    }
+
+    private void updateBans(List<Integer> bans, TeamDTO teamBans) {
+        System.out.println("team: " + teamBans.getTeam());
+        System.out.println("response bans: " + bans);
+
+        bans.stream()
+            .filter(championId -> teamBans.getSlots().stream()
+                .map(SlotDTO::getChampion)
+                .flatMap(Optional::stream)
+                .map(Champion::getId)
+                .noneMatch(championId::equals))
+            .map(service::findChampionDataById)
+            .flatMap(Optional::stream)
+            .forEach(champion -> teamBans.getSlots().stream()
+                .filter(SlotDTO::isChampionNotSelected)
+                .findFirst()
+                .ifPresent(slot -> slot.setChampion(champion)));
+
+        System.out.println("teamBans: " + teamBans.getSlots().stream()
+            .map(SlotDTO::getChampion)
+            .flatMap(Optional::stream)
+            .map(Champion::getId)
+            .toList() + "\n");
     }
 
     private void updateTeam(List<LolChampSelectChampSelectPlayerSelection> session, TeamDTO team) {
@@ -297,8 +330,14 @@ public class LeagueTeamCompController implements Initializable {
             stage.setX(event.getScreenX() + xOffset);
             stage.setY(event.getScreenY() + yOffset);
         });
-        closeButton.setOnAction(actionEvent -> stage.close());
-        minimizeButton.setOnAction(actionEvent -> stage.setIconified(true));
+    }
+
+    public void setCloseButtonAction(Runnable closeAction) {
+        closeButton.setOnAction(actionEvent -> closeAction.run());
+    }
+
+    public void setMinimizeButtonAction(Runnable minimizeAction) {
+        minimizeButton.setOnAction(actionEvent -> minimizeAction.run());
     }
 
     private void initializeRoleCompositions() {
@@ -310,16 +349,23 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     public void initializeChampionSuggestions() {
-        registerLCUListeners();
         champSelect = new ChampSelectDTO();
         ObservableList<SlotDTO> allyItems = FXCollections.observableArrayList(SlotDTO.extractor());
+        ObservableList<SlotDTO> allyBanItems = FXCollections.observableArrayList(SlotDTO.extractor());
         ObservableList<SlotDTO> enemyItems = FXCollections.observableArrayList(SlotDTO.extractor());
+        ObservableList<SlotDTO> enemyBanItems = FXCollections.observableArrayList(SlotDTO.extractor());
         allyItems.addAll(champSelect.getAllyTeam().getSlots());
+        allyBanItems.addAll(champSelect.getAllyBanList().getSlots());
         enemyItems.addAll(champSelect.getEnemyTeam().getSlots());
+        enemyBanItems.addAll(champSelect.getEnemyBanList().getSlots());
         allyListView.setItems(allyItems);
+        allyBanListView.setItems(allyBanItems);
         enemyListView.setItems(enemyItems);
-        allyListView.setCellFactory(param -> populateListCells());
-        enemyListView.setCellFactory(param -> populateListCells());
+        enemyBanListView.setItems(enemyBanItems);
+        allyListView.setCellFactory(param -> populateListCells(60, 50));
+        allyBanListView.setCellFactory(param -> populateListCells(50, 40));
+        enemyListView.setCellFactory(param -> populateListCells(60, 50));
+        enemyBanListView.setCellFactory(param -> populateListCells(50, 40));
 
         initializeTemporaryTeamStats();
     }
@@ -327,6 +373,10 @@ public class LeagueTeamCompController implements Initializable {
     private void initializeTemporaryTeamStats() {
         allyListView.getSelectionModel().setSelectionMode(MULTIPLE);
         enemyListView.getSelectionModel().setSelectionMode(MULTIPLE);
+        allyBanListView.setMouseTransparent(true);
+        allyBanListView.setFocusTraversable(false);
+        enemyBanListView.setMouseTransparent(true);
+        enemyBanListView.setFocusTraversable(false);
 
         allySearchField.setOnAction(actionEvent -> onSearchAction(allyListView, allySearchField.getText()));
         enemySearchField.setOnAction(actionEvent -> onSearchAction(enemyListView, enemySearchField.getText()));
@@ -468,7 +518,7 @@ public class LeagueTeamCompController implements Initializable {
         return String.format("%4s / 10", String.format("%1$,.1f", value));
     }
 
-    private ListCell<SlotDTO> populateListCells() {
+    private ListCell<SlotDTO> populateListCells(int emptySlotCellPrefSize, final int imageSize) {
         return new ListCell<>() {
             private final ImageView imageView = new ImageView();
 
@@ -476,11 +526,12 @@ public class LeagueTeamCompController implements Initializable {
             public void updateItem(SlotDTO slot, boolean empty) {
                 super.updateItem(slot, empty);
                 if (empty || slot == null) {
-                    setPrefHeight(60);
+                    setPrefHeight(emptySlotCellPrefSize);
+                    setPrefWidth(emptySlotCellPrefSize);
                     setGraphic(null);
                 } else {
-                    imageView.setFitWidth(50);
-                    imageView.setFitHeight(50);
+                    imageView.setFitWidth(imageSize);
+                    imageView.setFitHeight(imageSize);
                     imageView.setImage(slot.getImage());
                     setGraphic(imageView);
                 }
@@ -497,7 +548,8 @@ public class LeagueTeamCompController implements Initializable {
         }
     }
 
-    private String formatPLayerToRoleRow(List<Map.Entry<String, SummonerRole>> playerToRoleRow, int nameReservedSize) {
+    private String formatPLayerToRoleRow(List<Map.Entry<String, SummonerRole>> playerToRoleRow,
+                                         int nameReservedSize) {
         return playerToRoleRow.stream()
             .map(playerToRole -> formatPlayerToRoleEntry(playerToRole, nameReservedSize))
             .collect(joining("    "));
@@ -523,7 +575,7 @@ public class LeagueTeamCompController implements Initializable {
         if (isValidSearchFieldText(championListView.getItems(), searchFieldText)) {
             service.findChampionDataByName(searchFieldText)
                 .ifPresent(champion -> getSearchActionItems(championListView).stream()
-                    .filter(slot -> slot.getChampion().isEmpty())
+                    .filter(SlotDTO::isChampionNotSelected)
                     .findFirst()
                     .ifPresent(slot -> slot.setChampion(champion)));
         }
@@ -544,7 +596,7 @@ public class LeagueTeamCompController implements Initializable {
             .flatMap(Optional::stream)
             .map(Champion::getKey)
             .toList();
-        long filledSlots = slots.stream().filter(SlotDTO::isFilled).count();
+        long filledSlots = slots.stream().filter(SlotDTO::isChampionSelected).count();
         return filledSlots < 5
             && !championKeys.contains(searchFieldText)
             && service.existsChampionDataByName(searchFieldText)
