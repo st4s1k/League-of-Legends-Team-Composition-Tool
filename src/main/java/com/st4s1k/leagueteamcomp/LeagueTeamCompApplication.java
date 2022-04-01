@@ -1,57 +1,42 @@
 package com.st4s1k.leagueteamcomp;
 
 import com.google.gson.Gson;
+import com.st4s1k.leagueteamcomp.controller.LTCExceptionController;
 import com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController;
-import com.st4s1k.leagueteamcomp.model.champion.Champions;
+import com.st4s1k.leagueteamcomp.exceptions.LTCException;
+import com.st4s1k.leagueteamcomp.model.champion.ChampionsDTO;
 import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
+import com.st4s1k.leagueteamcomp.utils.ResizeHelper;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.MessageFormat;
-import java.util.ResourceBundle;
-import java.util.concurrent.CompletableFuture;
+import java.util.stream.DoubleStream;
 
+import static com.st4s1k.leagueteamcomp.utils.Resources.*;
 import static java.net.http.HttpResponse.BodyHandlers;
 import static java.util.Objects.requireNonNull;
 
 @Slf4j
 public class LeagueTeamCompApplication extends Application {
-
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Resource path constants                             *
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-    public static final String ICON_FILE_PATH = "icon.png";
-    public static final String FXML_FILE_PATH = "ltc-view.fxml";
-    public static final String APP_BUNDLE_PATH = "com.st4s1k.leagueteamcomp.ltc";
-    public static final String FXML_BUNDLE_PATH = "com.st4s1k.leagueteamcomp.ltc-view";
-
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Window constants                                    *
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-    private static final String WINDOW_TITLE = "League of Legends Team Composition Tool";
-    private static final int WINDOW_WIDTH = 800;
-    private static final int WINDOW_HEIGHT = 600;
-    private static final boolean WINDOW_IS_RESIZABLE = false;
-
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Resource bundles                                    *
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-    private final ResourceBundle ltcProperties = ResourceBundle.getBundle(APP_BUNDLE_PATH);
-    private final ResourceBundle ltcViewProperties = ResourceBundle.getBundle(FXML_BUNDLE_PATH);
 
     public static void main(String[] args) {
         launch();
@@ -60,38 +45,82 @@ public class LeagueTeamCompApplication extends Application {
     @Override
     @SneakyThrows
     public void start(Stage stage) {
-        ChampionRepository.init(getChampionsFromUrl());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_FILE_PATH), ltcViewProperties);
+        Thread.setDefaultUncaughtExceptionHandler(LeagueTeamCompApplication::showError);
+        getChampionsFromUrl();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_FILE_PATH), LTC_VIEW_PROPERTIES);
         Parent root = loader.load();
         LeagueTeamCompController controller = loader.getController();
         controller.setStageAndSetupListeners(stage);
-        controller.setCloseButtonAction(() ->  closeProgram(stage, controller));
+        controller.setCloseButtonAction(() -> closeProgram(stage, controller));
         controller.setMinimizeButtonAction(() -> stage.setIconified(true));
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
         stage.getIcons().add(new Image(requireNonNull(getClass().getResourceAsStream(ICON_FILE_PATH))));
         stage.setTitle(WINDOW_TITLE);
         stage.setResizable(WINDOW_IS_RESIZABLE);
-        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 
     @SneakyThrows
-    private CompletableFuture<Champions> getChampionsFromUrl() {
+    private void getChampionsFromUrl() {
         HttpRequest request = HttpRequest.newBuilder()
-            .uri(new URI(ltcProperties.getString("champions-url")))
+            .uri(new URI(CHAMPIONS_URL))
             .build();
-        return HttpClient.newHttpClient()
+        HttpClient.newHttpClient()
             .sendAsync(request, BodyHandlers.ofString())
-            .thenApply(this::getChampions);
+            .thenApply(this::getChampions)
+            .thenAccept(ChampionRepository::init);
     }
 
-    private Champions getChampions(HttpResponse<String> response) {
+    private ChampionsDTO getChampions(HttpResponse<String> response) {
         String json = MessageFormat.format("'{'\"champions\":{0}'}'", response.body());
-        Champions champions = new Gson().fromJson(json, Champions.class);
+        ChampionsDTO champions = new Gson().fromJson(json, ChampionsDTO.class);
         champions.getChampions().values()
             .forEach(champion -> champion.setImage(new Image(champion.getIconUrl(), true)));
         return champions;
+    }
+
+    private static void showError(Thread t, Throwable e) {
+        log.error("***Default exception handler***");
+        if (Platform.isFxApplicationThread()) {
+            showErrorDialog(e);
+        } else {
+            log.error("An unexpected error occurred in " + t);
+        }
+    }
+
+    @SneakyThrows
+    private static void showErrorDialog(Throwable e) {
+        StringWriter errorMsg = new StringWriter();
+        e.printStackTrace(new PrintWriter(errorMsg));
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        FXMLLoader loader = new FXMLLoader(LeagueTeamCompApplication.class.getResource("ltc-exception.fxml"));
+        Region root = loader.load();
+        LTCExceptionController controller = loader.getController();
+        controller.setStageAndSetupListeners(dialog);
+        int sceneWidth = 600;
+        int sceneHeight = 400;
+        if (e instanceof LTCException ltcException) {
+            sceneWidth = 300;
+            sceneHeight = 150;
+            controller.setErrorText(ltcException.getMessage());
+        } else {
+            controller.setErrorText(errorMsg.toString());
+        }
+        Scene scene = new Scene(root, sceneWidth, sceneHeight);
+        scene.setFill(Color.TRANSPARENT);
+        dialog.initStyle(StageStyle.TRANSPARENT);
+        dialog.setScene(scene);
+        dialog.setMinHeight(sceneHeight);
+        dialog.setMinWidth(sceneWidth);
+        Insets padding = root.getPadding();
+        double border = DoubleStream.of(padding.getTop(), padding.getRight(), padding.getBottom(), padding.getLeft())
+            .min().orElse(4);
+        ResizeHelper.addResizeListener(dialog, border);
+        dialog.show();
     }
 
     private void closeProgram(Stage stage, LeagueTeamCompController controller) {

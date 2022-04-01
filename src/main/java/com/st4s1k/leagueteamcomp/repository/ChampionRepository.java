@@ -1,58 +1,67 @@
 package com.st4s1k.leagueteamcomp.repository;
 
-import com.st4s1k.leagueteamcomp.model.champion.Champion;
-import com.st4s1k.leagueteamcomp.model.champion.Champions;
+import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
+import com.st4s1k.leagueteamcomp.model.champion.ChampionsDTO;
+import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
-import static java.util.Collections.emptySet;
+import static java.util.Collections.emptyMap;
+import static lombok.AccessLevel.PRIVATE;
 
+@NoArgsConstructor(access = PRIVATE)
 public class ChampionRepository {
 
     private static ChampionRepository INSTANCE;
-    private final CompletableFuture<Champions> champions;
+    private static ChampionsDTO champions;
 
-    public static ChampionRepository getInstance() {
-        return INSTANCE;
-    }
-
-    private ChampionRepository(CompletableFuture<Champions> champions) {
-        this.champions = champions;
-    }
-
-    public static void init(CompletableFuture<Champions> champions) {
-        if (INSTANCE == null) {
-            INSTANCE = new ChampionRepository(champions);
+    public static void init(ChampionsDTO champions) {
+        if (ChampionRepository.champions == null) {
+            ChampionRepository.champions = champions;
         }
     }
 
+    public static ChampionRepository getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ChampionRepository();
+        }
+        return INSTANCE;
+    }
+
+    private Map<String, ChampionDTO> getChampionsMap() {
+        return Optional.ofNullable(champions)
+            .map(ChampionsDTO::getChampions)
+            .orElse(emptyMap());
+    }
+
+    public Collection<ChampionDTO> getAllChampions() {
+        return getChampionsMap().values();
+    }
+
     public Set<String> getAllChampionKeys() {
-        return champions.thenApply(champions -> champions.getChampions().keySet())
-            .getNow(emptySet());
+        return getChampionsMap().keySet();
     }
 
-    public Optional<Champion> findChampionDataById(Integer championId) {
-        return champions.thenApply(champions -> champions.getChampions().values().stream()
-                .filter(championData -> championData.getId().equals(championId))
-                .findFirst())
-            .getNow(Optional.empty());
+    public Optional<ChampionDTO> findChampionById(Integer championId) {
+        return getAllChampions().stream()
+            .filter(championData -> championData.getId().equals(championId))
+            .findFirst();
     }
 
-    public Optional<Champion> findChampionDataByKey(String championKey) {
-        return champions.thenApply(champions -> Optional.ofNullable(champions.getChampions().get(championKey)))
-            .getNow(Optional.empty());
+    public Optional<ChampionDTO> findChampionByKey(String championKey) {
+        return Optional.ofNullable(getChampionsMap().get(championKey));
     }
 
-    public Optional<Champion> findChampionDataByName(String championName) {
-        return champions.thenApply(champions -> champions.getChampions().values().stream()
-                .filter(championData -> championData.getName().equals(championName))
-                .findFirst())
-            .getNow(Optional.empty());
+    public Optional<ChampionDTO> findChampionByName(String championName) {
+        return getAllChampions().stream()
+            .filter(championData -> championData.getName().equals(championName))
+            .findFirst();
     }
 
-    public boolean existsChampionDataByName(String championName) {
-        return findChampionDataByName(championName).isPresent();
+    public boolean existsChampionByName(String championName) {
+        return findChampionByName(championName).isPresent();
     }
 }

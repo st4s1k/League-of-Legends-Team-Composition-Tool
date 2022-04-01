@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-public class AttributeRatings {
+public class AttributeRatingsDTO {
     @SerializedName("damage")
     private Double damage;
     @SerializedName("toughness")

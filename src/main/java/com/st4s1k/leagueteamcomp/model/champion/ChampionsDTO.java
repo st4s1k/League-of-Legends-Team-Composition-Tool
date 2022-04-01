@@ -6,8 +6,7 @@ import lombok.Data;
 import java.util.Map;
 
 @Data
-public class Champions {
-
+public class ChampionsDTO {
     @SerializedName("champions")
-    private Map<String, Champion> champions;
+    private Map<String, ChampionDTO> champions;
 }

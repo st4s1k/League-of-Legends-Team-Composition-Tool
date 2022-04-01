@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-public class Stat {
+public class StatDTO {
     @SerializedName("flat")
     private double flat;
     @SerializedName("percent")

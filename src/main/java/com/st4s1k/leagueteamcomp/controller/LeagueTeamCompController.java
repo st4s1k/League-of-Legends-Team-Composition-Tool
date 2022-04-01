@@ -1,12 +1,20 @@
 package com.st4s1k.leagueteamcomp.controller;
 
-import com.st4s1k.leagueteamcomp.model.SummonerRole;
-import com.st4s1k.leagueteamcomp.model.champion.AttributeRatings;
-import com.st4s1k.leagueteamcomp.model.champion.Champion;
+import com.st4s1k.leagueteamcomp.exceptions.LTCException;
+import com.st4s1k.leagueteamcomp.model.champion.AttributeRatingsDTO;
+import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.model.champion.select.ChampSelectDTO;
 import com.st4s1k.leagueteamcomp.model.champion.select.SlotDTO;
+import com.st4s1k.leagueteamcomp.model.champion.select.SummonerDTO;
 import com.st4s1k.leagueteamcomp.model.champion.select.TeamDTO;
+import com.st4s1k.leagueteamcomp.model.enums.SummonerRoleEnum;
+import com.st4s1k.leagueteamcomp.model.interfaces.ChampionHolder;
+import com.st4s1k.leagueteamcomp.model.interfaces.Clearable;
+import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
+import com.st4s1k.leagueteamcomp.service.ChampionSuggestionService;
 import com.st4s1k.leagueteamcomp.service.LeagueTeamCompService;
+import com.st4s1k.leagueteamcomp.service.SummonerRoleListGeneratorService;
+import com.st4s1k.leagueteamcomp.utils.Utils;
 import com.stirante.lolclient.ClientApi;
 import com.stirante.lolclient.ClientConnectionListener;
 import com.stirante.lolclient.ClientWebSocket;
@@ -14,7 +22,6 @@ import generated.LolChampSelectChampSelectPlayerSelection;
 import generated.LolChampSelectChampSelectSession;
 import generated.LolSummonerSummoner;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
@@ -22,10 +29,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -35,26 +40,30 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.URL;
 import java.util.*;
 import java.util.function.DoubleBinaryOperator;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
-import static com.st4s1k.leagueteamcomp.model.SummonerRole.*;
-import static com.st4s1k.leagueteamcomp.service.SummonerRoleListGeneratorService.getCombinations;
+import static com.st4s1k.leagueteamcomp.model.enums.SummonerRoleEnum.*;
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.*;
-import static javafx.geometry.Pos.CENTER;
 import static javafx.scene.control.SelectionMode.MULTIPLE;
 import static org.controlsfx.control.textfield.TextFields.bindAutoCompletion;
 
 @Slf4j
 public class LeagueTeamCompController implements Initializable {
 
-    private static double xOffset = 0;
-    private static double yOffset = 0;
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * App controls                                        *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    private LeagueTeamCompService service;
+    @FXML
+    private TabPane tabPane;
+    @FXML
+    private Button minimizeButton;
+    @FXML
+    private Button closeButton;
 
-    /* Role Compositions */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Role Compositions                                   *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     private static final boolean DEFAULT_CHECKBOX_STATE = true;
 
@@ -132,7 +141,9 @@ public class LeagueTeamCompController implements Initializable {
     @FXML
     private Button resetButton;
 
-    /* Champion Suggestions  */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Champion Suggestions                                *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     private static final PseudoClass CHAMPION_STAT_GOOD_PSEUDO_CLASS = PseudoClass.getPseudoClass("good");
     private static final PseudoClass CHAMPION_STAT_BAD_PSEUDO_CLASS = PseudoClass.getPseudoClass("bad");
@@ -143,183 +154,40 @@ public class LeagueTeamCompController implements Initializable {
     @FXML
     private TextField allySearchField;
     @FXML
-    private ListView<SlotDTO> allyListView;
+    private ListView<SlotDTO<SummonerDTO>> allyListView;
     @FXML
-    private ListView<SlotDTO> allyBanListView;
+    private ListView<SlotDTO<ChampionDTO>> allyBanListView;
+    @FXML
+    private ListView<ListView<SlotDTO<ChampionDTO>>> suggestionsListView;
     @FXML
     private TextFlow allyTeamResultTextFlow;
 
     @FXML
     private TextField enemySearchField;
     @FXML
-    private ListView<SlotDTO> enemyListView;
+    private ListView<SlotDTO<SummonerDTO>> enemyListView;
     @FXML
-    private ListView<SlotDTO> enemyBanListView;
+    private ListView<SlotDTO<ChampionDTO>> enemyBanListView;
     @FXML
     private TextFlow enemyTeamResultTextFlow;
 
     @FXML
-    private GridPane gridPane;
-    @FXML
-    private TabPane tabPane;
-    @FXML
-    private Button minimizeButton;
-    @FXML
-    private Button closeButton;
+    private ToggleButton manualModeToggle;
 
-    private ChampSelectDTO champSelect;
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Controller fields                                   *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    private static double xOffset = 0;
+    private static double yOffset = 0;
+
+    private final LeagueTeamCompService service = LeagueTeamCompService.getInstance();
+    private final ChampionSuggestionService suggestionService = ChampionSuggestionService.getInstance();
+    private final SummonerRoleListGeneratorService roleListGeneratorService = SummonerRoleListGeneratorService.getInstance();
+    private final ChampSelectDTO champSelect = new ChampSelectDTO();
+    private final ClientApi api = new ClientApi();
+
     private ClientWebSocket socket;
-    private ClientApi api;
-
-    @Override
-    @SneakyThrows
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        service = LeagueTeamCompService.getInstance();
-        api = new ClientApi();
-        initializeRoleCompositions();
-        registerLCUListeners();
-        initializeChampionSuggestions();
-    }
-
-    public void stop() {
-        api.stop();
-    }
-
-    @SneakyThrows
-    private void registerLCUListeners() {
-        api.addClientConnectionListener(new ClientConnectionListener() {
-            @Override
-            public void onClientConnected() {
-                registerSocketListener();
-            }
-
-            @Override
-            public void onClientDisconnected() {
-                if (socket != null) {
-                    socket.close();
-                }
-            }
-        });
-    }
-
-    @SneakyThrows
-    private void registerSocketListener() {
-        if (!api.isAuthorized()) {
-            log.warn("Not logged in!");
-            return;
-        }
-        socket = api.openWebSocket();
-        socket.setSocketListener(new ClientWebSocket.SocketListener() {
-            @Override
-            public void onEvent(ClientWebSocket.Event event) {
-                Platform.runLater(() -> {
-                    if (event.getEventType().equals("Update") &&
-                        event.getUri().equals("/lol-champ-select/v1/session") &&
-                        event.getData() instanceof LolChampSelectChampSelectSession session) {
-                        updateTeam(session.myTeam, champSelect.getAllyTeam());
-                        updateBans(session.bans.myTeamBans, champSelect.getAllyBanList());
-                        updateTeam(session.theirTeam, champSelect.getEnemyTeam());
-                        updateBans(session.bans.theirTeamBans, champSelect.getEnemyBanList());
-                    }
-                });
-            }
-
-            @Override
-            public void onClose(int code, String reason) {
-                log.warn("Socket closed, reason: " + reason);
-            }
-        });
-    }
-
-    private void updateBans(List<Integer> bans, TeamDTO teamBans) {
-        System.out.println("team: " + teamBans.getTeam());
-        System.out.println("response bans: " + bans);
-
-        bans.stream()
-            .filter(championId -> teamBans.getSlots().stream()
-                .map(SlotDTO::getChampion)
-                .flatMap(Optional::stream)
-                .map(Champion::getId)
-                .noneMatch(championId::equals))
-            .map(service::findChampionDataById)
-            .flatMap(Optional::stream)
-            .forEach(champion -> teamBans.getSlots().stream()
-                .filter(SlotDTO::isChampionNotSelected)
-                .findFirst()
-                .ifPresent(slot -> slot.setChampion(champion)));
-
-        System.out.println("teamBans: " + teamBans.getSlots().stream()
-            .map(SlotDTO::getChampion)
-            .flatMap(Optional::stream)
-            .map(Champion::getId)
-            .toList() + "\n");
-    }
-
-    private void updateTeam(List<LolChampSelectChampSelectPlayerSelection> session, TeamDTO team) {
-        session.forEach(playerSelection -> service.findChampionDataById(playerSelection.championId)
-            .ifPresent(champion -> {
-                int slotId = playerSelection.cellId.intValue();
-                int slotIndex = slotId % 5;
-                SlotDTO slot = team.getSlot(slotIndex);
-                slot.setSlotId(slotId);
-                String summonerName = getSummonerName(playerSelection.summonerId);
-                slot.setSummonerName(summonerName);
-                slot.setChampion(champion);
-            }));
-    }
-
-    @SneakyThrows
-    private String getSummonerName(Long summonerId) {
-        return Optional.ofNullable(api.executeGet(
-                "/lol-summoner/v1/summoners/" + summonerId,
-                LolSummonerSummoner.class
-            ).getResponseObject())
-            .map(summoner -> summoner.displayName)
-            .orElse("");
-    }
-
-    protected void onGenerateButtonClick() {
-        textArea.clear();
-        var summonerNames = List.of(
-            tf1.getText(),
-            tf2.getText(),
-            tf3.getText(),
-            tf4.getText(),
-            tf5.getText()
-        );
-        var playersToRoles = Stream.of(
-                Map.entry(tf1.getText(), getRoles(cbTop1, cbMid1, cbAdc1, cbSup1, cbJgl1)),
-                Map.entry(tf2.getText(), getRoles(cbTop2, cbMid2, cbAdc2, cbSup2, cbJgl2)),
-                Map.entry(tf3.getText(), getRoles(cbTop3, cbMid3, cbAdc3, cbSup3, cbJgl3)),
-                Map.entry(tf4.getText(), getRoles(cbTop4, cbMid4, cbAdc4, cbSup4, cbJgl4)),
-                Map.entry(tf5.getText(), getRoles(cbTop5, cbMid5, cbAdc5, cbSup5, cbJgl5))
-            ).filter(entry -> !entry.getKey().isBlank())
-            .filter(entry -> summonerNames.stream().filter(entry.getKey()::equals).count() == 1)
-            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
-        var combinations = getCombinations(playersToRoles);
-        var nameReservedSize = Integer.min(16, IntStream.of(
-            tf1.getLength(),
-            tf2.getLength(),
-            tf3.getLength(),
-            tf4.getLength(),
-            tf5.getLength()
-        ).max().getAsInt());
-        var rows = combinations.stream()
-            .map(playerToRoleRow -> formatPLayerToRoleRow(playerToRoleRow, nameReservedSize))
-            .toList();
-        var rowsWithSeparator = rows.stream().map(this::appendSeparator).toList();
-        rowsWithSeparator.forEach(textArea::appendText);
-        if (!rowsWithSeparator.isEmpty()) {
-            var lastRow = rows.get(rowsWithSeparator.size() - 1);
-            textArea.appendText(getSeparator(lastRow));
-        }
-    }
-
-    protected void onResetButtonClick() {
-        textArea.clear();
-        resetAllCheckboxes();
-    }
-
 
     public void setStageAndSetupListeners(Stage stage) {
         tabPane.setOnMousePressed(event -> {
@@ -340,43 +208,289 @@ public class LeagueTeamCompController implements Initializable {
         minimizeButton.setOnAction(actionEvent -> minimizeAction.run());
     }
 
+    public void stop() {
+        api.stop();
+    }
+
+    @Override
+    @SneakyThrows
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        registerLeagueClientListeners();
+        initializeRoleCompositions();
+        initializeChampionSuggestions();
+    }
+
+    @SneakyThrows
+    private void registerLeagueClientListeners() {
+        log.info("Registering League Client listeners");
+        api.addClientConnectionListener(new ClientConnectionListener() {
+            @Override
+            public void onClientConnected() {
+                log.info("League Client connected");
+                registerSocketListener();
+            }
+
+            @Override
+            public void onClientDisconnected() {
+                log.info("League Client disconnected");
+                if (socket != null) {
+                    socket.close();
+                }
+            }
+        });
+    }
+
+    @SneakyThrows
+    private void registerSocketListener() {
+        log.info("Registering socket listener");
+        if (!api.isAuthorized()) {
+            log.warn("Not logged in!");
+            return;
+        }
+        socket = api.openWebSocket();
+        socket.setSocketListener(new ClientWebSocket.SocketListener() {
+            @Override
+            public void onEvent(ClientWebSocket.Event event) {
+                if (event.getEventType().equals("Update") &&
+                    event.getUri().equals("/lol-champ-select/v1/session") &&
+                    event.getData() instanceof LolChampSelectChampSelectSession session) {
+                    Platform.runLater(() -> LeagueTeamCompController.this.onChampSelectUpdate(session));
+                }
+            }
+
+            @Override
+            public void onClose(int code, String reason) {
+                log.warn("Socket closed, code: {}, reason: {}", code, reason);
+            }
+        });
+    }
+
+    private void onChampSelectUpdate(LolChampSelectChampSelectSession session) {
+        if (!manualModeToggle.isSelected()) {
+            updateTeam(champSelect.getAllyTeam(), session.myTeam, session.bans.myTeamBans);
+            updateTeam(champSelect.getEnemyTeam(), session.theirTeam, session.bans.theirTeamBans);
+        }
+    }
+
+    private void updateTeam(
+        TeamDTO team,
+        List<LolChampSelectChampSelectPlayerSelection> playerSelectionList,
+        List<Integer> bans
+    ) {
+        playerSelectionList.forEach(playerSelection -> service.findChampionDataById(playerSelection.championId)
+            .ifPresent(champion -> populateSummonerSlot(playerSelection, team, champion)));
+        updateBans(team, bans);
+    }
+
+    private void updateBans(TeamDTO team, List<Integer> bans) {
+        List<Integer> bannedChampionIdsBefore = team.getBannedChampionIds();
+        boolean shouldLog = Utils.notSame(bannedChampionIdsBefore, bans);
+        if (shouldLog) {
+            log.debug("team: {}", team.getTeamSide());
+            log.debug("response bans: {}", bans);
+        }
+
+        bans.stream()
+            .filter(championId -> team.getBannedChampions().stream()
+                .map(ChampionDTO::getId)
+                .noneMatch(championId::equals))
+            .map(service::findChampionDataById)
+            .flatMap(Optional::stream)
+            .forEach(champion -> team.getBans().stream()
+                .filter(SlotDTO::isChampionNotSelected)
+                .findFirst()
+                .ifPresent(slot -> slot.setChampion(champion)));
+
+        if (shouldLog) {
+            log.debug("teamBans: {}\n", team.getBannedChampionIds());
+        }
+    }
+
+    private void populateSummonerSlot(
+        LolChampSelectChampSelectPlayerSelection playerSelection,
+        TeamDTO team,
+        ChampionDTO champion
+    ) {
+        int slotId = playerSelection.cellId.intValue();
+        int slotIndex = slotId % 5;
+        team.getSlot(slotIndex).getItem().ifPresent(summoner -> {
+            summoner.setSlotId(slotId);
+            summoner.setSummonerName(getSummonerName(playerSelection.summonerId));
+            summoner.setChampion(champion);
+        });
+    }
+
+    @SneakyThrows
+    private String getSummonerName(Long summonerId) {
+        return Optional.ofNullable(api.executeGet(
+                "/lol-summoner/v1/summoners/" + summonerId,
+                LolSummonerSummoner.class
+            ).getResponseObject())
+            .map(summoner -> summoner.displayName)
+            .orElse("");
+    }
+
     private void initializeRoleCompositions() {
-        gridPane.setAlignment(CENTER);
+        log.info("Initializing role compositions");
         textArea.setEditable(false);
         resetAllCheckboxes();
-        generateButton.setOnAction(actionEvent -> onGenerateButtonClick());
-        resetButton.setOnAction(actionEvent -> onResetButtonClick());
+        generateButton.setOnAction(event -> onGenerateButtonClick());
+        resetButton.setOnAction(event -> onResetButtonClick());
+    }
+
+    private void onGenerateButtonClick() {
+        textArea.clear();
+        Map<String, List<SummonerRoleEnum>> playersToRoles = getPlayersToRolesMap();
+
+        List<Map<String, SummonerRoleEnum>> combinations = roleListGeneratorService.getCombinations(playersToRoles);
+
+        int nameReservedSize = calculateSummonerNameReservedSize(playersToRoles.keySet());
+        List<String> rows = combinations.stream().map(row -> formatPLayerToRoleRow(row, nameReservedSize)).toList();
+        List<String> rowsWithSeparator = rows.stream().map(this::appendSeparator).toList();
+
+        StringBuilder sb = new StringBuilder();
+        rowsWithSeparator.forEach(sb::append);
+        if (!rowsWithSeparator.isEmpty()) {
+            String lastRow = rows.get(rowsWithSeparator.size() - 1);
+            sb.append(getSeparator(lastRow));
+        }
+        textArea.setText(sb.toString());
+    }
+
+    private Map<String, List<SummonerRoleEnum>> getPlayersToRolesMap() {
+        validateSummonerNames();
+        return Map.ofEntries(
+                Map.entry(tf1.getText(), getRoles(cbTop1, cbMid1, cbAdc1, cbSup1, cbJgl1)),
+                Map.entry(tf2.getText(), getRoles(cbTop2, cbMid2, cbAdc2, cbSup2, cbJgl2)),
+                Map.entry(tf3.getText(), getRoles(cbTop3, cbMid3, cbAdc3, cbSup3, cbJgl3)),
+                Map.entry(tf4.getText(), getRoles(cbTop4, cbMid4, cbAdc4, cbSup4, cbJgl4)),
+                Map.entry(tf5.getText(), getRoles(cbTop5, cbMid5, cbAdc5, cbSup5, cbJgl5))
+            ).entrySet().stream()
+            .filter(entry -> !entry.getKey().isBlank())
+            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    private void validateSummonerNames() {
+        List<String> summonerNames = List.of(
+            tf1.getText(),
+            tf2.getText(),
+            tf3.getText(),
+            tf4.getText(),
+            tf5.getText()
+        );
+        Set<String> summonerNameSet = Set.copyOf(summonerNames);
+        if (summonerNames.size() != summonerNameSet.size()) {
+            throw new LTCException("Summoner names must be unique!");
+        }
+    }
+
+    private static List<SummonerRoleEnum> getRoles(
+        CheckBox cbTop,
+        CheckBox cbMid,
+        CheckBox cbAdc,
+        CheckBox cbSup,
+        CheckBox cbJgl
+    ) {
+        List<SummonerRoleEnum> roles = new ArrayList<>();
+        if (cbTop.isSelected()) {
+            roles.add(TOP);
+        }
+        if (cbMid.isSelected()) {
+            roles.add(MID);
+        }
+        if (cbAdc.isSelected()) {
+            roles.add(ADC);
+        }
+        if (cbSup.isSelected()) {
+            roles.add(SUP);
+        }
+        if (cbJgl.isSelected()) {
+            roles.add(JGL);
+        }
+        return roles;
+    }
+
+    private int calculateSummonerNameReservedSize(Set<String> summonerNames) {
+        return Integer.min(16, summonerNames.stream().mapToInt(String::length).max().orElse(16));
+    }
+
+    private String formatPLayerToRoleRow(
+        Map<String, SummonerRoleEnum> playerToRoleRow,
+        int nameReservedSize
+    ) {
+        return playerToRoleRow.entrySet().stream()
+            .map(playerToRole -> formatPlayerToRoleEntry(playerToRole, nameReservedSize))
+            .collect(joining("    "));
+    }
+
+    private String formatPlayerToRoleEntry(Map.Entry<String, SummonerRoleEnum> playerToRole, int nameReservedSize) {
+        return String.format("%" + nameReservedSize + "s", playerToRole.getKey()) + ": " + playerToRole.getValue().toString();
+    }
+
+    private String appendSeparator(String playerToRoleRow) {
+        return getSeparator(playerToRoleRow) + playerToRoleRow + "\n";
+    }
+
+    private String getSeparator(String playerToRoleRow) {
+        return "-".repeat(playerToRoleRow.length()) + "\n";
+    }
+
+    private void onResetButtonClick() {
+        textArea.clear();
+        resetAllCheckboxes();
+    }
+
+    private void resetAllCheckboxes() {
+        List.of(
+            cbTop1, cbMid1, cbAdc1, cbSup1, cbJgl1,
+            cbTop2, cbMid2, cbAdc2, cbSup2, cbJgl2,
+            cbTop3, cbMid3, cbAdc3, cbSup3, cbJgl3,
+            cbTop4, cbMid4, cbAdc4, cbSup4, cbJgl4,
+            cbTop5, cbMid5, cbAdc5, cbSup5, cbJgl5
+        ).forEach(cb -> cb.setSelected(DEFAULT_CHECKBOX_STATE));
     }
 
     public void initializeChampionSuggestions() {
-        champSelect = new ChampSelectDTO();
-        ObservableList<SlotDTO> allyItems = FXCollections.observableArrayList(SlotDTO.extractor());
-        ObservableList<SlotDTO> allyBanItems = FXCollections.observableArrayList(SlotDTO.extractor());
-        ObservableList<SlotDTO> enemyItems = FXCollections.observableArrayList(SlotDTO.extractor());
-        ObservableList<SlotDTO> enemyBanItems = FXCollections.observableArrayList(SlotDTO.extractor());
-        allyItems.addAll(champSelect.getAllyTeam().getSlots());
-        allyBanItems.addAll(champSelect.getAllyBanList().getSlots());
-        enemyItems.addAll(champSelect.getEnemyTeam().getSlots());
-        enemyBanItems.addAll(champSelect.getEnemyBanList().getSlots());
-        allyListView.setItems(allyItems);
-        allyBanListView.setItems(allyBanItems);
-        enemyListView.setItems(enemyItems);
-        enemyBanListView.setItems(enemyBanItems);
-        allyListView.setCellFactory(param -> populateListCells(60, 50));
-        allyBanListView.setCellFactory(param -> populateListCells(50, 40));
-        enemyListView.setCellFactory(param -> populateListCells(60, 50));
-        enemyBanListView.setCellFactory(param -> populateListCells(50, 40));
-
+        log.info("Initializing champion suggestions");
+        Utils.disableInteraction(allyListView);
+        Utils.disableInteraction(enemyListView);
+        Utils.disableInteraction(allyBanListView);
+        Utils.disableInteraction(enemyBanListView);
+        Utils.disableInteraction(suggestionsListView);
+        suggestionService.initializeChampionListView(champSelect.getAllyTeam().getSlots(), allyListView, 50);
+        suggestionService.initializeChampionListView(champSelect.getEnemyTeam().getSlots(), enemyListView, 50);
+        suggestionService.initializeChampionListView(champSelect.getAllyTeam().getBans(), allyBanListView, 40);
+        suggestionService.initializeChampionListView(champSelect.getEnemyTeam().getBans(), enemyBanListView, 40);
+        suggestionService.initializeSuggestionsListView(champSelect, suggestionsListView, 40);
+        manualModeToggle.setOnAction(event -> {
+            if (manualModeToggle.isSelected()) {
+                Utils.enableInteraction(allyListView);
+                Utils.enableInteraction(enemyListView);
+                Utils.enableInteraction(allyBanListView);
+                Utils.enableInteraction(enemyBanListView);
+                Utils.enableInteraction(suggestionsListView);
+            } else {
+                Utils.disableInteraction(allyListView);
+                Utils.disableInteraction(enemyListView);
+                Utils.disableInteraction(allyBanListView);
+                Utils.disableInteraction(enemyBanListView);
+                Utils.disableInteraction(suggestionsListView);
+                allyListView.getSelectionModel().clearSelection();
+                enemyListView.getSelectionModel().clearSelection();
+                allyBanListView.getSelectionModel().clearSelection();
+                enemyBanListView.getSelectionModel().clearSelection();
+                suggestionsListView.getItems().forEach(item -> item.getSelectionModel().clearSelection());
+            }
+        });
         initializeTemporaryTeamStats();
     }
 
     private void initializeTemporaryTeamStats() {
         allyListView.getSelectionModel().setSelectionMode(MULTIPLE);
         enemyListView.getSelectionModel().setSelectionMode(MULTIPLE);
-        allyBanListView.setMouseTransparent(true);
-        allyBanListView.setFocusTraversable(false);
-        enemyBanListView.setMouseTransparent(true);
-        enemyBanListView.setFocusTraversable(false);
+        allyBanListView.getSelectionModel().setSelectionMode(MULTIPLE);
+        enemyBanListView.getSelectionModel().setSelectionMode(MULTIPLE);
+        suggestionsListView.getItems().forEach(item -> item.getSelectionModel().setSelectionMode(MULTIPLE));
 
         allySearchField.setOnAction(actionEvent -> onSearchAction(allyListView, allySearchField.getText()));
         enemySearchField.setOnAction(actionEvent -> onSearchAction(enemyListView, enemySearchField.getText()));
@@ -386,13 +500,85 @@ public class LeagueTeamCompController implements Initializable {
 
         allyListView.setOnKeyPressed(event -> handleDeleteButton(event, allyListView));
         enemyListView.setOnKeyPressed(event -> handleDeleteButton(event, enemyListView));
+        allyBanListView.setOnKeyPressed(event -> handleDeleteButton(event, allyBanListView));
+        enemyBanListView.setOnKeyPressed(event -> handleDeleteButton(event, enemyBanListView));
+        suggestionsListView.getItems().forEach(item -> item.setOnKeyPressed(event -> handleDeleteButton(event, item)));
 
         getChampionListChangeListener().onChanged(null);
         allyListView.getItems().addListener(getChampionListChangeListener());
         enemyListView.getItems().addListener(getChampionListChangeListener());
     }
 
-    private ListChangeListener<SlotDTO> getChampionListChangeListener() {
+    private void onSearchAction(
+        ListView<SlotDTO<SummonerDTO>> championListView,
+        String searchFieldText
+    ) {
+        if (isValidSearchFieldText(championListView.getItems(), searchFieldText)) {
+            log.debug("Search field text \"{}\" is valid", searchFieldText);
+            service.findChampionDataByName(searchFieldText)
+                .ifPresentOrElse(
+                    champion -> getSearchActionItems(championListView).stream()
+                        .filter(ChampionHolder::isChampionNotSelected)
+                        .findFirst()
+                        .ifPresentOrElse(
+                            slot -> {
+                                log.debug("Setting champion {} in slot {}", champion.getName(), slot);
+                                slot.setChampion(champion);
+                                log.debug("Champion {} set in slot {}", champion.getName(), slot);
+                            },
+                            () -> log.debug("No empty slots found")
+                        ),
+                    () -> log.debug("Champion not found for name: {}", searchFieldText));
+        } else {
+            log.debug("Search field text is not valid: {}", searchFieldText);
+        }
+    }
+
+    private boolean isValidSearchFieldText(List<SlotDTO<SummonerDTO>> slots, String searchFieldText) {
+        List<String> championKeys = slots.stream()
+            .map(ChampionHolder::getChampion)
+            .flatMap(Optional::stream)
+            .map(ChampionDTO::getKey)
+            .toList();
+        long filledSlots = slots.stream().filter(ChampionHolder::isChampionSelected).count();
+        return filledSlots < 5
+            && !championKeys.contains(searchFieldText)
+            && service.existsChampionDataByName(searchFieldText)
+            && !service.findChampionDataByName(searchFieldText)
+            .map(champSelect.getChampionPool()::contains)
+            .orElse(false);
+    }
+
+    private ObservableList<SlotDTO<SummonerDTO>> getSearchActionItems(ListView<SlotDTO<SummonerDTO>> championListView) {
+        ObservableList<SlotDTO<SummonerDTO>> selectedItems = championListView.getSelectionModel().getSelectedItems();
+        return selectedItems.isEmpty() || selectedItems.stream().noneMatch(ChampionHolder::isChampionNotSelected)
+            ? championListView.getItems()
+            : selectedItems;
+    }
+
+    private List<String> searchFieldAutoCompletion(String userText) {
+        List<String> championPoolKeys = champSelect.getChampionPool().stream()
+            .map(ChampionDTO::getKey)
+            .toList();
+        return service.getAllChampionKeys().stream()
+            .filter(not(championPoolKeys::contains))
+            .map(service::findChampionDataByKey)
+            .flatMap(Optional::stream)
+            .map(ChampionDTO::getName)
+            .filter(championName -> championName.toLowerCase().startsWith(userText.toLowerCase()))
+            .collect(toList());
+    }
+
+    public <T extends SlotItem> void handleDeleteButton(KeyEvent event, ListView<SlotDTO<T>> listView) {
+        if (event.getCode() == KeyCode.DELETE) {
+            ObservableList<SlotDTO<T>> selectedItems = listView.getSelectionModel().getSelectedItems();
+            if (!selectedItems.isEmpty()) {
+                selectedItems.forEach(Clearable::clear);
+            }
+        }
+    }
+
+    private ListChangeListener<SlotDTO<SummonerDTO>> getChampionListChangeListener() {
         return change -> {
             setTeamAttributeRatings(champSelect.getAllyTeam());
             setTeamAttributeRatings(champSelect.getEnemyTeam());
@@ -418,16 +604,24 @@ public class LeagueTeamCompController implements Initializable {
         };
     }
 
-    private long getBadStatCount(TextFlow textFlow) {
-        return textFlow.getChildren().stream()
-            .map(Node::getPseudoClassStates)
-            .filter(pseudoClasses -> pseudoClasses.contains(CHAMPION_STAT_BAD_PSEUDO_CLASS))
-            .count();
+    private void setTeamAttributeRatings(TeamDTO team) {
+        AttributeRatingsDTO enemyTeamStats = team.getAttributeRatings();
+        List<String> enemyChampionKeys = team.getChampions().stream().map(ChampionDTO::getKey).toList();
+        enemyTeamStats.setDamage(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getDamage, 3));
+        enemyTeamStats.setAttack(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getAttack, 10));
+        enemyTeamStats.setDefense(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getDefense, 10));
+        enemyTeamStats.setMagic(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getMagic, 10));
+        enemyTeamStats.setDifficulty(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getDifficulty, 3));
+        enemyTeamStats.setControl(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getControl, 3));
+        enemyTeamStats.setToughness(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getToughness, 3));
+        enemyTeamStats.setMobility(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getMobility, 3));
+        enemyTeamStats.setUtility(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getUtility, 3));
+        enemyTeamStats.setAbilityReliance(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getAbilityReliance, 100));
     }
 
     private void calculateTeamStats(
-        AttributeRatings stats,
-        AttributeRatings opponentStats,
+        AttributeRatingsDTO stats,
+        AttributeRatingsDTO opponentStats,
         TextFlow textFlow
     ) {
         Text damageText = getStatText("Damage:", stats.getDamage());
@@ -465,23 +659,20 @@ public class LeagueTeamCompController implements Initializable {
         textFlow.getChildren().add(abilityRelianceText);
     }
 
-    private void setTeamAttributeRatings(TeamDTO champSelect) {
-        AttributeRatings enemyTeamStats = champSelect.getAttributeRatings();
-        List<String> enemyChampionKeys = champSelect.getSlots().stream()
-            .map(SlotDTO::getChampion)
-            .flatMap(Optional::stream)
-            .map(Champion::getKey)
-            .toList();
-        enemyTeamStats.setDamage(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getDamage, 3));
-        enemyTeamStats.setAttack(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getAttack, 10));
-        enemyTeamStats.setDefense(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getDefense, 10));
-        enemyTeamStats.setMagic(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getMagic, 10));
-        enemyTeamStats.setDifficulty(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getDifficulty, 3));
-        enemyTeamStats.setControl(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getControl, 3));
-        enemyTeamStats.setToughness(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getToughness, 3));
-        enemyTeamStats.setMobility(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getMobility, 3));
-        enemyTeamStats.setUtility(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getUtility, 3));
-        enemyTeamStats.setAbilityReliance(service.getChampionInfoValue(enemyChampionKeys, AttributeRatings::getAbilityReliance, 100));
+    private Text getStatText(String label, double value) {
+        return new Text(getStatString(label, value));
+    }
+
+    private String getStatString(String label, double value) {
+        return formatStatLabel(label).concat(formatStatValue(value));
+    }
+
+    private String formatStatLabel(String label) {
+        return String.format("%-18s", label);
+    }
+
+    private String formatStatValue(double value) {
+        return String.format("%4s / 10", String.format("%1$,.1f", value));
     }
 
     private void colorStatText(
@@ -502,177 +693,10 @@ public class LeagueTeamCompController implements Initializable {
         }
     }
 
-    private Text getStatText(String label, double value) {
-        return new Text(getStatString(label, value));
-    }
-
-    private String getStatString(String label, double value) {
-        return formatStatLabel(label).concat(formatStatValue(value));
-    }
-
-    private String formatStatLabel(String label) {
-        return String.format("%-18s", label);
-    }
-
-    private String formatStatValue(double value) {
-        return String.format("%4s / 10", String.format("%1$,.1f", value));
-    }
-
-    private ListCell<SlotDTO> populateListCells(int emptySlotCellPrefSize, final int imageSize) {
-        return new ListCell<>() {
-            private final ImageView imageView = new ImageView();
-
-            @Override
-            public void updateItem(SlotDTO slot, boolean empty) {
-                super.updateItem(slot, empty);
-                if (empty || slot == null) {
-                    setPrefHeight(emptySlotCellPrefSize);
-                    setPrefWidth(emptySlotCellPrefSize);
-                    setGraphic(null);
-                } else {
-                    imageView.setFitWidth(imageSize);
-                    imageView.setFitHeight(imageSize);
-                    imageView.setImage(slot.getImage());
-                    setGraphic(imageView);
-                }
-            }
-        };
-    }
-
-    public void handleDeleteButton(KeyEvent event, ListView<SlotDTO> listView) {
-        if (event.getCode() == KeyCode.DELETE) {
-            var selectedItems = listView.getSelectionModel().getSelectedItems();
-            if (!selectedItems.isEmpty()) {
-                selectedItems.forEach(SlotDTO::clear);
-            }
-        }
-    }
-
-    private String formatPLayerToRoleRow(List<Map.Entry<String, SummonerRole>> playerToRoleRow,
-                                         int nameReservedSize) {
-        return playerToRoleRow.stream()
-            .map(playerToRole -> formatPlayerToRoleEntry(playerToRole, nameReservedSize))
-            .collect(joining("    "));
-    }
-
-    private String formatPlayerToRoleEntry(Map.Entry<String, SummonerRole> playerToRole, int nameReservedSize) {
-        return String.format("%" + nameReservedSize + "s", playerToRole.getKey()) + ": " + playerToRole.getValue().toString();
-    }
-
-    private String appendSeparator(String playerToRoleRow) {
-        return getSeparator(playerToRoleRow) + playerToRoleRow + "\n";
-    }
-
-    private String getSeparator(String playerToRoleRow) {
-        return "-".repeat(playerToRoleRow.length()) + "\n";
-    }
-
-    private void onSearchAction(
-        ListView<SlotDTO> championListView,
-        String searchFieldText
-    ) {
-
-        if (isValidSearchFieldText(championListView.getItems(), searchFieldText)) {
-            service.findChampionDataByName(searchFieldText)
-                .ifPresent(champion -> getSearchActionItems(championListView).stream()
-                    .filter(SlotDTO::isChampionNotSelected)
-                    .findFirst()
-                    .ifPresent(slot -> slot.setChampion(champion)));
-        }
-    }
-
-    private ObservableList<SlotDTO> getSearchActionItems(ListView<SlotDTO> championListView) {
-        ObservableList<SlotDTO> selectedItems = championListView.getSelectionModel().getSelectedItems();
-        return selectedItems.isEmpty() || selectedItems.stream()
-            .map(SlotDTO::getChampion)
-            .noneMatch(Optional::isEmpty)
-            ? championListView.getItems()
-            : selectedItems;
-    }
-
-    private boolean isValidSearchFieldText(List<SlotDTO> slots, String searchFieldText) {
-        List<String> championKeys = slots.stream()
-            .map(SlotDTO::getChampion)
-            .flatMap(Optional::stream)
-            .map(Champion::getKey)
-            .toList();
-        long filledSlots = slots.stream().filter(SlotDTO::isChampionSelected).count();
-        return filledSlots < 5
-            && !championKeys.contains(searchFieldText)
-            && service.existsChampionDataByName(searchFieldText)
-            && !service.findChampionDataByName(searchFieldText)
-            .map(champSelect.getChampionPool()::contains)
-            .orElse(false);
-    }
-
-    private List<String> searchFieldAutoCompletion(String userText) {
-        List<String> championPoolKeys = champSelect.getChampionPool().stream()
-            .map(Champion::getKey)
-            .toList();
-        return service.getAllChampionKeys().stream()
-            .filter(not(championPoolKeys::contains))
-            .map(service::findChampionDataByKey)
-            .flatMap(Optional::stream)
-            .map(Champion::getName)
-            .filter(championName -> championName.toLowerCase().startsWith(userText.toLowerCase()))
-            .collect(toList());
-    }
-
-    private static List<SummonerRole> getRoles(
-        CheckBox cbTop,
-        CheckBox cbMid,
-        CheckBox cbAdc,
-        CheckBox cbSup,
-        CheckBox cbJgl
-    ) {
-        var roles = new ArrayList<SummonerRole>();
-        if (cbTop.isSelected()) {
-            roles.add(TOP);
-        }
-        if (cbMid.isSelected()) {
-            roles.add(MID);
-        }
-        if (cbAdc.isSelected()) {
-            roles.add(ADC);
-        }
-        if (cbSup.isSelected()) {
-            roles.add(SUP);
-        }
-        if (cbJgl.isSelected()) {
-            roles.add(JGL);
-        }
-        return roles;
-    }
-
-    private void resetAllCheckboxes() {
-        cbTop1.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbMid1.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbAdc1.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbSup1.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbJgl1.setSelected(DEFAULT_CHECKBOX_STATE);
-
-        cbTop2.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbMid2.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbAdc2.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbSup2.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbJgl2.setSelected(DEFAULT_CHECKBOX_STATE);
-
-        cbTop3.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbMid3.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbAdc3.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbSup3.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbJgl3.setSelected(DEFAULT_CHECKBOX_STATE);
-
-        cbTop4.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbMid4.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbAdc4.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbSup4.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbJgl4.setSelected(DEFAULT_CHECKBOX_STATE);
-
-        cbTop5.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbMid5.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbAdc5.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbSup5.setSelected(DEFAULT_CHECKBOX_STATE);
-        cbJgl5.setSelected(DEFAULT_CHECKBOX_STATE);
+    private long getBadStatCount(TextFlow textFlow) {
+        return textFlow.getChildren().stream()
+            .map(Node::getPseudoClassStates)
+            .filter(pseudoClasses -> pseudoClasses.contains(CHAMPION_STAT_BAD_PSEUDO_CLASS))
+            .count();
     }
 }
