@@ -1,20 +1,46 @@
 * {
+    /* General */
     -ltc-accent-color: #dead4a;
     -ltc-color-0: #1d1e22;
     -ltc-color-1: #202529;
     -ltc-color-2: #2a3036;
     -ltc-text-color: #c4b391;
     -ltc-background-color: #17181c;
+    -ltc-border-color: -ltc-color-2;
+    /* TabPane */
     -ltc-tab-text-color: -ltc-accent-color;
     -ltc-tab-header-background-color: -ltc-color-1;
     -ltc-tab-background-color: -ltc-color-0;
     -ltc-tab-selected-background-color: -ltc-color-1;
     -ltc-tab-selected-indicator-color: -ltc-accent-color;
     -ltc-tab-height: 40;
-    -ltc-border-color: -ltc-color-2;
-    -ltc-titled-pane-background-color: -ltc-color-2;
+    /* TitledPane */
+    -ltc-text-area-background-color: -ltc-color-2;
     -ltc-titled-pane-title-background-color: -ltc-accent-color;
     -ltc-titled-pane-text-color: -ltc-color-2;
+    /* Champion List */
+    -ltc-champion-list-view-width: 66;
+    -ltc-champion-list-view-height: 306;
+    -ltc-champion-list-cell-size: 60;
+    -ltc-champion-list-cell-width: -ltc-champion-list-cell-size;
+    -ltc-champion-list-cell-height: -ltc-champion-list-cell-size;
+    /* Champion Ban List */
+    -ltc-champion-ban-list-view-width: 252;
+    -ltc-champion-ban-list-view-height: 52;
+    -ltc-champion-ban-list-cell-size: 50;
+    -ltc-champion-ban-list-cell-width: -ltc-champion-ban-list-cell-size;
+    -ltc-champion-ban-list-cell-height: -ltc-champion-ban-list-cell-size;
+    /* Champion Suggestions List */
+    -ltc-suggestions-list-view-width: 236;
+    -ltc-suggestions-list-view-height: -ltc-champion-list-view-height;
+    -ltc-suggestions-list-cell-width: 230;
+    -ltc-suggestions-list-cell-height: -ltc-champion-list-cell-height;
+    /* Champion Suggestions Sub List */
+    -ltc-suggestions-sub-list-view-width: -ltc-suggestions-list-cell-width;
+    -ltc-suggestions-sub-list-view-height: 50;
+    -ltc-suggestions-sub-list-cell-size: 45;
+    -ltc-suggestions-sub-list-cell-width: -ltc-suggestions-sub-list-cell-size;
+    -ltc-suggestions-sub-list-cell-height: 40;
 }
 
 
@@ -22,17 +48,22 @@
 
 .button {
     -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-background-color: -ltc-accent-color;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-text-fill: -ltc-color-0;
+}
+
+.button:hover:pressed {
     -fx-background-color: -ltc-background-color;
     -fx-border-width: 1;
     -fx-border-color: -ltc-accent-color;
     -fx-text-fill: -ltc-accent-color;
 }
 
-.button:pressed {
-    -fx-background-color: -ltc-accent-color;
-    -fx-border-width: 0;
-    -fx-border-color: transparent;
-    -fx-text-fill: -ltc-color-0;
+.button:hover {
+    -fx-background-color: derive(-ltc-accent-color, 25%);
 }
 
 .window-button {
@@ -49,6 +80,11 @@
     -fx-content-display: graphic-only;
 }
 
+.window-button.minimize-button:hover,
+.window-button.close-button:hover {
+    -fx-background-color: transparent;
+}
+
 .window-button.minimize-button:hover .icon,
 .window-button.close-button:hover .icon {
     -fx-background-color: -ltc-accent-color;
@@ -56,6 +92,14 @@
 
 .window-button .icon {
     -fx-background-color: -ltc-text-color;
+}
+
+.window-button.minimize-button:pressed,
+.window-button.close-button:pressed {
+    -fx-background-color: -ltc-accent-color;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-text-fill: -ltc-color-0;
 }
 
 .window-button.minimize-button:pressed .icon,
@@ -85,6 +129,31 @@
     -fx-min-width: -wsize;
     -fx-max-height: -hsize;
     -fx-max-width: -wsize;
+}
+
+
+/* ToggleButton */
+
+.toggle-button {
+    -width: 40;
+    -height: 20;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-max-width: -width;
+    -fx-max-height: -height;
+    -fx-min-width: -width;
+    -fx-min-height: -height;
+    -fx-background-color: -ltc-tab-selected-background-color, derive(-ltc-accent-color, -50%);
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0, -3 20 -3 -3;
+}
+
+.toggle-button:selected {
+    -fx-background-color: -ltc-tab-selected-background-color, -ltc-accent-color;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0, -3 -3 -3 20;
 }
 
 
@@ -137,40 +206,53 @@
 
 /* TextArea */
 
-.output-text-area {
+.text-area {
     -fx-font-family: 'monospaced';
     -fx-highlight-fill: -ltc-text-color;
     -fx-highlight-text-fill: -ltc-color-2;
     -fx-text-fill: -ltc-text-color;
 }
 
-.output-text-area .scroll-pane .corner {
-    -fx-background-color: transparent;
+.text-area .scroll-pane .corner {
+    -fx-background-color: -ltc-text-area-background-color;
 }
 
-.output-text-area,
-.output-text-area .scroll-pane,
-.output-text-area .content {
+.text-area,
+.text-area .viewport,
+.text-area .content {
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-control-inner-background: transparent;
-    -fx-background-color: transparent;
+    -fx-background-color: -ltc-text-area-background-color;
 }
 
 
 /* TextField */
 
 .text-field {
-    -fx-background-color: -ltc-accent-color, -ltc-background-color;
+    -fx-background-color: -ltc-background-color;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-text-fill: -ltc-text-color;
     -fx-background-radius: 0;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-pref-height: 30;
+    -fx-background-insets: 0;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 0;
+    -fx-border-color: -ltc-accent-color;
+    -height: 30;
+    -fx-pref-height: -height;
+    -fx-min-height: -height;
+    -fx-max-height: -height;
     -fx-alignment: center;
     -fx-prompt-text-fill: -ltc-color-2;
     -fx-highlight-fill: -ltc-text-color;
     -fx-highlight-text-fill: -ltc-color-2;
+}
+
+.team-search-field {
+    -width: 200;
+    -fx-pref-width: -width;
+    -fx-min-width: -width;
+    -fx-max-width: -width;
 }
 
 
@@ -271,7 +353,7 @@
 }
 
 
-/* Champion ListView */
+/* Champion List */
 
 .champion-list-view .scroll-bar:horizontal .increment-arrow,
 .champion-list-view .scroll-bar:horizontal .decrement-arrow,
@@ -280,57 +362,145 @@
 .champion-list-view .scroll-bar:vertical .increment-arrow,
 .champion-list-view .scroll-bar:vertical .decrement-arrow,
 .champion-list-view .scroll-bar:vertical .increment-button,
-.champion-list-view .scroll-bar:vertical .decrement-button,
-.champion-ban-list-view .scroll-bar:horizontal .increment-arrow,
-.champion-ban-list-view .scroll-bar:horizontal .decrement-arrow,
-.champion-ban-list-view .scroll-bar:horizontal .increment-button,
-.champion-ban-list-view .scroll-bar:horizontal .decrement-button,
-.champion-ban-list-view .scroll-bar:vertical .increment-arrow,
-.champion-ban-list-view .scroll-bar:vertical .decrement-arrow,
-.champion-ban-list-view .scroll-bar:vertical .increment-button,
-.champion-ban-list-view .scroll-bar:vertical .decrement-button {
+.champion-list-view .scroll-bar:vertical .decrement-button {
     -fx-padding: 0;
 }
 
 .champion-list-view {
-    -width: 66;
-    -height: 306;
+    -width: -ltc-champion-list-view-width;
+    -height: -ltc-champion-list-view-height;
     -fx-pref-width: -width;
     -fx-pref-height: -height;
     -fx-max-width: -width;
     -fx-max-height: -height;
     -fx-min-width: -width;
     -fx-min-height: -height;
-    -fx-border-color: -ltc-accent-color;
-    -fx-border-width: 2;
-}
-
-.champion-ban-list-view {
-    -width: 252;
-    -height: 52;
-    -fx-pref-width: -width;
-    -fx-pref-height: -height;
-    -fx-max-width: -width;
-    -fx-max-height: -height;
-    -fx-min-width: -width;
-    -fx-min-height: -height;
-}
-
-.champion-list-view,
-.champion-ban-list-view {
+    /* ---------------------------------------- */
     -fx-background-insets: 0;
+    -fx-border-width: 2;
+    -fx-border-color: -ltc-accent-color;
     -fx-background-color: -ltc-color-1;
 }
 
-.champion-ban-list-view .list-cell,
 .champion-list-view .list-cell {
+    -width: -ltc-champion-list-cell-width;
+    -height: -ltc-champion-list-cell-height;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-max-width: -width;
+    -fx-max-height: -height;
+    -fx-min-width: -width;
+    -fx-min-height: -height;
+    /* ---------------------------------------- */
     -fx-padding: 0;
     -fx-alignment: center;
+    -fx-background-color: transparent;
+}
+
+.champion-list-view .list-cell:selected {
+    -fx-background-color: -ltc-accent-color;
+}
+
+
+/* Champion Ban List */
+
+.champion-ban-list-view {
+    -width: -ltc-champion-ban-list-view-width;
+    -height: -ltc-champion-ban-list-view-height;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-max-width: -width;
+    -fx-max-height: -height;
+    -fx-min-width: -width;
+    -fx-min-height: -height;
+    /* ---------------------------------------- */
+    -fx-border-width: 0;
+    -fx-orientation: horizontal;
+}
+
+.champion-ban-list-view .list-cell {
+    -width: -ltc-champion-ban-list-cell-width;
+    -height: -ltc-champion-ban-list-cell-height;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-max-width: -width;
+    -fx-max-height: -height;
+    -fx-min-width: -width;
+    -fx-min-height: -height;
+    /* ---------------------------------------- */
+    -fx-border-width: 0;
+    -fx-orientation: horizontal;
+}
+
+
+/* Champion Suggestions List */
+
+.suggestions-list-view {
+    -width: -ltc-suggestions-list-view-width;
+    -height: -ltc-suggestions-list-view-height;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-max-width: -width;
+    -fx-max-height: -height;
+    -fx-min-width: -width;
+    -fx-min-height: -height;
+    /* ---------------------------------------- */
+    -fx-orientation: vertical;
+    -fx-border-color: transparent;
+    -fx-border-width: 2 2 2 0;
+    -fx-background-color: transparent;
+}
+
+.suggestions-list-view .list-cell {
+    -width: -ltc-suggestions-list-cell-width;
+    -height: -ltc-suggestions-list-cell-height;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-max-width: -width;
+    -fx-max-height: -height;
+    -fx-min-width: -width;
+    -fx-min-height: -height;
+    /* ---------------------------------------- */
+    -fx-background-color: transparent;
+}
+
+.suggestions-list-view .list-cell:selected {
+    -fx-background-color: transparent;
+}
+
+
+/* Champion Suggestions Sub List */
+
+.suggestions-sub-list-view {
+    -width: -ltc-suggestions-sub-list-view-width;
+    -height: -ltc-suggestions-sub-list-view-height;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-max-width: -width;
+    -fx-max-height: -height;
+    -fx-min-width: -width;
+    -fx-min-height: -height;
+    /* ---------------------------------------- */
+    -fx-orientation: horizontal;
+    -fx-border-width: 1 1 1 0;
+    -fx-border-color: -ltc-accent-color;
     -fx-background-color: -ltc-color-1;
 }
 
-.champion-ban-list-view .list-cell:selected,
-.champion-list-view .list-cell:selected {
+.suggestions-sub-list-view .list-cell {
+    -width: -ltc-suggestions-sub-list-cell-width;
+    -height: -ltc-suggestions-sub-list-cell-height;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-max-width: -width;
+    -fx-max-height: -height;
+    -fx-min-width: -width;
+    -fx-min-height: -height;
+    /* ---------------------------------------- */
+    -fx-background-color: transparent;
+}
+
+.suggestions-sub-list-view .list-cell:selected {
     -fx-background-color: -ltc-accent-color;
 }
 
@@ -416,7 +586,7 @@
 }
 
 .titled-pane .content {
-    -fx-background-color: -ltc-titled-pane-background-color;
+    -fx-background-color: -ltc-text-area-background-color;
     -fx-border-width: 0;
 }
 

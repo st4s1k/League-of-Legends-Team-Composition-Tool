@@ -1,36 +1,67 @@
 package com.st4s1k.leagueteamcomp.model.champion.select;
 
-import com.st4s1k.leagueteamcomp.model.champion.AttributeRatings;
+import com.st4s1k.leagueteamcomp.model.champion.AttributeRatingsDTO;
+import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
+import com.st4s1k.leagueteamcomp.model.enums.TeamSideEnum;
+import com.st4s1k.leagueteamcomp.model.interfaces.Clearable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor
-public class TeamDTO {
-    enum Team {
-        UNDEFINED,
-        ALLY_TEAM,
-        ENEMY_TEAM
-    }
+public class TeamDTO implements Clearable {
 
-    private final List<SlotDTO> slots = List.of(
-        new SlotDTO(),
-        new SlotDTO(),
-        new SlotDTO(),
-        new SlotDTO(),
-        new SlotDTO()
+    private final List<SlotDTO<SummonerDTO>> slots = List.of(
+        SummonerSlotDTO.newSlot(),
+        SummonerSlotDTO.newSlot(),
+        SummonerSlotDTO.newSlot(),
+        SummonerSlotDTO.newSlot(),
+        SummonerSlotDTO.newSlot()
     );
-    private Team team = Team.UNDEFINED;
+    private final List<SlotDTO<ChampionDTO>> bans = List.of(
+        ChampionSlotDTO.newSlot(),
+        ChampionSlotDTO.newSlot(),
+        ChampionSlotDTO.newSlot(),
+        ChampionSlotDTO.newSlot(),
+        ChampionSlotDTO.newSlot()
+    );
 
-    public TeamDTO(Team team) {
-        this.team = team;
+    private TeamSideEnum teamSide = TeamSideEnum.UNDEFINED;
+
+    public TeamDTO(TeamSideEnum teamSide) {
+        this.teamSide = teamSide;
     }
 
-    private final AttributeRatings attributeRatings = new AttributeRatings();
+    private final AttributeRatingsDTO attributeRatings = new AttributeRatingsDTO();
 
-    public SlotDTO getSlot(int slotId) {
+    public SlotDTO<SummonerDTO> getSlot(int slotId) {
         return slots.get(slotId);
+    }
+
+    public List<ChampionDTO> getChampions() {
+        return slots.stream()
+            .map(SlotDTO::getItem)
+            .flatMap(Optional::stream)
+            .map(SummonerDTO::getChampion)
+            .flatMap(Optional::stream)
+            .toList();
+    }
+
+    public List<ChampionDTO> getBannedChampions() {
+        return bans.stream().map(SlotDTO::getItem).flatMap(Optional::stream).toList();
+    }
+
+    public List<Integer> getBannedChampionIds() {
+        return bans.stream().map(SlotDTO::getItem).flatMap(Optional::stream).map(ChampionDTO::getId).toList();
+    }
+
+    @Override
+    public void clear() {
+        slots.forEach(SlotDTO::clear);
+        bans.forEach(SlotDTO::clear);
+        teamSide = TeamSideEnum.UNDEFINED;
     }
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.Color?>
+<?import java.lang.String?>
+<BorderPane style="-fx-background-color: transparent;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.st4s1k.leagueteamcomp.controller.LTCExceptionController">
+   <center>
+      <BorderPane style="-fx-background-color: -ltc-color-1;">
+        <bottom>
+          <HBox alignment="CENTER">
+            <Button fx:id="okButton" text="OK" />
+          </HBox>
+        </bottom>
+        <center>
+          <TextArea fx:id="errorMessage" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+        </center>
+        <top>
+          <HBox fx:id="windowTitleBar" alignment="TOP_RIGHT">
+            <children>
+              <Button fx:id="minimizeButton" layoutX="779.0" layoutY="10.0" mnemonicParsing="false">
+                <graphic>
+                  <Region prefHeight="200.0" prefWidth="200.0" styleClass="icon" />
+                </graphic>
+                <styleClass>
+                  <String fx:value="window-button" />
+                  <String fx:value="minimize-button" />
+                </styleClass>
+              </Button>
+              <Button fx:id="closeButton" layoutX="769.0" mnemonicParsing="false">
+                <graphic>
+                  <Region prefHeight="200.0" prefWidth="200.0" styleClass="icon" />
+                </graphic>
+                <styleClass>
+                  <String fx:value="window-button" />
+                  <String fx:value="close-button" />
+                </styleClass>
+              </Button>
+            </children>
+          </HBox>
+        </top>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.7" />
+               </color>
+            </DropShadow>
+         </effect>
+      </BorderPane>
+   </center>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</BorderPane>

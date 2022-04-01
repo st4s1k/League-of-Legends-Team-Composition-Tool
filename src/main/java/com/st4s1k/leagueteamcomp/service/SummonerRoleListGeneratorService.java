@@ -1,6 +1,6 @@
 package com.st4s1k.leagueteamcomp.service;
 
-import com.st4s1k.leagueteamcomp.model.SummonerRole;
+import com.st4s1k.leagueteamcomp.model.enums.SummonerRoleEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,38 +13,48 @@ import static java.util.Collections.swap;
 
 public class SummonerRoleListGeneratorService {
 
-    public static List<List<Entry<String, SummonerRole>>> getCombinations(Map<String, List<SummonerRole>> playerToRoles) {
+    private static SummonerRoleListGeneratorService INSTANCE;
+
+    public static SummonerRoleListGeneratorService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new SummonerRoleListGeneratorService();
+        }
+        return INSTANCE;
+    }
+
+    public List<Map<String, SummonerRoleEnum>> getCombinations(Map<String, List<SummonerRoleEnum>> playerToRoles) {
         if (playerToRoles.isEmpty() || playerToRoles.size() < 5) {
             return emptyList();
         }
         List<List<String>> allPlayerPermutations = new ArrayList<>();
         List<String> players = new ArrayList<>(playerToRoles.keySet());
         generateAllPlayerPermutations(playerToRoles.size(), players, allPlayerPermutations);
-        return allPlayerPermutations.stream().map(playersInOrder -> List.of(
-                Map.entry(playersInOrder.get(0), SummonerRole.TOP),
-                Map.entry(playersInOrder.get(1), SummonerRole.MID),
-                Map.entry(playersInOrder.get(2), SummonerRole.ADC),
-                Map.entry(playersInOrder.get(3), SummonerRole.SUP),
-                Map.entry(playersInOrder.get(4), SummonerRole.JGL)
-            )).filter(newPlayerToRoleList -> arePlayersOnCorrectRoles(playerToRoles, newPlayerToRoleList))
+        return allPlayerPermutations.stream().map(playersInOrder -> Map.ofEntries(
+                Map.entry(playersInOrder.get(0), SummonerRoleEnum.TOP),
+                Map.entry(playersInOrder.get(1), SummonerRoleEnum.MID),
+                Map.entry(playersInOrder.get(2), SummonerRoleEnum.ADC),
+                Map.entry(playersInOrder.get(3), SummonerRoleEnum.SUP),
+                Map.entry(playersInOrder.get(4), SummonerRoleEnum.JGL)
+            )).filter(playersToRoles -> arePlayersOnCorrectRoles(playerToRoles, playersToRoles))
             .collect(Collectors.toList());
     }
 
-    private static boolean arePlayersOnCorrectRoles(
-        Map<String, List<SummonerRole>> playerToRoles,
-        List<Entry<String, SummonerRole>> newPlayerToRoleList
+    private boolean arePlayersOnCorrectRoles(
+        Map<String, List<SummonerRoleEnum>> playerToRoles,
+        Map<String, SummonerRoleEnum> newPlayerToRoleList
     ) {
-        return newPlayerToRoleList.stream().allMatch(newPlayerToRole -> isPlayerOnCorrectRole(playerToRoles, newPlayerToRole));
+        return newPlayerToRoleList.entrySet().stream()
+            .allMatch(newPlayerToRole -> isPlayerOnCorrectRole(playerToRoles, newPlayerToRole));
     }
 
-    private static boolean isPlayerOnCorrectRole(
-        Map<String, List<SummonerRole>> playerToRoles,
-        Entry<String, SummonerRole> playerToRole
+    private boolean isPlayerOnCorrectRole(
+        Map<String, List<SummonerRoleEnum>> playerToRoles,
+        Entry<String, SummonerRoleEnum> playerToRole
     ) {
         return playerToRoles.get(playerToRole.getKey()).contains(playerToRole.getValue());
     }
 
-    public static <T> void generateAllPlayerPermutations(
+    public void generateAllPlayerPermutations(
         int n,
         List<String> playerPermutation,
         List<List<String>> allPlayerPermutations

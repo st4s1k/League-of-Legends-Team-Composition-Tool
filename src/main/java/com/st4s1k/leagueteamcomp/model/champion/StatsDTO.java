@@ -4,61 +4,61 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-public class Stats {
+public class StatsDTO {
     @SerializedName("health")
-    private Stat health;
+    private StatDTO health;
     @SerializedName("healthRegen")
-    private Stat healthRegen;
+    private StatDTO healthRegen;
     @SerializedName("mana")
-    private Stat mana;
+    private StatDTO mana;
     @SerializedName("manaRegen")
-    private Stat manaRegen;
+    private StatDTO manaRegen;
     @SerializedName("armor")
-    private Stat armor;
+    private StatDTO armor;
     @SerializedName("magicResistance")
-    private Stat magicResistance;
+    private StatDTO magicResistance;
     @SerializedName("attackDamage")
-    private Stat attackDamage;
+    private StatDTO attackDamage;
     @SerializedName("movespeed")
-    private Stat moveSpeed;
+    private StatDTO moveSpeed;
     @SerializedName("acquisitionRadius")
-    private Stat acquisitionRadius;
+    private StatDTO acquisitionRadius;
     @SerializedName("selectionRadius")
-    private Stat selectionRadius;
+    private StatDTO selectionRadius;
     @SerializedName("pathingRadius")
-    private Stat pathingRadius;
+    private StatDTO pathingRadius;
     @SerializedName("gameplayRadius")
-    private Stat gameplayRadius;
+    private StatDTO gameplayRadius;
     @SerializedName("criticalStrikeDamage")
-    private Stat criticalStrikeDamage;
+    private StatDTO criticalStrikeDamage;
     @SerializedName("criticalStrikeDamageModifier")
-    private Stat criticalStrikeDamageModifier;
+    private StatDTO criticalStrikeDamageModifier;
     @SerializedName("attackSpeed")
-    private Stat attackSpeed;
+    private StatDTO attackSpeed;
     @SerializedName("attackSpeedRatio")
-    private Stat attackSpeedRatio;
+    private StatDTO attackSpeedRatio;
     @SerializedName("attackCastTime")
-    private Stat attackCastTime;
+    private StatDTO attackCastTime;
     @SerializedName("attackTotalTime")
-    private Stat attackTotalTime;
+    private StatDTO attackTotalTime;
     @SerializedName("attackDelayOffset")
-    private Stat attackDelayOffset;
+    private StatDTO attackDelayOffset;
     @SerializedName("attackRange")
-    private Stat attackRange;
+    private StatDTO attackRange;
     @SerializedName("aramDamageTaken")
-    private Stat aramDamageTaken;
+    private StatDTO aramDamageTaken;
     @SerializedName("aramDamageDealt")
-    private Stat aramDamageDealt;
+    private StatDTO aramDamageDealt;
     @SerializedName("aramHealing")
-    private Stat aramHealing;
+    private StatDTO aramHealing;
     @SerializedName("aramShielding")
-    private Stat aramShielding;
+    private StatDTO aramShielding;
     @SerializedName("urfDamageTaken")
-    private Stat urfDamageTaken;
+    private StatDTO urfDamageTaken;
     @SerializedName("urfDamageDealt")
-    private Stat urfDamageDealt;
+    private StatDTO urfDamageDealt;
     @SerializedName("urfHealing")
-    private Stat urfHealing;
+    private StatDTO urfHealing;
     @SerializedName("urfShielding")
-    private Stat urfShielding;
+    private StatDTO urfShielding;
 }

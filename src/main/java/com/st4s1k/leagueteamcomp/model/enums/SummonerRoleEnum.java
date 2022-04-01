@@ -1,6 +1,6 @@
-package com.st4s1k.leagueteamcomp.model;
+package com.st4s1k.leagueteamcomp.model.enums;
 
-public enum SummonerRole {
+public enum SummonerRoleEnum {
     TOP,
     JGL,
     MID,

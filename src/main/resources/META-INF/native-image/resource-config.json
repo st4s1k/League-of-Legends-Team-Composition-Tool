@@ -14,10 +14,16 @@
       "pattern":"\\QMETA-INF/services/org.apache.logging.log4j.util.PropertySource\\E"
     }, 
     {
+      "pattern":"\\Qcom/st4s1k/leagueteamcomp/exception.fxml\\E"
+    }, 
+    {
       "pattern":"\\Qcom/st4s1k/leagueteamcomp/helmet_bro.png\\E"
     }, 
     {
       "pattern":"\\Qcom/st4s1k/leagueteamcomp/icon.png\\E"
+    }, 
+    {
+      "pattern":"\\Qcom/st4s1k/leagueteamcomp/ltc-exception.fxml\\E"
     }, 
     {
       "pattern":"\\Qcom/st4s1k/leagueteamcomp/ltc-view.fxml\\E"
@@ -27,6 +33,9 @@
     }, 
     {
       "pattern":"\\Qcom/stirante/lolclient/libs/org/slf4j/impl/StaticLoggerBinder.class\\E"
+    }, 
+    {
+      "pattern":"\\Qlog4j2.properties\\E"
     }, 
     {
       "pattern":"\\Qmozilla/public-suffix-list.txt\\E"

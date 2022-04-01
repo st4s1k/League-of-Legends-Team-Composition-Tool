@@ -48,6 +48,24 @@
   "name":"[Ljavax.management.openmbean.CompositeData;"
 },
 {
+  "name":"[Lorg.apache.logging.log4j.core.Appender;"
+},
+{
+  "name":"[Lorg.apache.logging.log4j.core.appender.rolling.TriggeringPolicy;"
+},
+{
+  "name":"[Lorg.apache.logging.log4j.core.appender.rolling.action.Action;"
+},
+{
+  "name":"[Lorg.apache.logging.log4j.core.config.AppenderRef;"
+},
+{
+  "name":"[Lorg.apache.logging.log4j.core.config.LoggerConfig;"
+},
+{
+  "name":"[Lorg.apache.logging.log4j.core.config.Property;"
+},
+{
   "name":"[Lsun.security.pkcs.SignerInfo;"
 },
 {
@@ -64,6 +82,15 @@
   ]
 },
 {
+  "name":"com.st4s1k.leagueteamcomp.controller.LTCExceptionController",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"close","parameterTypes":[] }
+  ]
+},
+{
   "name":"com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController",
   "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
@@ -74,7 +101,17 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"com.st4s1k.leagueteamcomp.model.champion.AttributeRatingsDTO",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"com.st4s1k.leagueteamcomp.model.champion.Champion",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.model.champion.ChampionDTO",
   "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -84,12 +121,27 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"com.st4s1k.leagueteamcomp.model.champion.ChampionsDTO",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"com.st4s1k.leagueteamcomp.model.champion.Stat",
   "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"com.st4s1k.leagueteamcomp.model.champion.StatDTO",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"com.st4s1k.leagueteamcomp.model.champion.Stats",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.model.champion.StatsDTO",
   "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -107,6 +159,22 @@
 },
 {
   "name":"com.st4s1k.leagueteamcomp.model.champion.enums.Role",
+  "allDeclaredFields":true
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.model.enums.AdaptiveTypeEnum",
+  "allDeclaredFields":true
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.model.enums.AttackTypeEnum",
+  "allDeclaredFields":true
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.model.enums.ResourceEnum",
+  "allDeclaredFields":true
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.model.enums.RoleEnum",
   "allDeclaredFields":true
 },
 {
@@ -213,6 +281,9 @@
   "methods":[{"name":"getResource","parameterTypes":["java.lang.String"] }]
 },
 {
+  "name":"com.sun.javafx.tk.quantum.OverlayWarning"
+},
+{
   "name":"com.sun.javafx.tk.quantum.QuantumToolkit",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -280,7 +351,19 @@
   "methods":[{"name":"loadShader","parameterTypes":["com.sun.prism.ps.ShaderFactory","java.io.InputStream"] }]
 },
 {
+  "name":"com.sun.prism.shader.FillPgram_LinearGradient_PAD_Loader",
+  "methods":[{"name":"loadShader","parameterTypes":["com.sun.prism.ps.ShaderFactory","java.io.InputStream"] }]
+},
+{
   "name":"com.sun.prism.shader.FillRoundRect_Color_Loader",
+  "methods":[{"name":"loadShader","parameterTypes":["com.sun.prism.ps.ShaderFactory","java.io.InputStream"] }]
+},
+{
+  "name":"com.sun.prism.shader.FillRoundRect_LinearGradient_PAD_Loader",
+  "methods":[{"name":"loadShader","parameterTypes":["com.sun.prism.ps.ShaderFactory","java.io.InputStream"] }]
+},
+{
+  "name":"com.sun.prism.shader.Solid_Color_Loader",
   "methods":[{"name":"loadShader","parameterTypes":["com.sun.prism.ps.ShaderFactory","java.io.InputStream"] }]
 },
 {
@@ -297,6 +380,10 @@
 },
 {
   "name":"com.sun.prism.shader.Texture_Color_Loader",
+  "methods":[{"name":"loadShader","parameterTypes":["com.sun.prism.ps.ShaderFactory","java.io.InputStream"] }]
+},
+{
+  "name":"com.sun.prism.shader.Texture_LinearGradient_PAD_Loader",
   "methods":[{"name":"loadShader","parameterTypes":["com.sun.prism.ps.ShaderFactory","java.io.InputStream"] }]
 },
 {
@@ -933,6 +1020,10 @@
   "queriedMethods":[{"name":"getResourceAsStream","parameterTypes":["java.lang.String"] }]
 },
 {
+  "name":"java.lang.Object",
+  "allDeclaredFields":true
+},
+{
   "name":"java.lang.Short",
   "fields":[{"name":"TYPE"}]
 },
@@ -1082,9 +1173,13 @@
   "methods":[
     {"name":"getId","parameterTypes":[] }, 
     {"name":"getStyleClass","parameterTypes":[] }, 
+    {"name":"setEffect","parameterTypes":["javafx.scene.effect.Effect"] }, 
     {"name":"setId","parameterTypes":["java.lang.String"] }, 
     {"name":"setLayoutX","parameterTypes":["double"] }, 
-    {"name":"setLayoutY","parameterTypes":["double"] }
+    {"name":"setLayoutY","parameterTypes":["double"] }, 
+    {"name":"setOpacity","parameterTypes":["double"] }, 
+    {"name":"setStyle","parameterTypes":["java.lang.String"] }, 
+    {"name":"setVisible","parameterTypes":["boolean"] }
   ]
 },
 {
@@ -1106,13 +1201,18 @@
 },
 {
   "name":"javafx.scene.control.ButtonBase",
-  "queryAllDeclaredMethods":true
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"setOnAction","parameterTypes":["javafx.event.EventHandler"] }]
 },
 {
   "name":"javafx.scene.control.CheckBox",
   "queryAllDeclaredMethods":true,
   "queryAllPublicConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"javafx.scene.control.ContentDisplay",
+  "methods":[{"name":"valueOf","parameterTypes":["java.lang.String"] }]
 },
 {
   "name":"javafx.scene.control.Control",
@@ -1129,11 +1229,13 @@
   "queryAllDeclaredMethods":true,
   "methods":[
     {"name":"setAlignment","parameterTypes":["javafx.geometry.Pos"] }, 
+    {"name":"setContentDisplay","parameterTypes":["javafx.scene.control.ContentDisplay"] }, 
     {"name":"setFont","parameterTypes":["javafx.scene.text.Font"] }, 
     {"name":"setGraphic","parameterTypes":["javafx.scene.Node"] }, 
     {"name":"setMnemonicParsing","parameterTypes":["boolean"] }, 
     {"name":"setText","parameterTypes":["java.lang.String"] }, 
-    {"name":"setTextAlignment","parameterTypes":["javafx.scene.text.TextAlignment"] }
+    {"name":"setTextAlignment","parameterTypes":["javafx.scene.text.TextAlignment"] }, 
+    {"name":"setWrapText","parameterTypes":["boolean"] }
   ]
 },
 {
@@ -1143,6 +1245,15 @@
   "methods":[
     {"name":"<init>","parameterTypes":[] }, 
     {"name":"setOrientation","parameterTypes":["javafx.geometry.Orientation"] }
+  ]
+},
+{
+  "name":"javafx.scene.control.ScrollPane",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setContent","parameterTypes":["javafx.scene.Node"] }
   ]
 },
 {
@@ -1179,7 +1290,10 @@
   "name":"javafx.scene.control.TextField",
   "queryAllDeclaredMethods":true,
   "queryAllPublicConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setAlignment","parameterTypes":["javafx.geometry.Pos"] }
+  ]
 },
 {
   "name":"javafx.scene.control.TextInputControl",
@@ -1197,7 +1311,23 @@
   ]
 },
 {
-  "name":"javafx.scene.effect.Effect"
+  "name":"javafx.scene.control.ToggleButton",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"javafx.scene.effect.DropShadow",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setColor","parameterTypes":["javafx.scene.paint.Color"] }
+  ]
+},
+{
+  "name":"javafx.scene.effect.Effect",
+  "queryAllDeclaredMethods":true
 },
 {
   "name":"javafx.scene.image.Image"
@@ -1221,6 +1351,18 @@
     {"name":"getLeftAnchor","parameterTypes":["javafx.scene.Node"] }, 
     {"name":"getRightAnchor","parameterTypes":["javafx.scene.Node"] }, 
     {"name":"getTopAnchor","parameterTypes":["javafx.scene.Node"] }
+  ]
+},
+{
+  "name":"javafx.scene.layout.BorderPane",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setAlignment","parameterTypes":["javafx.scene.Node","javafx.geometry.Pos"] }, 
+    {"name":"setBottom","parameterTypes":["javafx.scene.Node"] }, 
+    {"name":"setCenter","parameterTypes":["javafx.scene.Node"] }, 
+    {"name":"setTop","parameterTypes":["javafx.scene.Node"] }
   ]
 },
 {
@@ -1248,6 +1390,7 @@
     {"name":"<init>","parameterTypes":[] }, 
     {"name":"getColumnConstraints","parameterTypes":[] }, 
     {"name":"getRowConstraints","parameterTypes":[] }, 
+    {"name":"setAlignment","parameterTypes":["javafx.geometry.Pos"] }, 
     {"name":"setColumnIndex","parameterTypes":["javafx.scene.Node","java.lang.Integer"] }, 
     {"name":"setColumnSpan","parameterTypes":["javafx.scene.Node","java.lang.Integer"] }, 
     {"name":"setHalignment","parameterTypes":["javafx.scene.Node","javafx.geometry.HPos"] }, 
@@ -1262,9 +1405,22 @@
   ]
 },
 {
+  "name":"javafx.scene.layout.HBox",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setAlignment","parameterTypes":["javafx.geometry.Pos"] }
+  ]
+},
+{
   "name":"javafx.scene.layout.Pane",
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getChildren","parameterTypes":[] }]
+  "queryAllPublicConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"getChildren","parameterTypes":[] }
+  ]
 },
 {
   "name":"javafx.scene.layout.Priority",
@@ -1309,6 +1465,12 @@
     {"name":"setVgrow","parameterTypes":["javafx.scene.Node","javafx.scene.layout.Priority"] }
   ],
   "queriedMethods":[{"name":"getVgrow","parameterTypes":["javafx.scene.Node"] }]
+},
+{
+  "name":"javafx.scene.paint.Color",
+  "queryAllPublicMethods":true,
+  "queryAllPublicConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["double","double","double","double"] }]
 },
 {
   "name":"javafx.scene.shape.LineTo"
@@ -1416,13 +1578,27 @@
   "queryAllPublicMethods":true
 },
 {
+  "name":"org.apache.logging.log4j.core.appender.AbstractAppender$Builder",
+  "allDeclaredFields":true
+},
+{
+  "name":"org.apache.logging.log4j.core.appender.AbstractOutputStreamAppender$Builder",
+  "allDeclaredFields":true
+},
+{
   "name":"org.apache.logging.log4j.core.appender.AppenderSet"
 },
 {
   "name":"org.apache.logging.log4j.core.appender.AsyncAppender"
 },
 {
-  "name":"org.apache.logging.log4j.core.appender.ConsoleAppender"
+  "name":"org.apache.logging.log4j.core.appender.ConsoleAppender",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.appender.ConsoleAppender$Builder",
+  "allDeclaredFields":true
 },
 {
   "name":"org.apache.logging.log4j.core.appender.CountingNoOpAppender"
@@ -1452,7 +1628,13 @@
   "name":"org.apache.logging.log4j.core.appender.RandomAccessFileAppender"
 },
 {
-  "name":"org.apache.logging.log4j.core.appender.RollingFileAppender"
+  "name":"org.apache.logging.log4j.core.appender.RollingFileAppender",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.appender.RollingFileAppender$Builder",
+  "allDeclaredFields":true
 },
 {
   "name":"org.apache.logging.log4j.core.appender.RollingRandomAccessFileAppender"
@@ -1515,13 +1697,21 @@
   "name":"org.apache.logging.log4j.core.appender.rewrite.RewriteAppender"
 },
 {
-  "name":"org.apache.logging.log4j.core.appender.rolling.CompositeTriggeringPolicy"
+  "name":"org.apache.logging.log4j.core.appender.rolling.CompositeTriggeringPolicy",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"createPolicy","parameterTypes":["org.apache.logging.log4j.core.appender.rolling.TriggeringPolicy[]"] }]
 },
 {
   "name":"org.apache.logging.log4j.core.appender.rolling.CronTriggeringPolicy"
 },
 {
-  "name":"org.apache.logging.log4j.core.appender.rolling.DefaultRolloverStrategy"
+  "name":"org.apache.logging.log4j.core.appender.rolling.DefaultRolloverStrategy",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.appender.rolling.DefaultRolloverStrategy$Builder",
+  "allDeclaredFields":true
 },
 {
   "name":"org.apache.logging.log4j.core.appender.rolling.DirectWriteRolloverStrategy"
@@ -1533,10 +1723,18 @@
   "name":"org.apache.logging.log4j.core.appender.rolling.OnStartupTriggeringPolicy"
 },
 {
-  "name":"org.apache.logging.log4j.core.appender.rolling.SizeBasedTriggeringPolicy"
+  "name":"org.apache.logging.log4j.core.appender.rolling.SizeBasedTriggeringPolicy",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"createPolicy","parameterTypes":["java.lang.String"] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.appender.rolling.TimeBasedTriggeringPolicy"
+  "name":"org.apache.logging.log4j.core.appender.rolling.TimeBasedTriggeringPolicy",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.appender.rolling.TimeBasedTriggeringPolicy$Builder",
+  "allDeclaredFields":true
 },
 {
   "name":"org.apache.logging.log4j.core.appender.rolling.action.DeleteAction"
@@ -1602,10 +1800,14 @@
   "name":"org.apache.logging.log4j.core.async.LinkedTransferQueueFactory"
 },
 {
-  "name":"org.apache.logging.log4j.core.config.AppenderRef"
+  "name":"org.apache.logging.log4j.core.config.AppenderRef",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"createAppenderRef","parameterTypes":["java.lang.String","org.apache.logging.log4j.Level","org.apache.logging.log4j.core.Filter"] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.AppendersPlugin"
+  "name":"org.apache.logging.log4j.core.config.AppendersPlugin",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"createAppenders","parameterTypes":["org.apache.logging.log4j.core.Appender[]"] }]
 },
 {
   "name":"org.apache.logging.log4j.core.config.CustomLevelConfig"
@@ -1620,13 +1822,27 @@
   "name":"org.apache.logging.log4j.core.config.HttpWatcher"
 },
 {
-  "name":"org.apache.logging.log4j.core.config.LoggerConfig"
+  "name":"org.apache.logging.log4j.core.config.LoggerConfig",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.LoggerConfig$RootLogger"
+  "name":"org.apache.logging.log4j.core.config.LoggerConfig$Builder",
+  "allDeclaredFields":true
 },
 {
-  "name":"org.apache.logging.log4j.core.config.LoggersPlugin"
+  "name":"org.apache.logging.log4j.core.config.LoggerConfig$RootLogger",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"newRootBuilder","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.config.LoggerConfig$RootLogger$Builder",
+  "allDeclaredFields":true
+},
+{
+  "name":"org.apache.logging.log4j.core.config.LoggersPlugin",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"createLoggers","parameterTypes":["org.apache.logging.log4j.core.config.LoggerConfig[]"] }]
 },
 {
   "name":"org.apache.logging.log4j.core.config.PropertiesPlugin"
@@ -1657,82 +1873,132 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$BigDecimalConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$BigDecimalConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$BigIntegerConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$BigIntegerConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$BooleanConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$BooleanConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$ByteArrayConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$ByteArrayConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$ByteConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$ByteConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$CharArrayConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$CharArrayConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$CharacterConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$CharacterConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$CharsetConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$CharsetConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$ClassConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$ClassConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$CronExpressionConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$CronExpressionConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$DoubleConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$DoubleConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$DurationConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$DurationConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$FileConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$FileConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$FloatConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$FloatConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$InetAddressConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$InetAddressConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$IntegerConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$IntegerConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$LevelConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$LevelConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$LongConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$LongConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$PathConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$PathConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$PatternConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$PatternConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$SecurityProviderConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$SecurityProviderConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$ShortConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$ShortConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$StringConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$StringConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$UriConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$UriConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$UrlConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$UrlConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$UuidConverter"
+  "name":"org.apache.logging.log4j.core.config.plugins.convert.TypeConverters$UuidConverter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.config.plugins.validation.validators.RequiredValidator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.config.plugins.visitors.PluginAttributeVisitor",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.config.plugins.visitors.PluginBuilderAttributeVisitor",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.config.plugins.visitors.PluginConfigurationVisitor",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.config.plugins.visitors.PluginElementVisitor",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.config.properties.PropertiesConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":["org.apache.logging.log4j.core.LoggerContext","org.apache.logging.log4j.core.config.ConfigurationSource","org.apache.logging.log4j.core.config.builder.api.Component"] }]
 },
 {
   "name":"org.apache.logging.log4j.core.config.properties.PropertiesConfigurationFactory",
@@ -1745,6 +2011,10 @@
 {
   "name":"org.apache.logging.log4j.core.config.yaml.YamlConfigurationFactory",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.filter.AbstractFilterable$Builder",
+  "allDeclaredFields":true
 },
 {
   "name":"org.apache.logging.log4j.core.filter.BurstFilter"
@@ -1815,6 +2085,14 @@
   "queryAllPublicMethods":true
 },
 {
+  "name":"org.apache.logging.log4j.core.jmx.LoggerConfigAdmin",
+  "queryAllPublicConstructors":true
+},
+{
+  "name":"org.apache.logging.log4j.core.jmx.LoggerConfigAdminMBean",
+  "queryAllPublicMethods":true
+},
+{
   "name":"org.apache.logging.log4j.core.jmx.LoggerContextAdmin",
   "queryAllPublicConstructors":true
 },
@@ -1858,7 +2136,13 @@
   "name":"org.apache.logging.log4j.core.layout.MessageLayout"
 },
 {
-  "name":"org.apache.logging.log4j.core.layout.PatternLayout"
+  "name":"org.apache.logging.log4j.core.layout.PatternLayout",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"newBuilder","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.logging.log4j.core.layout.PatternLayout$Builder",
+  "allDeclaredFields":true
 },
 {
   "name":"org.apache.logging.log4j.core.layout.PatternMatch"
@@ -1990,7 +2274,9 @@
   "name":"org.apache.logging.log4j.core.pattern.AbstractStyleNameConverter$Yellow"
 },
 {
-  "name":"org.apache.logging.log4j.core.pattern.ClassNamePatternConverter"
+  "name":"org.apache.logging.log4j.core.pattern.ClassNamePatternConverter",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"newInstance","parameterTypes":["java.lang.String[]"] }]
 },
 {
   "name":"org.apache.logging.log4j.core.pattern.DatePatternConverter",
@@ -2013,7 +2299,9 @@
   "name":"org.apache.logging.log4j.core.pattern.ExtendedThrowablePatternConverter"
 },
 {
-  "name":"org.apache.logging.log4j.core.pattern.FileDatePatternConverter"
+  "name":"org.apache.logging.log4j.core.pattern.FileDatePatternConverter",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"newInstance","parameterTypes":["java.lang.String[]"] }]
 },
 {
   "name":"org.apache.logging.log4j.core.pattern.FileLocationPatternConverter"
@@ -2025,7 +2313,9 @@
   "name":"org.apache.logging.log4j.core.pattern.HighlightConverter"
 },
 {
-  "name":"org.apache.logging.log4j.core.pattern.IntegerPatternConverter"
+  "name":"org.apache.logging.log4j.core.pattern.IntegerPatternConverter",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"newInstance","parameterTypes":["java.lang.String[]"] }]
 },
 {
   "name":"org.apache.logging.log4j.core.pattern.LevelPatternConverter",

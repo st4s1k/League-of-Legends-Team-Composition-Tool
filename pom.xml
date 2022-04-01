@@ -40,18 +40,7 @@
       <artifactId>javafx-fxml</artifactId>
       <version>${javafx-fxml.version}</version>
     </dependency>
-    <!-- Misc -->
-    <dependency>
-      <groupId>org.controlsfx</groupId>
-      <artifactId>controlsfx</artifactId>
-      <version>${controlsfx.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-      <scope>provided</scope>
-    </dependency>
+    <!-- Logging -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
@@ -66,6 +55,18 @@
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-slf4j-impl</artifactId>
       <version>${log4j.version}</version>
+    </dependency>
+    <!-- Misc -->
+    <dependency>
+      <groupId>org.controlsfx</groupId>
+      <artifactId>controlsfx</artifactId>
+      <version>${controlsfx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>

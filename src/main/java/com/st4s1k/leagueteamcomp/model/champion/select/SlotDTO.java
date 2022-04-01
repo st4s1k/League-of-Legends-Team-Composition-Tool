@@ -1,58 +1,77 @@
 package com.st4s1k.leagueteamcomp.model.champion.select;
 
-import com.st4s1k.leagueteamcomp.LeagueTeamCompApplication;
-import com.st4s1k.leagueteamcomp.model.champion.Champion;
+import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
+import com.st4s1k.leagueteamcomp.model.interfaces.ChampionHolder;
+import com.st4s1k.leagueteamcomp.model.interfaces.Clearable;
+import com.st4s1k.leagueteamcomp.model.interfaces.ObservablesProvider;
+import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
+import com.st4s1k.leagueteamcomp.utils.Resources;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
-import javafx.util.Callback;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
-import static java.util.Objects.requireNonNull;
+import static lombok.AccessLevel.PACKAGE;
 
 @Data
+@RequiredArgsConstructor(access = PACKAGE)
+@ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class SlotDTO {
-    private static final String DEFAULT_IMAGE_URL = "helmet_bro.png";
-    private static final Image EMPTY_SLOT_IMAGE =
-        new Image(requireNonNull(LeagueTeamCompApplication.class.getResourceAsStream(DEFAULT_IMAGE_URL)));
+public class SlotDTO<T extends SlotItem> implements SlotItem, ChampionHolder {
 
-    private int slotId;
+    private final SimpleObjectProperty<T> itemProperty = new SimpleObjectProperty<>();
+    private final Function<T, Optional<ChampionDTO>> championGetter;
+    private final BiConsumer<ChampionDTO, SlotDTO<T>> championSetter;
 
+    @ToString.Include
     @EqualsAndHashCode.Include
-    private SimpleObjectProperty<Champion> championProperty = new SimpleObjectProperty<>();
-
-    @EqualsAndHashCode.Include
-    private String summonerName;
-
-    public Optional<Champion> getChampion() {
-        return Optional.ofNullable(championProperty.get());
+    public Optional<T> getItem() {
+        return Optional.ofNullable(itemProperty.get());
     }
 
-    public void setChampion(Champion champion) {
-        this.championProperty.set(champion);
+    public void setItem(T value) {
+        itemProperty.set(value);
     }
 
-    public Image getImage() {
-        return getChampion().map(Champion::getImage).orElse(EMPTY_SLOT_IMAGE);
-    }
-
-    public boolean isChampionSelected() {
-        return getChampion().isPresent();
-    }
-
-    public boolean isChampionNotSelected() {
-        return getChampion().isEmpty();
-    }
-
+    @Override
     public void clear() {
-        championProperty.set(null);
+        getItem().ifPresent(Clearable::clear);
     }
 
-    public static Callback<SlotDTO, Observable[]> extractor() {
-        return param -> new Observable[]{param.championProperty, param.getImage().progressProperty()};
+    @Override
+    public Observable[] getObservables() {
+        List<Observable> observables = new ArrayList<>();
+        observables.add(itemProperty);
+        getItem()
+            .map(ObservablesProvider::getObservables)
+            .map(Arrays::asList)
+            .ifPresent(observables::addAll);
+        return observables.toArray(Observable[]::new);
+    }
+
+    @Override
+    public Image getImage() {
+        return getItem().map(SlotItem::getImage).orElse(Resources.EMPTY_SLOT_IMAGE);
+    }
+
+    @Override
+    @EqualsAndHashCode.Include
+    public Optional<ChampionDTO> getChampion() {
+        return getItem().flatMap(championGetter);
+    }
+
+    @Override
+    public void setChampion(ChampionDTO champion) {
+        championSetter.accept(champion, this);
     }
 }

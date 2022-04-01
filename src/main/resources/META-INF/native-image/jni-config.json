@@ -36,7 +36,10 @@
 },
 {
   "name":"com.sun.glass.ui.Screen",
-  "methods":[{"name":"<init>","parameterTypes":["long","int","int","int","int","int","int","int","int","int","int","int","int","int","int","int","float","float","float","float"] }]
+  "methods":[
+    {"name":"<init>","parameterTypes":["long","int","int","int","int","int","int","int","int","int","int","int","int","int","int","int","float","float","float","float"] }, 
+    {"name":"notifySettingsChanged","parameterTypes":[] }
+  ]
 },
 {
   "name":"com.sun.glass.ui.Size",
@@ -304,6 +307,10 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"com.sun.javafx.geom.Path2D",
+  "methods":[{"name":"<init>","parameterTypes":["int","byte[]","int","float[]","int"] }]
+},
+{
   "name":"com.sun.management.internal.DiagnosticCommandArgumentInfo",
   "methods":[{"name":"<init>","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.lang.String","boolean","boolean","boolean","int"] }]
 },
@@ -336,8 +343,26 @@
   "methods":[{"name":"run","parameterTypes":[] }]
 },
 {
+  "name":"java.lang.String",
+  "methods":[{"name":"toLowerCase","parameterTypes":["java.util.Locale"] }]
+},
+{
+  "name":"java.util.ArrayList",
+  "methods":[
+    {"name":"<init>","parameterTypes":["int"] }, 
+    {"name":"add","parameterTypes":["java.lang.Object"] }
+  ]
+},
+{
   "name":"java.util.Arrays",
   "methods":[{"name":"asList","parameterTypes":["java.lang.Object[]"] }]
+},
+{
+  "name":"java.util.HashMap",
+  "methods":[
+    {"name":"containsKey","parameterTypes":["java.lang.Object"] }, 
+    {"name":"put","parameterTypes":["java.lang.Object","java.lang.Object"] }
+  ]
 },
 {
   "name":"jdk.internal.loader.ClassLoaders$PlatformClassLoader"

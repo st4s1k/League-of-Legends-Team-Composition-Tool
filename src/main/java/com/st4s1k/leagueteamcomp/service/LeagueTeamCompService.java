@@ -1,14 +1,19 @@
 package com.st4s1k.leagueteamcomp.service;
 
-import com.st4s1k.leagueteamcomp.model.champion.AttributeRatings;
-import com.st4s1k.leagueteamcomp.model.champion.Champion;
+import com.st4s1k.leagueteamcomp.model.champion.AttributeRatingsDTO;
+import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
+import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.ToDoubleFunction;
 
+import static lombok.AccessLevel.PRIVATE;
+
+@NoArgsConstructor(access = PRIVATE)
 public class LeagueTeamCompService {
 
     private static LeagueTeamCompService INSTANCE;
@@ -24,35 +29,39 @@ public class LeagueTeamCompService {
         return INSTANCE;
     }
 
+    public Collection<ChampionDTO> getAllChampions() {
+        return championRepository.getAllChampions();
+    }
+
     public Set<String> getAllChampionKeys() {
         return championRepository.getAllChampionKeys();
     }
 
-    public Optional<Champion> findChampionDataById(Integer championId) {
-        return championRepository.findChampionDataById(championId);
+    public Optional<ChampionDTO> findChampionDataById(Integer championId) {
+        return championRepository.findChampionById(championId);
     }
 
-    public Optional<Champion> findChampionDataByKey(String championKey) {
-        return championRepository.findChampionDataByKey(championKey);
+    public Optional<ChampionDTO> findChampionDataByKey(String championKey) {
+        return championRepository.findChampionByKey(championKey);
     }
 
-    public Optional<Champion> findChampionDataByName(String championName) {
-        return championRepository.findChampionDataByName(championName);
+    public Optional<ChampionDTO> findChampionDataByName(String championName) {
+        return championRepository.findChampionByName(championName);
     }
 
     public boolean existsChampionDataByName(String championName) {
-        return championRepository.existsChampionDataByName(championName);
+        return championRepository.existsChampionByName(championName);
     }
 
-    public double getChampionInfoValue(
+    public double getChampionStatValue(
         List<? extends String> championList,
-        ToDoubleFunction<AttributeRatings> getValue,
+        ToDoubleFunction<AttributeRatingsDTO> getValue,
         double valueScale
     ) {
         double teamStatSum = championList.stream()
-            .map(championRepository::findChampionDataByKey)
+            .map(championRepository::findChampionByKey)
             .flatMap(Optional::stream)
-            .map(Champion::getAttributeRatings)
+            .map(ChampionDTO::getAttributeRatings)
             .mapToDouble(getValue)
             .reduce(0, Double::sum);
         double teamStat = teamStatSum / championList.size() / valueScale * CHAMPION_STAT_OUTPUT_SCALE;
