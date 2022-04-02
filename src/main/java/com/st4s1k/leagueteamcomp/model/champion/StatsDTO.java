@@ -1,9 +1,9 @@
 package com.st4s1k.leagueteamcomp.model.champion;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class StatsDTO {
     @SerializedName("health")
     private StatDTO health;

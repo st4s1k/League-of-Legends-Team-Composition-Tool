@@ -16,7 +16,7 @@ To build an executable locally you need:
 
 - You need to have `%JAVA_HOME%` environment variable same as `%GRAALVM_HOME%`
 
-- You need to have `%GRAALVM_HOME%\bin` inside `%PATH%` variable and no other java paths! Otherwise your `*.exe` file won't run!
+- You need to have `%GRAALVM_HOME%\bin` inside `%PATH%` variable and no other java paths! Otherwise, your `*.exe` file won't run!
 
 How to build:
 

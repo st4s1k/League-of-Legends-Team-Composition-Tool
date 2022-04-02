@@ -2,6 +2,8 @@ package com.st4s1k.leagueteamcomp.model.champion.select;
 
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.model.interfaces.ChampionHolder;
+import com.st4s1k.leagueteamcomp.model.interfaces.Clearable;
+import com.st4s1k.leagueteamcomp.model.interfaces.ImageProvider;
 import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
 import com.st4s1k.leagueteamcomp.utils.Resources;
 import javafx.beans.Observable;
@@ -17,7 +19,7 @@ import java.util.Optional;
 @Data
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class SummonerDTO implements SlotItem, ChampionHolder {
+public class SummonerDTO implements SlotItem, ChampionHolder, Clearable {
 
     @ToString.Include
     @EqualsAndHashCode.Include
@@ -42,7 +44,7 @@ public class SummonerDTO implements SlotItem, ChampionHolder {
 
     @Override
     public Image getImage() {
-        return getChampion().map(ChampionDTO::getImage).orElse(Resources.EMPTY_SLOT_IMAGE);
+        return getChampion().map(ImageProvider::getImage).orElse(Resources.EMPTY_SLOT_IMAGE);
     }
 
     @Override

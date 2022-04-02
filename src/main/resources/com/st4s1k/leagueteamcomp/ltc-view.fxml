@@ -98,27 +98,27 @@
                                                       <Font name="System Bold" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="tf1" GridPane.rowIndex="1">
+                                                <TextField fx:id="summonerName1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField fx:id="tf2" GridPane.rowIndex="2">
+                                                <TextField fx:id="summonerName2" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField fx:id="tf3" GridPane.rowIndex="3">
+                                                <TextField fx:id="summonerName3" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField fx:id="tf4" GridPane.rowIndex="4">
+                                                <TextField fx:id="summonerName4" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField fx:id="tf5" GridPane.rowIndex="5">
+                                                <TextField fx:id="summonerName5" GridPane.rowIndex="5">
                                                    <GridPane.margin>
                                                       <Insets />
                                                    </GridPane.margin>

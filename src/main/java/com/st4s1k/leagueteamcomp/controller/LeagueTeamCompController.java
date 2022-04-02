@@ -8,7 +8,7 @@ import com.st4s1k.leagueteamcomp.model.champion.select.SlotDTO;
 import com.st4s1k.leagueteamcomp.model.champion.select.SummonerDTO;
 import com.st4s1k.leagueteamcomp.model.champion.select.TeamDTO;
 import com.st4s1k.leagueteamcomp.model.enums.SummonerRoleEnum;
-import com.st4s1k.leagueteamcomp.model.interfaces.ChampionHolder;
+import com.st4s1k.leagueteamcomp.model.interfaces.ChampionProvider;
 import com.st4s1k.leagueteamcomp.model.interfaces.Clearable;
 import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
 import com.st4s1k.leagueteamcomp.service.ChampionSuggestionService;
@@ -40,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.URL;
 import java.util.*;
 import java.util.function.DoubleBinaryOperator;
+import java.util.function.Function;
 
 import static com.st4s1k.leagueteamcomp.model.enums.SummonerRoleEnum.*;
 import static java.util.function.Predicate.not;
@@ -71,15 +72,15 @@ public class LeagueTeamCompController implements Initializable {
     private TextArea textArea;
 
     @FXML
-    private TextField tf1;
+    private TextField summonerName1;
     @FXML
-    private TextField tf2;
+    private TextField summonerName2;
     @FXML
-    private TextField tf3;
+    private TextField summonerName3;
     @FXML
-    private TextField tf4;
+    private TextField summonerName4;
     @FXML
-    private TextField tf5;
+    private TextField summonerName5;
 
     @FXML
     private CheckBox cbTop1;
@@ -209,12 +210,24 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     public void stop() {
-        api.stop();
+        Utils.stop(LeagueTeamCompController.class).accept(() -> {
+            save();
+            api.stop();
+        });
+    }
+
+    public void save() {
+        log.info("Saving application state...");
+        saveAllCheckboxes();
+        saveAllTextFields();
+        log.info("Application saved.");
     }
 
     @Override
     @SneakyThrows
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initializeAllCheckboxes();
+        initializeAllTextFields();
         registerLeagueClientListeners();
         initializeRoleCompositions();
         initializeChampionSuggestions();
@@ -267,6 +280,7 @@ public class LeagueTeamCompController implements Initializable {
 
     private void onChampSelectUpdate(LolChampSelectChampSelectSession session) {
         if (!manualModeToggle.isSelected()) {
+            champSelect.clear();
             updateTeam(champSelect.getAllyTeam(), session.myTeam, session.bans.myTeamBans);
             updateTeam(champSelect.getEnemyTeam(), session.theirTeam, session.bans.theirTeamBans);
         }
@@ -333,7 +347,6 @@ public class LeagueTeamCompController implements Initializable {
     private void initializeRoleCompositions() {
         log.info("Initializing role compositions");
         textArea.setEditable(false);
-        resetAllCheckboxes();
         generateButton.setOnAction(event -> onGenerateButtonClick());
         resetButton.setOnAction(event -> onResetButtonClick());
     }
@@ -360,11 +373,11 @@ public class LeagueTeamCompController implements Initializable {
     private Map<String, List<SummonerRoleEnum>> getPlayersToRolesMap() {
         validateSummonerNames();
         return Map.ofEntries(
-                Map.entry(tf1.getText(), getRoles(cbTop1, cbMid1, cbAdc1, cbSup1, cbJgl1)),
-                Map.entry(tf2.getText(), getRoles(cbTop2, cbMid2, cbAdc2, cbSup2, cbJgl2)),
-                Map.entry(tf3.getText(), getRoles(cbTop3, cbMid3, cbAdc3, cbSup3, cbJgl3)),
-                Map.entry(tf4.getText(), getRoles(cbTop4, cbMid4, cbAdc4, cbSup4, cbJgl4)),
-                Map.entry(tf5.getText(), getRoles(cbTop5, cbMid5, cbAdc5, cbSup5, cbJgl5))
+                Map.entry(summonerName1.getText(), getRoles(cbTop1, cbMid1, cbAdc1, cbSup1, cbJgl1)),
+                Map.entry(summonerName2.getText(), getRoles(cbTop2, cbMid2, cbAdc2, cbSup2, cbJgl2)),
+                Map.entry(summonerName3.getText(), getRoles(cbTop3, cbMid3, cbAdc3, cbSup3, cbJgl3)),
+                Map.entry(summonerName4.getText(), getRoles(cbTop4, cbMid4, cbAdc4, cbSup4, cbJgl4)),
+                Map.entry(summonerName5.getText(), getRoles(cbTop5, cbMid5, cbAdc5, cbSup5, cbJgl5))
             ).entrySet().stream()
             .filter(entry -> !entry.getKey().isBlank())
             .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -372,11 +385,11 @@ public class LeagueTeamCompController implements Initializable {
 
     private void validateSummonerNames() {
         List<String> summonerNames = List.of(
-            tf1.getText(),
-            tf2.getText(),
-            tf3.getText(),
-            tf4.getText(),
-            tf5.getText()
+            summonerName1.getText(),
+            summonerName2.getText(),
+            summonerName3.getText(),
+            summonerName4.getText(),
+            summonerName5.getText()
         );
         Set<String> summonerNameSet = Set.copyOf(summonerNames);
         if (summonerNames.size() != summonerNameSet.size()) {
@@ -437,17 +450,42 @@ public class LeagueTeamCompController implements Initializable {
 
     private void onResetButtonClick() {
         textArea.clear();
-        resetAllCheckboxes();
+        Utils.initializeFieldsWithDefaultState(
+            this,
+            CheckBox.class,
+            CheckBox::setSelected,
+            DEFAULT_CHECKBOX_STATE
+        );
     }
 
-    private void resetAllCheckboxes() {
-        List.of(
-            cbTop1, cbMid1, cbAdc1, cbSup1, cbJgl1,
-            cbTop2, cbMid2, cbAdc2, cbSup2, cbJgl2,
-            cbTop3, cbMid3, cbAdc3, cbSup3, cbJgl3,
-            cbTop4, cbMid4, cbAdc4, cbSup4, cbJgl4,
-            cbTop5, cbMid5, cbAdc5, cbSup5, cbJgl5
-        ).forEach(cb -> cb.setSelected(DEFAULT_CHECKBOX_STATE));
+    private void initializeAllCheckboxes() {
+        Utils.initializeFields(
+            this,
+            CheckBox.class,
+            CheckBox::getId,
+            CheckBox::setSelected,
+            Boolean::parseBoolean,
+            DEFAULT_CHECKBOX_STATE
+        );
+    }
+
+    private void initializeAllTextFields() {
+        Utils.initializeFields(
+            this,
+            TextField.class,
+            TextField::getId,
+            TextInputControl::setText,
+            Function.identity(),
+            ""
+        );
+    }
+
+    private void saveAllCheckboxes() {
+        Utils.saveFields(this, CheckBox.class, Node::getId, CheckBox::isSelected);
+    }
+
+    private void saveAllTextFields() {
+        Utils.saveFields(this, TextField.class, Node::getId, TextField::getText);
     }
 
     public void initializeChampionSuggestions() {
@@ -518,7 +556,7 @@ public class LeagueTeamCompController implements Initializable {
             service.findChampionDataByName(searchFieldText)
                 .ifPresentOrElse(
                     champion -> getSearchActionItems(championListView).stream()
-                        .filter(ChampionHolder::isChampionNotSelected)
+                        .filter(ChampionProvider::isChampionNotSelected)
                         .findFirst()
                         .ifPresentOrElse(
                             slot -> {
@@ -536,11 +574,11 @@ public class LeagueTeamCompController implements Initializable {
 
     private boolean isValidSearchFieldText(List<SlotDTO<SummonerDTO>> slots, String searchFieldText) {
         List<String> championKeys = slots.stream()
-            .map(ChampionHolder::getChampion)
+            .map(ChampionProvider::getChampion)
             .flatMap(Optional::stream)
             .map(ChampionDTO::getKey)
             .toList();
-        long filledSlots = slots.stream().filter(ChampionHolder::isChampionSelected).count();
+        long filledSlots = slots.stream().filter(ChampionProvider::isChampionSelected).count();
         return filledSlots < 5
             && !championKeys.contains(searchFieldText)
             && service.existsChampionDataByName(searchFieldText)
@@ -551,7 +589,7 @@ public class LeagueTeamCompController implements Initializable {
 
     private ObservableList<SlotDTO<SummonerDTO>> getSearchActionItems(ListView<SlotDTO<SummonerDTO>> championListView) {
         ObservableList<SlotDTO<SummonerDTO>> selectedItems = championListView.getSelectionModel().getSelectedItems();
-        return selectedItems.isEmpty() || selectedItems.stream().noneMatch(ChampionHolder::isChampionNotSelected)
+        return selectedItems.isEmpty() || selectedItems.stream().noneMatch(ChampionProvider::isChampionNotSelected)
             ? championListView.getItems()
             : selectedItems;
     }
@@ -605,18 +643,20 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     private void setTeamAttributeRatings(TeamDTO team) {
-        AttributeRatingsDTO enemyTeamStats = team.getAttributeRatings();
         List<String> enemyChampionKeys = team.getChampions().stream().map(ChampionDTO::getKey).toList();
-        enemyTeamStats.setDamage(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getDamage, 3));
-        enemyTeamStats.setAttack(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getAttack, 10));
-        enemyTeamStats.setDefense(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getDefense, 10));
-        enemyTeamStats.setMagic(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getMagic, 10));
-        enemyTeamStats.setDifficulty(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getDifficulty, 3));
-        enemyTeamStats.setControl(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getControl, 3));
-        enemyTeamStats.setToughness(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getToughness, 3));
-        enemyTeamStats.setMobility(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getMobility, 3));
-        enemyTeamStats.setUtility(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getUtility, 3));
-        enemyTeamStats.setAbilityReliance(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getAbilityReliance, 100));
+        AttributeRatingsDTO enemyTeamStats = AttributeRatingsDTO.builder()
+            .damage(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getDamage, 3))
+            .attack(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getAttack, 10))
+            .defense(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getDefense, 10))
+            .magic(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getMagic, 10))
+            .difficulty(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getDifficulty, 3))
+            .control(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getControl, 3))
+            .toughness(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getToughness, 3))
+            .mobility(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getMobility, 3))
+            .utility(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getUtility, 3))
+            .abilityReliance(service.getChampionStatValue(enemyChampionKeys, AttributeRatingsDTO::getAbilityReliance, 100))
+            .build();
+        team.setAttributeRatings(enemyTeamStats);
     }
 
     private void calculateTeamStats(

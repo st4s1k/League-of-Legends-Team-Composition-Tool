@@ -4,6 +4,7 @@ import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.model.champion.select.ChampSelectDTO;
 import com.st4s1k.leagueteamcomp.model.champion.select.SlotDTO;
 import com.st4s1k.leagueteamcomp.model.champion.select.SummonerDTO;
+import com.st4s1k.leagueteamcomp.model.interfaces.ObservablesProvider;
 import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
 import com.st4s1k.leagueteamcomp.model.javafx.LTCChampionListCell;
 import com.st4s1k.leagueteamcomp.model.javafx.LTCChampionSuggestionListCell;
@@ -26,8 +27,6 @@ import static lombok.AccessLevel.PRIVATE;
 public class ChampionSuggestionService {
 
     private static ChampionSuggestionService INSTANCE;
-
-    private static final LeagueTeamCompService service = LeagueTeamCompService.getInstance();
 
     public static ChampionSuggestionService getInstance() {
         if (INSTANCE == null) {
@@ -67,7 +66,7 @@ public class ChampionSuggestionService {
         ListView<SlotDTO<T>> listView,
         double imageSize
     ) {
-        ObservableList<SlotDTO<T>> itemsList = FXCollections.observableArrayList(SlotItem::getObservables);
+        ObservableList<SlotDTO<T>> itemsList = FXCollections.observableArrayList(ObservablesProvider::getObservables);
         itemsList.addAll(slots);
         listView.setItems(itemsList);
         listView.setCellFactory(param -> new LTCChampionListCell<>(imageSize));
@@ -79,7 +78,7 @@ public class ChampionSuggestionService {
     ) {
         ObservableList<ListView<SlotDTO<ChampionDTO>>> itemsList = FXCollections.observableArrayList(param ->
             param.getItems().stream()
-                .map(SlotItem::getObservables)
+                .map(ObservablesProvider::getObservables)
                 .map(Arrays::asList)
                 .flatMap(Collection::stream)
                 .toArray(Observable[]::new));

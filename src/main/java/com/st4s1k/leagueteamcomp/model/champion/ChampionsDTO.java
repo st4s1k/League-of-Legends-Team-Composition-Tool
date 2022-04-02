@@ -1,11 +1,11 @@
 package com.st4s1k.leagueteamcomp.model.champion;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.Map;
 
-@Data
+@Getter
 public class ChampionsDTO {
     @SerializedName("champions")
     private Map<String, ChampionDTO> champions;

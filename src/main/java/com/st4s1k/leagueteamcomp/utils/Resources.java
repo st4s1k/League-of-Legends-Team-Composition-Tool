@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import lombok.experimental.UtilityClass;
 
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
@@ -21,6 +22,7 @@ public class Resources {
     private final String FXML_BUNDLE_PATH = "com.st4s1k.leagueteamcomp.ltc-view";
     public final ResourceBundle LTC_PROPERTIES = ResourceBundle.getBundle(APP_BUNDLE_PATH);
     public final ResourceBundle LTC_VIEW_PROPERTIES = ResourceBundle.getBundle(FXML_BUNDLE_PATH);
+    public final Preferences PREFERENCES = Preferences.userNodeForPackage(LeagueTeamCompApplication.class);
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Window constants                                    *

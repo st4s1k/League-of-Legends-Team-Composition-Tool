@@ -1,6 +1,7 @@
 package com.st4s1k.leagueteamcomp.model.champion.select;
 
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
+import com.st4s1k.leagueteamcomp.model.interfaces.ChampionProvider;
 import com.st4s1k.leagueteamcomp.model.interfaces.Clearable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,19 +24,19 @@ public class ChampSelectDTO implements Clearable {
     public List<ChampionDTO> getChampionPool() {
         return Stream.of(
                 allyTeam.getSlots().stream()
-                    .map(SlotDTO::getChampion)
+                    .map(ChampionProvider::getChampion)
                     .flatMap(Optional::stream)
                     .toList(),
                 enemyTeam.getSlots().stream()
-                    .map(SlotDTO::getChampion)
+                    .map(ChampionProvider::getChampion)
                     .flatMap(Optional::stream)
                     .toList(),
                 allyTeam.getBans().stream()
-                    .map(SlotDTO::getChampion)
+                    .map(ChampionProvider::getChampion)
                     .flatMap(Optional::stream)
                     .toList(),
                 enemyTeam.getBans().stream()
-                    .map(SlotDTO::getChampion)
+                    .map(ChampionProvider::getChampion)
                     .flatMap(Optional::stream)
                     .toList()
             ).flatMap(Collection::stream)
