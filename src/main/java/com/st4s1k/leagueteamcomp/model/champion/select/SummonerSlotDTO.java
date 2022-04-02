@@ -1,6 +1,7 @@
 package com.st4s1k.leagueteamcomp.model.champion.select;
 
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
+import com.st4s1k.leagueteamcomp.model.interfaces.ChampionProvider;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -24,10 +25,15 @@ public class SummonerSlotDTO extends SlotDTO<SummonerDTO> {
 
     public static SummonerSlotDTO of(SummonerDTO summoner) {
         SummonerSlotDTO championSlot = new SummonerSlotDTO(
-            SummonerDTO::getChampion,
+            ChampionProvider::getChampion,
             (champion, slot) -> slot.getItem().orElseThrow().setChampion(champion)
         );
         championSlot.setItem(summoner);
         return championSlot;
+    }
+
+    @Override
+    public void clear() {
+        getItem().ifPresent(SummonerDTO::clear);
     }
 }

@@ -7,12 +7,13 @@ import com.st4s1k.leagueteamcomp.model.enums.ResourceEnum;
 import com.st4s1k.leagueteamcomp.model.enums.RoleEnum;
 import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
 import javafx.scene.image.Image;
-import lombok.Data;
+import lombok.Getter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Optional;
 
-@Data
+@Getter
 @ToString(onlyExplicitlyIncluded = true)
 public class ChampionDTO implements SlotItem {
     @SerializedName("id")
@@ -38,4 +39,9 @@ public class ChampionDTO implements SlotItem {
     private String iconUrl;
 
     private transient Image image;
+
+    @Override
+    public Optional<ChampionDTO> getChampion() {
+        return Optional.of(this);
+    }
 }

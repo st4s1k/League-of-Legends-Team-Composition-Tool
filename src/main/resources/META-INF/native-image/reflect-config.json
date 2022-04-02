@@ -93,6 +93,7 @@
 {
   "name":"com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController",
   "allDeclaredFields":true,
+  "allPublicFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -1206,6 +1207,7 @@
 },
 {
   "name":"javafx.scene.control.CheckBox",
+  "allPublicFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllPublicConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
@@ -2469,7 +2471,8 @@
 },
 {
   "name":"sun.misc.Unsafe",
-  "fields":[{"name":"theUnsafe"}]
+  "fields":[{"name":"theUnsafe"}],
+  "methods":[{"name":"allocateInstance","parameterTypes":["java.lang.Class"] }]
 },
 {
   "name":"sun.security.pkcs12.PKCS12KeyStore",

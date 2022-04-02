@@ -23,9 +23,8 @@ public class ChampionSlotDTO extends SlotDTO<ChampionDTO> {
         return new ChampionSlotDTO(Optional::ofNullable, (item, slot) -> slot.setItem(item));
     }
 
-    public static ChampionSlotDTO of(ChampionDTO champion) {
-        ChampionSlotDTO championSlot = new ChampionSlotDTO(Optional::ofNullable, (item, slot) -> slot.setItem(item));
-        championSlot.setChampion(champion);
-        return championSlot;
+    @Override
+    public void clear() {
+        getItemProperty().set(null);
     }
 }

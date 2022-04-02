@@ -3,6 +3,7 @@ package com.st4s1k.leagueteamcomp.model.champion.select;
 import com.st4s1k.leagueteamcomp.model.champion.AttributeRatingsDTO;
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.model.enums.TeamSideEnum;
+import com.st4s1k.leagueteamcomp.model.interfaces.ChampionProvider;
 import com.st4s1k.leagueteamcomp.model.interfaces.Clearable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,7 +36,7 @@ public class TeamDTO implements Clearable {
         this.teamSide = teamSide;
     }
 
-    private final AttributeRatingsDTO attributeRatings = new AttributeRatingsDTO();
+    private AttributeRatingsDTO attributeRatings;
 
     public SlotDTO<SummonerDTO> getSlot(int slotId) {
         return slots.get(slotId);
@@ -45,7 +46,7 @@ public class TeamDTO implements Clearable {
         return slots.stream()
             .map(SlotDTO::getItem)
             .flatMap(Optional::stream)
-            .map(SummonerDTO::getChampion)
+            .map(ChampionProvider::getChampion)
             .flatMap(Optional::stream)
             .toList();
     }

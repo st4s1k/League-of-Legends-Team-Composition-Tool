@@ -5,7 +5,6 @@ import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -27,10 +26,6 @@ public class LeagueTeamCompService {
             INSTANCE.championRepository = ChampionRepository.getInstance();
         }
         return INSTANCE;
-    }
-
-    public Collection<ChampionDTO> getAllChampions() {
-        return championRepository.getAllChampions();
     }
 
     public Set<String> getAllChampionKeys() {

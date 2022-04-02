@@ -1,10 +1,7 @@
 package com.st4s1k.leagueteamcomp.model.champion.select;
 
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
-import com.st4s1k.leagueteamcomp.model.interfaces.ChampionHolder;
-import com.st4s1k.leagueteamcomp.model.interfaces.Clearable;
-import com.st4s1k.leagueteamcomp.model.interfaces.ObservablesProvider;
-import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
+import com.st4s1k.leagueteamcomp.model.interfaces.*;
 import com.st4s1k.leagueteamcomp.utils.Resources;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
@@ -27,7 +24,11 @@ import static lombok.AccessLevel.PACKAGE;
 @RequiredArgsConstructor(access = PACKAGE)
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class SlotDTO<T extends SlotItem> implements SlotItem, ChampionHolder {
+public abstract class SlotDTO<T extends SlotItem> implements
+    ChampionHolder,
+    ImageProvider,
+    ObservablesProvider,
+    Clearable {
 
     private final SimpleObjectProperty<T> itemProperty = new SimpleObjectProperty<>();
     private final Function<T, Optional<ChampionDTO>> championGetter;
@@ -44,11 +45,6 @@ public class SlotDTO<T extends SlotItem> implements SlotItem, ChampionHolder {
     }
 
     @Override
-    public void clear() {
-        getItem().ifPresent(Clearable::clear);
-    }
-
-    @Override
     public Observable[] getObservables() {
         List<Observable> observables = new ArrayList<>();
         observables.add(itemProperty);
@@ -61,7 +57,7 @@ public class SlotDTO<T extends SlotItem> implements SlotItem, ChampionHolder {
 
     @Override
     public Image getImage() {
-        return getItem().map(SlotItem::getImage).orElse(Resources.EMPTY_SLOT_IMAGE);
+        return getItem().map(ImageProvider::getImage).orElse(Resources.EMPTY_SLOT_IMAGE);
     }
 
     @Override

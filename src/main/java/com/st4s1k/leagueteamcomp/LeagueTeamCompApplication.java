@@ -7,6 +7,7 @@ import com.st4s1k.leagueteamcomp.exceptions.LTCException;
 import com.st4s1k.leagueteamcomp.model.champion.ChampionsDTO;
 import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
 import com.st4s1k.leagueteamcomp.utils.ResizeHelper;
+import com.st4s1k.leagueteamcomp.utils.Utils;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -51,7 +52,10 @@ public class LeagueTeamCompApplication extends Application {
         Parent root = loader.load();
         LeagueTeamCompController controller = loader.getController();
         controller.setStageAndSetupListeners(stage);
-        controller.setCloseButtonAction(() -> closeProgram(stage, controller));
+        controller.setCloseButtonAction(() -> Utils.stop(LeagueTeamCompApplication.class).accept(() -> {
+            controller.stop();
+            stage.close();
+        }));
         controller.setMinimizeButtonAction(() -> stage.setIconified(true));
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.initStyle(StageStyle.TRANSPARENT);
@@ -77,8 +81,8 @@ public class LeagueTeamCompApplication extends Application {
     private ChampionsDTO getChampions(HttpResponse<String> response) {
         String json = MessageFormat.format("'{'\"champions\":{0}'}'", response.body());
         ChampionsDTO champions = new Gson().fromJson(json, ChampionsDTO.class);
-        champions.getChampions().values()
-            .forEach(champion -> champion.setImage(new Image(champion.getIconUrl(), true)));
+        champions.getChampions().values().forEach(champion ->
+            Utils.setFieldValue(champion, "image", new Image(champion.getIconUrl(), true)));
         return champions;
     }
 
@@ -121,12 +125,5 @@ public class LeagueTeamCompApplication extends Application {
             .min().orElse(4);
         ResizeHelper.addResizeListener(dialog, border);
         dialog.show();
-    }
-
-    private void closeProgram(Stage stage, LeagueTeamCompController controller) {
-        log.info("Closing application...");
-        controller.stop();
-        stage.close();
-        log.info("Application closed.");
     }
 }

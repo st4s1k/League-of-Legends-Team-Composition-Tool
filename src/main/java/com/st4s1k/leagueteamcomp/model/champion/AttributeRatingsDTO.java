@@ -1,9 +1,11 @@
 package com.st4s1k.leagueteamcomp.model.champion;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
+@Getter
+@Builder
 public class AttributeRatingsDTO {
     @SerializedName("damage")
     private Double damage;
