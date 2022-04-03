@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.DropShadow?>
@@ -14,7 +13,7 @@
          <children>
             <TabPane fx:id="tabPane" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <tabs>
-                  <Tab text="Role Compositions">
+                  <Tab closable="false" text="Role Compositions">
                      <content>
                         <AnchorPane>
                            <children>
@@ -68,32 +67,32 @@
                                                 <CheckBox fx:id="cbJgl3" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="3" />
                                                 <CheckBox fx:id="cbJgl4" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="4" />
                                                 <CheckBox fx:id="cbJgl5" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-                                                <Label styleClass="team-label" text="TOP" GridPane.columnIndex="2">
+                                                <Label text="TOP" GridPane.columnIndex="2">
                                                    <font>
                                                       <Font name="System Bold" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <Label styleClass="team-label" text="MID" GridPane.columnIndex="3">
+                                                <Label text="MID" GridPane.columnIndex="3">
                                                    <font>
                                                       <Font name="System Bold" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <Label styleClass="team-label" text="ADC" GridPane.columnIndex="4">
+                                                <Label text="ADC" GridPane.columnIndex="4">
                                                    <font>
                                                       <Font name="System Bold" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <Label styleClass="team-label" text="SUP" GridPane.columnIndex="5">
+                                                <Label text="SUP" GridPane.columnIndex="5">
                                                    <font>
                                                       <Font name="System Bold" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <Label styleClass="team-label" text="JGL" GridPane.columnIndex="6">
+                                                <Label text="JGL" GridPane.columnIndex="6">
                                                    <font>
                                                       <Font name="System Bold" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <Label styleClass="team-label" text="Summoner Name">
+                                                <Label text="Summoner Name">
                                                    <font>
                                                       <Font name="System Bold" size="12.0" />
                                                    </font>
@@ -161,69 +160,167 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Champion Suggestions">
+                  <Tab closable="false" text="Champion Suggestions">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <AnchorPane layoutX="20.0" layoutY="30.0" styleClass="team-search-field" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="20.0">
+                              <GridPane alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                                  <ColumnConstraints halignment="CENTER" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints valignment="CENTER" />
+                                  <RowConstraints valignment="CENTER" />
+                                </rowConstraints>
                                  <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="67.0" layoutY="4.0" styleClass="team-label" text="Ally Team" textAlignment="CENTER" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0">
+                                    <VBox alignment="TOP_CENTER">
+                                       <children>
+                                          <HBox alignment="CENTER">
+                                             <children>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Ally Team" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="BOTTOM_LEFT">
+                                             <children>
+                                                <Button fx:id="allyAddButton" alignment="CENTER" styleClass="add-button" text="add" />
+                                                <TextField fx:id="allySearchField" alignment="CENTER" promptText="champion name" styleClass="team-search-field" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <ListView fx:id="allyBanListView" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                       <styleClass>
+                                          <String fx:value="champion-list-view" />
+                                          <String fx:value="champion-ban-list-view" />
+                                       </styleClass>
+                                       <GridPane.margin>
+                                          <Insets top="15.0" />
+                                       </GridPane.margin>
+                                    </ListView>
+                                    <Label fx:id="teamCompResultLabel" alignment="CENTER" prefHeight="18.0" prefWidth="207.0" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" text="Banned Champions" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="allySearchField" alignment="CENTER" layoutY="28.0" promptText="champion name" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+                                    <VBox alignment="TOP_CENTER" GridPane.columnIndex="2">
+                                       <children>
+                                          <HBox alignment="CENTER">
+                                             <children>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Enemy Team" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="BOTTOM_LEFT">
+                                             <children>
+                                                <TextField fx:id="enemySearchField" alignment="CENTER" promptText="champion name" styleClass="team-search-field" HBox.hgrow="ALWAYS" />
+                                                <Button fx:id="enemyAddButton" alignment="CENTER" styleClass="add-button" text="add" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <ListView fx:id="enemyBanListView" orientation="HORIZONTAL" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                       <styleClass>
+                                          <String fx:value="champion-list-view" />
+                                          <String fx:value="champion-ban-list-view" />
+                                       </styleClass>
+                                       <GridPane.margin>
+                                          <Insets top="15.0" />
+                                       </GridPane.margin>
+                                    </ListView>
                                  </children>
-                              </AnchorPane>
-                              <AnchorPane layoutX="580.0" layoutY="30.0" styleClass="team-search-field" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="20.0">
+                              </GridPane>
+                              <HBox layoutX="20.0" layoutY="170.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0">
                                  <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="58.0" layoutY="4.0" styleClass="team-label" text="Enemy Team" textAlignment="CENTER" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0">
+                                    <ListView fx:id="allyListView" styleClass="champion-list-view" />
+                                    <ListView fx:id="suggestionsListView">
+                                       <styleClass>
+                                          <String fx:value="champion-list-view" />
+                                          <String fx:value="suggestions-list-view" />
+                                       </styleClass>
+                                    </ListView>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="449.6000061035156" layoutY="170.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <TextFlow fx:id="teamStatsTextFlow" styleClass="team-result">
+                                       <HBox.margin>
+                                          <Insets right="15.0" />
+                                       </HBox.margin>
+                                    </TextFlow>
+                                    <ListView fx:id="enemyListView" styleClass="champion-list-view" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" layoutX="627.5999755859375" layoutY="499.6000061035156" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <Label alignment="CENTER" text="Manual Mode" textAlignment="CENTER">
                                        <font>
-                                          <Font name="System Bold" size="14.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="enemySearchField" alignment="CENTER" layoutY="28.0" promptText="champion name" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+                                    <ToggleButton fx:id="manualModeToggle" mnemonicParsing="false">
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
                                  </children>
-                              </AnchorPane>
-                              <Label fx:id="teamCompResultLabel" alignment="CENTER" layoutX="296.0" layoutY="14.0" prefHeight="18.0" prefWidth="207.0" styleClass="team-label">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <ListView fx:id="allyListView" layoutX="20.0" layoutY="100.0" styleClass="champion-list-view" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="170.0" />
-                              <ListView fx:id="enemyListView" layoutX="720.0" layoutY="100.0" styleClass="champion-list-view" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="170.0" />
-                              <TextFlow fx:id="allyTeamResultTextFlow" layoutX="450.0" layoutY="170.0" styleClass="team-result" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="170.0" />
-                              <TextFlow fx:id="enemyTeamResultTextFlow" layoutX="450.0" layoutY="125.0" styleClass="team-result" textAlignment="RIGHT" visible="false" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="170.0" />
-                              <ListView fx:id="allyBanListView" layoutX="100.0" layoutY="355.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0">
-                                 <styleClass>
-                                    <String fx:value="champion-list-view" />
-                                    <String fx:value="champion-ban-list-view" />
-                                 </styleClass>
-                              </ListView>
-                              <ListView fx:id="enemyBanListView" layoutX="449.0" layoutY="355.0" orientation="HORIZONTAL" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
-                                 <styleClass>
-                                    <String fx:value="champion-list-view" />
-                                    <String fx:value="champion-ban-list-view" />
-                                 </styleClass>
-                              </ListView>
-                              <Label alignment="CENTER" layoutX="320.0" layoutY="116.0" styleClass="team-label" text="Banned Champions" textAlignment="CENTER" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="116.0">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <ToggleButton fx:id="manualModeToggle" layoutX="727.0" layoutY="510.0" mnemonicParsing="false" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="33.0" />
-                              <Label alignment="CENTER" layoutX="627.0" layoutY="510.0" styleClass="team-label" text="Manual Mode" textAlignment="CENTER" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="86.0">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <ListView fx:id="suggestionsListView" layoutX="86.0" layoutY="170.0" AnchorPane.leftAnchor="86.0" AnchorPane.topAnchor="170.0">
-                                 <styleClass>
-                                    <String fx:value="champion-list-view" />
-                                    <String fx:value="suggestions-list-view" />
-                                 </styleClass>
-                              </ListView>
+                              </HBox>
                            </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="Summoner Data">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox layoutX="14.0" layoutY="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER">
+                                       <children>
+                                          <HBox alignment="CENTER" VBox.vgrow="NEVER">
+                                             <children>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Add Summoner" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="BOTTOM_LEFT">
+                                             <children>
+                                                <Button fx:id="summonerAddButton" alignment="CENTER" styleClass="add-button" text="add" />
+                                                <TextField fx:id="summonerAddField" alignment="CENTER" promptText="summoner name" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <ListView fx:id="summonerDataListView" prefHeight="358.0" prefWidth="252.0" VBox.vgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets top="15.0" />
+                                       </VBox.margin>
+                                    </ListView>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
                         </AnchorPane>
                      </content>
                   </Tab>
@@ -234,7 +331,7 @@
             </TabPane>
             <Button fx:id="closeButton" layoutX="769.0" mnemonicParsing="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <graphic>
-                  <Region prefHeight="200.0" prefWidth="200.0" styleClass="icon" />
+                  <Region styleClass="icon" />
                </graphic>
                <styleClass>
                   <String fx:value="window-button" />
@@ -243,7 +340,7 @@
             </Button>
             <Button fx:id="minimizeButton" layoutX="779.0" layoutY="10.0" mnemonicParsing="false" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
                <graphic>
-                  <Region prefHeight="200.0" prefWidth="200.0" styleClass="icon" />
+                  <Region styleClass="icon" />
                </graphic>
                <styleClass>
                   <String fx:value="window-button" />

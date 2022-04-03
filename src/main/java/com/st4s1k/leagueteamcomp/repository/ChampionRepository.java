@@ -1,7 +1,6 @@
 package com.st4s1k.leagueteamcomp.repository;
 
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
-import com.st4s1k.leagueteamcomp.model.champion.ChampionsDTO;
 import lombok.NoArgsConstructor;
 
 import java.util.Collection;
@@ -14,11 +13,11 @@ import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
 public class ChampionRepository {
-
     private static ChampionRepository INSTANCE;
-    private static ChampionsDTO champions;
 
-    public static void init(ChampionsDTO champions) {
+    private static Map<String, ChampionDTO> champions;
+
+    public static void init(Map<String, ChampionDTO> champions) {
         if (ChampionRepository.champions == null) {
             ChampionRepository.champions = champions;
         }
@@ -32,9 +31,7 @@ public class ChampionRepository {
     }
 
     private Map<String, ChampionDTO> getChampionsMap() {
-        return Optional.ofNullable(champions)
-            .map(ChampionsDTO::getChampions)
-            .orElse(emptyMap());
+        return Optional.ofNullable(champions).orElse(emptyMap());
     }
 
     public Collection<ChampionDTO> getAllChampions() {

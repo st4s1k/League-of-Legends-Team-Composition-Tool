@@ -6,10 +6,7 @@ import com.st4s1k.leagueteamcomp.utils.Resources;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,8 +27,11 @@ public abstract class SlotDTO<T extends SlotItem> implements
     ObservablesProvider,
     Clearable {
 
+    @Getter(PACKAGE)
     private final SimpleObjectProperty<T> itemProperty = new SimpleObjectProperty<>();
+    @Getter(PACKAGE)
     private final Function<T, Optional<ChampionDTO>> championGetter;
+    @Getter(PACKAGE)
     private final BiConsumer<ChampionDTO, SlotDTO<T>> championSetter;
 
     @ToString.Include
@@ -69,5 +69,9 @@ public abstract class SlotDTO<T extends SlotItem> implements
     @Override
     public void setChampion(ChampionDTO champion) {
         championSetter.accept(champion, this);
+    }
+
+    public boolean isEmpty() {
+        return isChampionNotSelected();
     }
 }

@@ -1,7 +1,7 @@
 package com.st4s1k.leagueteamcomp.service;
 
-import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.model.champion.select.ChampSelectDTO;
+import com.st4s1k.leagueteamcomp.model.champion.select.ChampionSlotDTO;
 import com.st4s1k.leagueteamcomp.model.champion.select.SlotDTO;
 import com.st4s1k.leagueteamcomp.model.champion.select.SummonerDTO;
 import com.st4s1k.leagueteamcomp.model.interfaces.ObservablesProvider;
@@ -38,10 +38,10 @@ public class ChampionSuggestionService {
     @SuppressWarnings("SameParameterValue")
     public void initializeSuggestionsListView(
         ChampSelectDTO champSelect,
-        ListView<ListView<SlotDTO<ChampionDTO>>> suggestionsListView,
+        ListView<ListView<ChampionSlotDTO>> suggestionsListView,
         double imageSize
     ) {
-        List<ListView<SlotDTO<ChampionDTO>>> championSuggestionsListViews = champSelect.getAllyTeam().getSlots().stream()
+        List<ListView<ChampionSlotDTO>> championSuggestionsListViews = champSelect.getAllyTeam().getSlots().stream()
             .map(SlotDTO::getItem)
             .flatMap(Optional::stream)
             .map(SummonerDTO::getChampionSuggestions)
@@ -51,32 +51,32 @@ public class ChampionSuggestionService {
         initializeSuggestionsListView(championSuggestionsListViews, suggestionsListView);
     }
 
-    public ListView<SlotDTO<ChampionDTO>> initializeSuggestionsSubListView(
-        List<SlotDTO<ChampionDTO>> championSuggestions,
+    public ListView<ChampionSlotDTO> initializeSuggestionsSubListView(
+        List<ChampionSlotDTO> championSuggestions,
         double imageSize
     ) {
-        var suggestionsListView = new ListView<SlotDTO<ChampionDTO>>();
+        var suggestionsListView = new ListView<ChampionSlotDTO>();
         suggestionsListView.getStyleClass().addAll("champion-list-view", "suggestions-sub-list-view");
         initializeChampionListView(championSuggestions, suggestionsListView, imageSize);
         return suggestionsListView;
     }
 
-    public <T extends SlotItem> void initializeChampionListView(
-        List<SlotDTO<T>> slots,
-        ListView<SlotDTO<T>> listView,
+    public <T extends SlotItem, S extends SlotDTO<T>> void initializeChampionListView(
+        List<S> slots,
+        ListView<S> listView,
         double imageSize
     ) {
-        ObservableList<SlotDTO<T>> itemsList = FXCollections.observableArrayList(ObservablesProvider::getObservables);
+        ObservableList<S> itemsList = FXCollections.observableArrayList(ObservablesProvider::getObservables);
         itemsList.addAll(slots);
         listView.setItems(itemsList);
         listView.setCellFactory(param -> new LTCChampionListCell<>(imageSize));
     }
 
-    public <T extends SlotItem> void initializeSuggestionsListView(
-        List<ListView<SlotDTO<ChampionDTO>>> items,
-        ListView<ListView<SlotDTO<ChampionDTO>>> listView
+    public void initializeSuggestionsListView(
+        List<ListView<ChampionSlotDTO>> items,
+        ListView<ListView<ChampionSlotDTO>> listView
     ) {
-        ObservableList<ListView<SlotDTO<ChampionDTO>>> itemsList = FXCollections.observableArrayList(param ->
+        ObservableList<ListView<ChampionSlotDTO>> itemsList = FXCollections.observableArrayList(param ->
             param.getItems().stream()
                 .map(ObservablesProvider::getObservables)
                 .map(Arrays::asList)

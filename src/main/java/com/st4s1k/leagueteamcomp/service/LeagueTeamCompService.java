@@ -32,19 +32,19 @@ public class LeagueTeamCompService {
         return championRepository.getAllChampionKeys();
     }
 
-    public Optional<ChampionDTO> findChampionDataById(Integer championId) {
+    public Optional<ChampionDTO> findChampionById(Integer championId) {
         return championRepository.findChampionById(championId);
     }
 
-    public Optional<ChampionDTO> findChampionDataByKey(String championKey) {
+    public Optional<ChampionDTO> findChampionByKey(String championKey) {
         return championRepository.findChampionByKey(championKey);
     }
 
-    public Optional<ChampionDTO> findChampionDataByName(String championName) {
+    public Optional<ChampionDTO> findChampionByName(String championName) {
         return championRepository.findChampionByName(championName);
     }
 
-    public boolean existsChampionDataByName(String championName) {
+    public boolean existsChampionByName(String championName) {
         return championRepository.existsChampionByName(championName);
     }
 

@@ -18,6 +18,21 @@
   "name":"[J"
 },
 {
+  "name":"[Lcom.fasterxml.jackson.databind.deser.Deserializers;"
+},
+{
+  "name":"[Lcom.fasterxml.jackson.databind.deser.KeyDeserializers;"
+},
+{
+  "name":"[Lcom.fasterxml.jackson.databind.ser.Serializers;"
+},
+{
+  "name":"[Lcom.google.common.collect.ImmutableMapEntry;"
+},
+{
+  "name":"[Lgenerated.LolChampSelectChampSelectAction;"
+},
+{
   "name":"[Lgenerated.LolChampSelectSfxNotification;"
 },
 {
@@ -27,10 +42,25 @@
   "name":"[Lgenerated.LolChatUserResource;"
 },
 {
+  "name":"[Lgenerated.LolCollectionsCollectionsChampionMastery;"
+},
+{
   "name":"[Lgenerated.LolHonorV2Honor;"
 },
 {
+  "name":"[Lgenerated.LolLobbyLobbyBotChampion;"
+},
+{
+  "name":"[Lgenerated.LolLobbyLobbyInvitation;"
+},
+{
+  "name":"[Lgenerated.LolLobbyLobbyParticipantDto;"
+},
+{
   "name":"[Lgenerated.LolLootLootGrantNotification;"
+},
+{
+  "name":"[Lgenerated.LolNpeTutorialPathTutorial;"
 },
 {
   "name":"[Lgenerated.LolPerksPerkPageResource;"
@@ -39,10 +69,34 @@
   "name":"[Lgenerated.LolSimpleDialogMessagesMessage;"
 },
 {
+  "name":"[Lgenerated.PlayerMissionDTO;"
+},
+{
+  "name":"[Lgenerated.SeriesDTO;"
+},
+{
+  "name":"[Ljava.lang.Class;"
+},
+{
   "name":"[Ljava.lang.Integer;"
 },
 {
+  "name":"[Ljava.lang.Object;"
+},
+{
   "name":"[Ljava.lang.String;"
+},
+{
+  "name":"[Ljava.lang.reflect.Constructor;"
+},
+{
+  "name":"[Ljava.lang.reflect.Field;"
+},
+{
+  "name":"[Ljava.lang.reflect.Method;"
+},
+{
+  "name":"[Ljava.util.Map$Entry;"
 },
 {
   "name":"[Ljavax.management.openmbean.CompositeData;"
@@ -66,6 +120,12 @@
   "name":"[Lorg.apache.logging.log4j.core.config.Property;"
 },
 {
+  "name":"[Lorg.cache2k.core.spi.CacheLifeCycleListener;"
+},
+{
+  "name":"[Lorg.cache2k.core.spi.CacheManagerLifeCycleListener;"
+},
+{
   "name":"[Lsun.security.pkcs.SignerInfo;"
 },
 {
@@ -73,6 +133,697 @@
 },
 {
   "name":"[Z"
+},
+{
+  "name":"com.fasterxml.jackson.core.JsonParser"
+},
+{
+  "name":"com.fasterxml.jackson.databind.JsonNode"
+},
+{
+  "name":"com.fasterxml.jackson.databind.ObjectMapper"
+},
+{
+  "name":"com.fasterxml.jackson.databind.ext.Java7HandlersImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.fasterxml.jackson.databind.ext.Java7SupportImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.fasterxml.jackson.databind.ser.std.ClassSerializer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.google.common.collect.CollectPreconditions"
+},
+{
+  "name":"com.google.common.collect.ImmutableCollection",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.google.common.collect.ImmutableMap",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.google.common.collect.ImmutableMap$Builder"
+},
+{
+  "name":"com.google.common.collect.ImmutableMapEntry"
+},
+{
+  "name":"com.google.common.collect.ImmutableSet",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.google.common.collect.ImmutableSet$Indexed",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.google.common.collect.RegularImmutableMap",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true
+},
+{
+  "name":"com.google.common.collect.RegularImmutableSet",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true
+},
+{
+  "name":"com.google.gson.Gson"
+},
+{
+  "name":"com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter"
+},
+{
+  "name":"com.google.gson.stream.JsonReader"
+},
+{
+  "name":"com.merakianalytics.orianna.Orianna$Configuration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setCurrentVersionExpiration","parameterTypes":["com.merakianalytics.orianna.datapipeline.common.expiration.ExpirationPeriod"] }, 
+    {"name":"setPipeline","parameterTypes":["com.merakianalytics.orianna.datapipeline.PipelineConfiguration"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.AbstractLocallyCachedCDN$Configuration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[
+    {"name":"getCacheDuration","parameterTypes":[] }, 
+    {"name":"getRequests","parameterTypes":[] }, 
+    {"name":"setCacheDuration","parameterTypes":["com.merakianalytics.orianna.datapipeline.common.expiration.ExpirationPeriod"] }, 
+    {"name":"setRequests","parameterTypes":["com.merakianalytics.orianna.datapipeline.common.HTTPClient$Configuration"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.DataDragon",
+  "allDeclaredClasses":true,
+  "queryAllPublicMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.DataDragon$Configuration"] }, 
+    {"name":"getRealm","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"getVersions","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.DataDragon$Configuration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.GhostLoader",
+  "allDeclaredClasses":true,
+  "queryAllPublicMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"getChampion","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"getChampionMasteries","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"getRealm","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"getSummoner","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"getVersions","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.ImageDownloader",
+  "allDeclaredClasses":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.InMemoryCache",
+  "allDeclaredClasses":true,
+  "queryAllPublicMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.InMemoryCache$Configuration"] }, 
+    {"name":"getChampion","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"getChampionMasteries","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"getRealm","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"getSummoner","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"getVersions","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"putChampion","parameterTypes":["com.merakianalytics.orianna.types.core.staticdata.Champion","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"putChampionMasteries","parameterTypes":["com.merakianalytics.orianna.types.core.championmastery.ChampionMasteries","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"putRealm","parameterTypes":["com.merakianalytics.orianna.types.core.staticdata.Realm","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"putSummoner","parameterTypes":["com.merakianalytics.orianna.types.core.summoner.Summoner","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"putVersions","parameterTypes":["com.merakianalytics.orianna.types.core.staticdata.Versions","com.merakianalytics.datapipelines.PipelineContext"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.InMemoryCache$Configuration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"getExpirationPeriods","parameterTypes":[] }, 
+    {"name":"setExpirationPeriods","parameterTypes":["java.util.Map"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.MerakiAnalyticsCDN",
+  "allDeclaredClasses":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.MerakiAnalyticsCDN$Configuration"] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.MerakiAnalyticsCDN$Configuration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"getHost","parameterTypes":[] }, 
+    {"name":"setHost","parameterTypes":["java.lang.String"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.PipelineConfiguration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setElements","parameterTypes":["java.util.List"] }, 
+    {"name":"setTransformers","parameterTypes":["java.util.Set"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.PipelineConfiguration$PipelineElementConfiguration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setClassName","parameterTypes":["java.lang.String"] }, 
+    {"name":"setConfig","parameterTypes":["com.fasterxml.jackson.databind.JsonNode"] }, 
+    {"name":"setConfigClassName","parameterTypes":["java.lang.String"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.PipelineConfiguration$TransformerConfiguration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setClassName","parameterTypes":["java.lang.String"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.common.HTTPClient$Configuration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"getConnectTimeout","parameterTypes":[] }, 
+    {"name":"getConnectTimeoutUnit","parameterTypes":[] }, 
+    {"name":"getRateLimiterTimeout","parameterTypes":[] }, 
+    {"name":"getRateLimiterTimeoutUnit","parameterTypes":[] }, 
+    {"name":"getReadTimeout","parameterTypes":[] }, 
+    {"name":"getReadTimeoutUnit","parameterTypes":[] }, 
+    {"name":"isHttps","parameterTypes":[] }, 
+    {"name":"setConnectTimeout","parameterTypes":["long"] }, 
+    {"name":"setConnectTimeoutUnit","parameterTypes":["java.util.concurrent.TimeUnit"] }, 
+    {"name":"setHttps","parameterTypes":["boolean"] }, 
+    {"name":"setRateLimiterTimeout","parameterTypes":["long"] }, 
+    {"name":"setRateLimiterTimeoutUnit","parameterTypes":["java.util.concurrent.TimeUnit"] }, 
+    {"name":"setReadTimeout","parameterTypes":["long"] }, 
+    {"name":"setReadTimeoutUnit","parameterTypes":["java.util.concurrent.TimeUnit"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.common.expiration.ExpirationPeriod",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"getPeriod","parameterTypes":[] }, 
+    {"name":"getUnit","parameterTypes":[] }, 
+    {"name":"setPeriod","parameterTypes":["long"] }, 
+    {"name":"setUnit","parameterTypes":["java.util.concurrent.TimeUnit"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.common.rates.FixedWindowRateLimiter",
+  "methods":[{"name":"<init>","parameterTypes":["int","long","java.util.concurrent.TimeUnit"] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.common.rates.RateLimiter$Type",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.ChampionAPI",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPI$Configuration","com.merakianalytics.orianna.datapipeline.common.HTTPClient","java.util.Map","java.util.Map"] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.ChampionMasteryAPI",
+  "queryAllPublicMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPI$Configuration","com.merakianalytics.orianna.datapipeline.common.HTTPClient","java.util.Map","java.util.Map"] }, 
+    {"name":"getChampionMasteryList","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.LeagueAPI",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPI$Configuration","com.merakianalytics.orianna.datapipeline.common.HTTPClient","java.util.Map","java.util.Map"] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.MatchAPI",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPI$Configuration","com.merakianalytics.orianna.datapipeline.common.HTTPClient","java.util.Map","java.util.Map"] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.RiotAPI",
+  "allDeclaredClasses":true,
+  "methods":[{"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPI$Configuration"] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.RiotAPI$Configuration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"getApiKey","parameterTypes":[] }, 
+    {"name":"getHttp404Strategy","parameterTypes":[] }, 
+    {"name":"getHttp429Strategy","parameterTypes":[] }, 
+    {"name":"getHttp500Strategy","parameterTypes":[] }, 
+    {"name":"getHttp503Strategy","parameterTypes":[] }, 
+    {"name":"getHttp504Strategy","parameterTypes":[] }, 
+    {"name":"getHttpTimeoutStrategy","parameterTypes":[] }, 
+    {"name":"getLimitingShare","parameterTypes":[] }, 
+    {"name":"getLimitingType","parameterTypes":[] }, 
+    {"name":"getRateLimiterTimeoutStrategy","parameterTypes":[] }, 
+    {"name":"getRequests","parameterTypes":[] }, 
+    {"name":"getServices","parameterTypes":[] }, 
+    {"name":"setApiKey","parameterTypes":["java.lang.String"] }, 
+    {"name":"setHttp404Strategy","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy"] }, 
+    {"name":"setHttp429Strategy","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy"] }, 
+    {"name":"setHttp500Strategy","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy"] }, 
+    {"name":"setHttp503Strategy","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy"] }, 
+    {"name":"setHttp504Strategy","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy"] }, 
+    {"name":"setHttpTimeoutStrategy","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy"] }, 
+    {"name":"setLimitingShare","parameterTypes":["double"] }, 
+    {"name":"setLimitingType","parameterTypes":["com.merakianalytics.orianna.datapipeline.common.rates.RateLimiter$Type"] }, 
+    {"name":"setRateLimiterTimeoutStrategy","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy"] }, 
+    {"name":"setRequests","parameterTypes":["com.merakianalytics.orianna.datapipeline.common.HTTPClient$Configuration"] }, 
+    {"name":"setServices","parameterTypes":["java.util.Set"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy",
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$Configuration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"getBackoff","parameterTypes":[] }, 
+    {"name":"getBackoffFactor","parameterTypes":[] }, 
+    {"name":"getBackoffUnit","parameterTypes":[] }, 
+    {"name":"getBackupStrategy","parameterTypes":[] }, 
+    {"name":"getMaxAttempts","parameterTypes":[] }, 
+    {"name":"getType","parameterTypes":[] }, 
+    {"name":"setBackoff","parameterTypes":["long"] }, 
+    {"name":"setBackoffFactor","parameterTypes":["int"] }, 
+    {"name":"setBackoffUnit","parameterTypes":["java.util.concurrent.TimeUnit"] }, 
+    {"name":"setBackupStrategy","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy"] }, 
+    {"name":"setMaxAttempts","parameterTypes":["int"] }, 
+    {"name":"setType","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$Type"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$Deserializer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$ExponentialBackoff",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$Configuration"] }, 
+    {"name":"getConfiguration","parameterTypes":[] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$RetryFromHeaders",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$Configuration"] }, 
+    {"name":"getConfiguration","parameterTypes":[] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$ReturnNull",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$Configuration"] }, 
+    {"name":"getConfiguration","parameterTypes":[] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$ThrowException",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$Configuration"] }, 
+    {"name":"getConfiguration","parameterTypes":[] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.RiotAPIService$FailedRequestStrategy$Type",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.SpectatorAPI",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPI$Configuration","com.merakianalytics.orianna.datapipeline.common.HTTPClient","java.util.Map","java.util.Map"] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.StatusAPI",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPI$Configuration","com.merakianalytics.orianna.datapipeline.common.HTTPClient","java.util.Map","java.util.Map"] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.SummonerAPI",
+  "queryAllPublicMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPI$Configuration","com.merakianalytics.orianna.datapipeline.common.HTTPClient","java.util.Map","java.util.Map"] }, 
+    {"name":"getSummoner","parameterTypes":["java.util.Map","com.merakianalytics.datapipelines.PipelineContext"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.riotapi.ThirdPartyCodeAPI",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":["com.merakianalytics.orianna.datapipeline.riotapi.RiotAPI$Configuration","com.merakianalytics.orianna.datapipeline.common.HTTPClient","java.util.Map","java.util.Map"] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.transformers.dtodata.ChampionMasteryTransformer",
+  "queryAllPublicMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"transform","parameterTypes":["com.merakianalytics.orianna.types.dto.championmastery.ChampionMasteries","com.merakianalytics.datapipelines.PipelineContext"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.transformers.dtodata.ChampionTransformer",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.transformers.dtodata.LeagueTransformer",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.transformers.dtodata.MatchTransformer",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.transformers.dtodata.SpectatorTransformer",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.transformers.dtodata.StaticDataTransformer",
+  "queryAllPublicMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"transform","parameterTypes":["com.merakianalytics.orianna.types.dto.staticdata.Realm","com.merakianalytics.datapipelines.PipelineContext"] }, 
+    {"name":"transform","parameterTypes":["com.merakianalytics.orianna.types.dto.staticdata.Versions","com.merakianalytics.datapipelines.PipelineContext"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.transformers.dtodata.StatusTransformer",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.transformers.dtodata.SummonerTransformer",
+  "queryAllPublicMethods":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"transformer","parameterTypes":["com.merakianalytics.orianna.types.dto.summoner.Summoner","com.merakianalytics.datapipelines.PipelineContext"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.datapipeline.transformers.dtodata.ThirdPartyCodeTransformer",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.merakianalytics.orianna.types.common.Platform",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.champion.ChampionRotation"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.championmastery.ChampionMasteries"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.championmastery.ChampionMasteries$Builder"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.championmastery.ChampionMastery"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.championmastery.ChampionMasteryScore"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.league.League"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.league.LeaguePositions"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.match.Match"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.match.Timeline"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.match.TournamentMatches"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.spectator.CurrentMatch"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.spectator.FeaturedMatches"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Champion"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Champions"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Item"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Items"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.LanguageStrings"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Languages"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Map"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Maps"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Masteries"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Mastery"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Patch"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Patches"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.ProfileIcon"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.ProfileIcons"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Realm"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.ReforgedRune"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.ReforgedRunes"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Rune"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Runes"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.SummonerSpell"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.SummonerSpells"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.staticdata.Versions"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.status.ShardStatus"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.summoner.Summoner"
+},
+{
+  "name":"com.merakianalytics.orianna.types.core.thirdpartycode.VerificationString"
+},
+{
+  "name":"com.merakianalytics.orianna.types.data.staticdata.ItemStats",
+  "queriedMethods":[
+    {"name":"setGold","parameterTypes":["double"] }, 
+    {"name":"setLethality","parameterTypes":["double"] }, 
+    {"name":"setMagicPenetration","parameterTypes":["double"] }, 
+    {"name":"setManaRegen","parameterTypes":["double"] }, 
+    {"name":"setOnHitHealthRegen","parameterTypes":["double"] }, 
+    {"name":"setOnHitMagicDamage","parameterTypes":["double"] }, 
+    {"name":"setOnHitPercentHealthPhysicalDamage","parameterTypes":["double"] }, 
+    {"name":"setOnHitPercentMaxHealthPhysicalDamage","parameterTypes":["double"] }, 
+    {"name":"setOnHitPhysicalDamage","parameterTypes":["double"] }, 
+    {"name":"setOnHitPhysicalDamageAgainstMinions","parameterTypes":["double"] }, 
+    {"name":"setOnKillManaRegen","parameterTypes":["double"] }, 
+    {"name":"setOutOfCombatMovespeed","parameterTypes":["double"] }, 
+    {"name":"setPercentAbilityPower","parameterTypes":["double"] }, 
+    {"name":"setPercentArmorPenetration","parameterTypes":["double"] }, 
+    {"name":"setPercentBaseAttackDamage","parameterTypes":["double"] }, 
+    {"name":"setPercentCooldownReduction","parameterTypes":["double"] }, 
+    {"name":"setPercentHealAndShieldPower","parameterTypes":["double"] }, 
+    {"name":"setPercentHealth","parameterTypes":["double"] }, 
+    {"name":"setPercentHealthRegen","parameterTypes":["double"] }, 
+    {"name":"setPercentHealthRegenFromPotions","parameterTypes":["double"] }, 
+    {"name":"setPercentLifesteal","parameterTypes":["double"] }, 
+    {"name":"setPercentLifestealAgainstMonsters","parameterTypes":["double"] }, 
+    {"name":"setPercentMagicPenetration","parameterTypes":["double"] }, 
+    {"name":"setPercentManaRegen","parameterTypes":["double"] }, 
+    {"name":"setPercentManaRegenInJungle","parameterTypes":["double"] }, 
+    {"name":"setPercentMovespeed","parameterTypes":["double"] }, 
+    {"name":"setPercentSpellVamp","parameterTypes":["double"] }, 
+    {"name":"setPercentTenacity","parameterTypes":["double"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.types.dto.DataObject",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.merakianalytics.orianna.types.dto.DataObject$ListProxy",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"com.merakianalytics.orianna.types.dto.championmastery.ChampionMasteries",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.merakianalytics.orianna.types.dto.championmastery.ChampionMastery",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setChampionId","parameterTypes":["long"] }, 
+    {"name":"setChampionLevel","parameterTypes":["int"] }, 
+    {"name":"setChampionPoints","parameterTypes":["int"] }, 
+    {"name":"setChampionPointsSinceLastLevel","parameterTypes":["long"] }, 
+    {"name":"setChampionPointsUntilNextLevel","parameterTypes":["long"] }, 
+    {"name":"setChestGranted","parameterTypes":["boolean"] }, 
+    {"name":"setLastPlayTime","parameterTypes":["long"] }, 
+    {"name":"setSummonerId","parameterTypes":["java.lang.String"] }, 
+    {"name":"setTokensEarned","parameterTypes":["int"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.types.dto.staticdata.Realm",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setCdn","parameterTypes":["java.lang.String"] }, 
+    {"name":"setCss","parameterTypes":["java.lang.String"] }, 
+    {"name":"setDd","parameterTypes":["java.lang.String"] }, 
+    {"name":"setL","parameterTypes":["java.lang.String"] }, 
+    {"name":"setLg","parameterTypes":["java.lang.String"] }, 
+    {"name":"setN","parameterTypes":["java.util.Map"] }, 
+    {"name":"setProfileiconmax","parameterTypes":["int"] }, 
+    {"name":"setStore","parameterTypes":["java.lang.String"] }, 
+    {"name":"setV","parameterTypes":["java.lang.String"] }
+  ]
+},
+{
+  "name":"com.merakianalytics.orianna.types.dto.staticdata.Versions",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.merakianalytics.orianna.types.dto.summoner.Summoner",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setAccountId","parameterTypes":["java.lang.String"] }, 
+    {"name":"setId","parameterTypes":["java.lang.String"] }, 
+    {"name":"setName","parameterTypes":["java.lang.String"] }, 
+    {"name":"setProfileIconId","parameterTypes":["int"] }, 
+    {"name":"setPuuid","parameterTypes":["java.lang.String"] }, 
+    {"name":"setRevisionDate","parameterTypes":["long"] }, 
+    {"name":"setSummonerLevel","parameterTypes":["long"] }
+  ]
 },
 {
   "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication",
@@ -94,6 +845,14 @@
   "name":"com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController",
   "allDeclaredFields":true,
   "allPublicFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController$2"
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.model.SummonerData",
+  "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -163,6 +922,18 @@
   "allDeclaredFields":true
 },
 {
+  "name":"com.st4s1k.leagueteamcomp.model.champion.select.ChampSelectDTO"
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.model.champion.select.SummonerDTO"
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.model.champion.select.SummonerSlotDTO"
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.model.champion.select.TeamDTO"
+},
+{
   "name":"com.st4s1k.leagueteamcomp.model.enums.AdaptiveTypeEnum",
   "allDeclaredFields":true
 },
@@ -177,6 +948,13 @@
 {
   "name":"com.st4s1k.leagueteamcomp.model.enums.RoleEnum",
   "allDeclaredFields":true
+},
+{
+  "name":"com.stirante.lolclient.ClientWebSocket"
+},
+{
+  "name":"com.stirante.lolclient.libs.com.google.gson.internal.LinkedTreeMap",
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"com.stirante.lolclient.libs.org.apache.commons.logging.LogFactory"
@@ -195,6 +973,15 @@
 {
   "name":"com.stirante.lolclient.libs.org.apache.commons.logging.impl.WeakHashtable",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.stirante.lolclient.libs.org.java_websocket.WebSocketImpl"
+},
+{
+  "name":"com.stirante.lolclient.libs.org.java_websocket.client.WebSocketClient"
+},
+{
+  "name":"com.stirante.lolclient.libs.org.java_websocket.drafts.Draft_6455"
 },
 {
   "name":"com.sun.crypto.provider.AESCipher$General",
@@ -225,6 +1012,10 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"com.sun.crypto.provider.HmacCore$HmacSHA256",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"com.sun.crypto.provider.HmacCore$HmacSHA384",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -245,11 +1036,28 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"com.sun.crypto.provider.TlsKeyMaterialGenerator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"com.sun.crypto.provider.TlsMasterSecretGenerator",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"com.sun.crypto.provider.TlsPrfGenerator$V12",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.glass.ui.InvokeLaterDispatcher$Future"
+},
+{
   "name":"com.sun.glass.ui.Screen"
+},
+{
+  "name":"com.sun.glass.ui.View"
+},
+{
+  "name":"com.sun.glass.ui.win.WinApplication"
 },
 {
   "name":"com.sun.glass.ui.win.WinDnDClipboard"
@@ -260,6 +1068,51 @@
 {
   "name":"com.sun.glass.ui.win.WinPlatformFactory",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.javafx.application.PlatformImpl"
+},
+{
+  "name":"com.sun.javafx.binding.ExpressionHelper"
+},
+{
+  "name":"com.sun.javafx.binding.ExpressionHelper$SingleInvalidation"
+},
+{
+  "name":"com.sun.javafx.collections.ListListenerHelper"
+},
+{
+  "name":"com.sun.javafx.collections.ListListenerHelper$Generic"
+},
+{
+  "name":"com.sun.javafx.collections.ObservableListWrapper"
+},
+{
+  "name":"com.sun.javafx.collections.ObservableListWrapper$1$1"
+},
+{
+  "name":"com.sun.javafx.collections.VetoableListDecorator"
+},
+{
+  "name":"com.sun.javafx.event.BasicEventDispatcher"
+},
+{
+  "name":"com.sun.javafx.event.CompositeEventDispatcher"
+},
+{
+  "name":"com.sun.javafx.event.CompositeEventHandler"
+},
+{
+  "name":"com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord"
+},
+{
+  "name":"com.sun.javafx.event.EventDispatchChainImpl"
+},
+{
+  "name":"com.sun.javafx.event.EventHandlerManager"
+},
+{
+  "name":"com.sun.javafx.event.EventUtil"
 },
 {
   "name":"com.sun.javafx.font.directwrite.DWFactory",
@@ -278,8 +1131,23 @@
   "methods":[{"name":"invoke","parameterTypes":["java.lang.reflect.Method","java.lang.Object","java.lang.Object[]"] }]
 },
 {
+  "name":"com.sun.javafx.scene.control.behavior.ButtonBehavior"
+},
+{
+  "name":"com.sun.javafx.scene.control.inputmap.InputMap"
+},
+{
   "name":"com.sun.javafx.scene.control.skin.Utils",
   "methods":[{"name":"getResource","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"com.sun.javafx.tk.Toolkit"
+},
+{
+  "name":"com.sun.javafx.tk.quantum.GlassViewEventHandler"
+},
+{
+  "name":"com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification"
 },
 {
   "name":"com.sun.javafx.tk.quantum.OverlayWarning"
@@ -408,7 +1276,21 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"double",
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"generated.AlertDTO",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"generated.LolChampSelectChampGridChampion",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChampSelectChampSelectAction",
   "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -459,13 +1341,7 @@
 },
 {
   "name":"generated.LolChampSelectChampSelectTradeState",
-  "fields":[
-    {"name":"AVAILABLE"}, 
-    {"name":"BUSY"}, 
-    {"name":"INVALID"}, 
-    {"name":"RECEIVED"}, 
-    {"name":"SENT"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolChampSelectChampionSelection",
@@ -530,17 +1406,11 @@
 {
   "name":"generated.LolChampSelectLegacyChampSelectTradeContract",
   "allDeclaredFields":true,
-  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"generated.LolChampSelectLegacyChampSelectTradeState",
-  "fields":[
-    {"name":"AVAILABLE"}, 
-    {"name":"BUSY"}, 
-    {"name":"INVALID"}, 
-    {"name":"RECEIVED"}, 
-    {"name":"SENT"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolChampSelectLegacyTeamBoost",
@@ -578,6 +1448,16 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"generated.LolChatFriendCountsResource",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolChatFriendResource",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"generated.LolChatUserResource",
   "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
@@ -589,11 +1469,12 @@
 },
 {
   "name":"generated.LolClashPresenceState",
-  "fields":[
-    {"name":"LOCKED_IN"}, 
-    {"name":"NONE"}, 
-    {"name":"SCOUTING"}
-  ]
+  "allDeclaredFields":true
+},
+{
+  "name":"generated.LolCollectionsCollectionsChampionMastery",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"generated.LolGameflowGameflowAvailability",
@@ -602,15 +1483,7 @@
 },
 {
   "name":"generated.LolGameflowGameflowAvailabilityState",
-  "fields":[
-    {"name":"AVAILABLE"}, 
-    {"name":"CONFIGURATION"}, 
-    {"name":"ELIGIBILITYINFOMISSING"}, 
-    {"name":"INGAMEFLOW"}, 
-    {"name":"INITIALIZING"}, 
-    {"name":"PATCHING"}, 
-    {"name":"PLAYERBANNED"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolGameflowGameflowGameClient",
@@ -629,12 +1502,7 @@
 },
 {
   "name":"generated.LolGameflowGameflowGameDodgeState",
-  "fields":[
-    {"name":"INVALID"}, 
-    {"name":"PARTYDODGED"}, 
-    {"name":"STRANGERDODGED"}, 
-    {"name":"TOURNAMENTDODGED"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolGameflowGameflowGameMap",
@@ -643,22 +1511,7 @@
 },
 {
   "name":"generated.LolGameflowGameflowPhase",
-  "fields":[
-    {"name":"CHAMPSELECT"}, 
-    {"name":"CHECKEDINTOTOURNAMENT"}, 
-    {"name":"ENDOFGAME"}, 
-    {"name":"FAILEDTOLAUNCH"}, 
-    {"name":"GAMESTART"}, 
-    {"name":"INPROGRESS"}, 
-    {"name":"LOBBY"}, 
-    {"name":"MATCHMAKING"}, 
-    {"name":"NONE"}, 
-    {"name":"PREENDOFGAME"}, 
-    {"name":"READYCHECK"}, 
-    {"name":"RECONNECT"}, 
-    {"name":"TERMINATEDINERROR"}, 
-    {"name":"WAITINGFORSTATS"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolGameflowGameflowSession",
@@ -682,30 +1535,15 @@
 },
 {
   "name":"generated.LolGameflowQueueAvailability",
-  "fields":[
-    {"name":"AVAILABLE"}, 
-    {"name":"DOESNTMEETREQUIREMENTS"}, 
-    {"name":"PLATFORMDISABLED"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolGameflowQueueCustomGameSpectatorPolicy",
-  "fields":[
-    {"name":"ALLALLOWED"}, 
-    {"name":"FRIENDSALLOWED"}, 
-    {"name":"LOBBYALLOWED"}, 
-    {"name":"NOTALLOWED"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolGameflowQueueGameCategory",
-  "fields":[
-    {"name":"ALPHA"}, 
-    {"name":"CUSTOM"}, 
-    {"name":"NONE"}, 
-    {"name":"PVP"}, 
-    {"name":"VERSUSAI"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolGameflowQueueGameTypeConfig",
@@ -738,69 +1576,44 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"generated.LolLobbyEligibility",
+  "allDeclaredFields":true,
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"generated.LolLobbyEligibilityRestriction",
   "allDeclaredFields":true,
   "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"generated.LolLobbyEligibilityRestrictionCode",
-  "fields":[
-    {"name":"BANINFONOTAVAILABLE"}, 
-    {"name":"GAMEVERSIONMISMATCH"}, 
-    {"name":"GAMEVERSIONMISSING"}, 
-    {"name":"GAMEVERSIONNOTSUPPORTED"}, 
-    {"name":"INVENTORYCHAMPSINFONOTAVAILABLE"}, 
-    {"name":"INVENTORYQUEUESINFONOTAVAILABLE"}, 
-    {"name":"LEAGUESINFONOTAVAILABLE"}, 
-    {"name":"MINORINFONOTAVAILABLE"}, 
-    {"name":"MMRSTANDARDDEVIATIONTOOLARGE"}, 
-    {"name":"PLAYERAVAILABLECHAMPIONRESTRICTION"}, 
-    {"name":"PLAYERBANNEDRESTRICTION"}, 
-    {"name":"PLAYERBINGERESTRICTION"}, 
-    {"name":"PLAYERDODGERESTRICTION"}, 
-    {"name":"PLAYERINGAMERESTRICTION"}, 
-    {"name":"PLAYERLEAVERBUSTEDRESTRICTION"}, 
-    {"name":"PLAYERLEAVERTAINTEDWARNINGRESTRICTION"}, 
-    {"name":"PLAYERLEVELRESTRICTION"}, 
-    {"name":"PLAYERMAXLEVELRESTRICTION"}, 
-    {"name":"PLAYERMINLEVELRESTRICTION"}, 
-    {"name":"PLAYERMINORRESTRICTION"}, 
-    {"name":"PLAYERRANKEDSUSPENSIONRESTRICTION"}, 
-    {"name":"PLAYERRANKSOLOONLYRESTRICTION"}, 
-    {"name":"PLAYERTIMEDRESTRICTION"}, 
-    {"name":"PLAYERTIMEPLAYEDRESTRICTION"}, 
-    {"name":"PREREQUISITEQUEUESNOTPLAYEDRESTRICTION"}, 
-    {"name":"QUEUEDISABLED"}, 
-    {"name":"QUEUEENTRYNOTENTITLEDRESTRICTION"}, 
-    {"name":"QUEUEUNSUPPORTED"}, 
-    {"name":"SUMMONERINFONOTAVAILABLE"}, 
-    {"name":"TEAMDIVISIONRESTRICTION"}, 
-    {"name":"TEAMHIGHMMRMAXSIZERESTRICTION"}, 
-    {"name":"TEAMMAXSIZERESTRICTION"}, 
-    {"name":"TEAMMINSIZERESTRICTION"}, 
-    {"name":"TEAMSIZERESTRICTION"}, 
-    {"name":"UNKNOWNRESTRICTION"}
-  ]
+  "allDeclaredFields":true
+},
+{
+  "name":"generated.LolLobbyInvitationType",
+  "allDeclaredFields":true
+},
+{
+  "name":"generated.LolLobbyLobbyBotChampion",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"generated.LolLobbyLobbyBotDifficulty",
-  "fields":[
-    {"name":"EASY"}, 
-    {"name":"HARD"}, 
-    {"name":"INTRO"}, 
-    {"name":"MEDIUM"}, 
-    {"name":"NONE"}, 
-    {"name":"TUTORIAL"}, 
-    {"name":"UBER"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolLobbyLobbyDto",
   "allDeclaredFields":true,
-  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"generated.LolLobbyLobbyGameConfigDto",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolLobbyLobbyInvitation",
   "allDeclaredFields":true,
   "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -811,29 +1624,16 @@
 },
 {
   "name":"generated.LolLobbyLobbyInvitationState",
-  "fields":[
-    {"name":"ACCEPTED"}, 
-    {"name":"DECLINED"}, 
-    {"name":"ERROR"}, 
-    {"name":"JOINED"}, 
-    {"name":"KICKED"}, 
-    {"name":"ONHOLD"}, 
-    {"name":"PENDING"}, 
-    {"name":"REQUESTED"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolLobbyLobbyParticipantDto",
   "allDeclaredFields":true,
-  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"generated.LolLobbyLobbyPartyRewardType",
-  "fields":[
-    {"name":"ICON"}, 
-    {"name":"IP"}, 
-    {"name":"NONE"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolLobbyLobbyPartyRewards",
@@ -846,18 +1646,50 @@
   "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"generated.LolLobbyQueueAvailability",
+  "allDeclaredFields":true
+},
+{
   "name":"generated.LolLobbyQueueCustomGameSpectatorPolicy",
-  "fields":[
-    {"name":"ALLALLOWED"}, 
-    {"name":"FRIENDSALLOWED"}, 
-    {"name":"LOBBYALLOWED"}, 
-    {"name":"NOTALLOWED"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolLootLootGrantNotification",
   "allDeclaredFields":true,
   "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolMissionsTftPaidBattlepass",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolMissionsTftPaidBattlepassInfo",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolMissionsTftPaidBattlepassMilestone",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolNpeTutorialPathTutorial",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolNpeTutorialPathTutorialReward",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.LolNpeTutorialPathTutorialStatus",
+  "allDeclaredFields":true
+},
+{
+  "name":"generated.LolNpeTutorialPathTutorialType",
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolPatchComponentActionProgress",
@@ -871,13 +1703,7 @@
 },
 {
   "name":"generated.LolPatchComponentStateAction",
-  "fields":[
-    {"name":"CHECKINGFORUPDATES"}, 
-    {"name":"IDLE"}, 
-    {"name":"MIGRATING"}, 
-    {"name":"PATCHING"}, 
-    {"name":"REPAIRING"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolPatchComponentStateProgress",
@@ -886,11 +1712,7 @@
 },
 {
   "name":"generated.LolPatchComponentStateWorkType",
-  "fields":[
-    {"name":"DISK"}, 
-    {"name":"NETWORK"}, 
-    {"name":"SCANNING"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.LolPatchProductState",
@@ -913,6 +1735,15 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"generated.LolPremadeVoiceInputMode",
+  "allDeclaredFields":true
+},
+{
+  "name":"generated.LolPremadeVoiceSettingsResource",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"generated.LolReplaysReplaysConfiguration",
   "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
@@ -923,12 +1754,49 @@
   "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"generated.LolSummonerProfilePrivacySetting",
+  "fields":[
+    {"name":"PRIVATE"}, 
+    {"name":"PUBLIC"}
+  ]
+},
+{
   "name":"generated.LolSummonerSummoner",
   "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"generated.LolSummonerSummonerRerollPoints",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.MissionAlertDTO",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.MissionDisplay",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.MissionMetadata",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.MissionProgressDTO",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.NpeReward",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.NpeRewardPackMetadata",
   "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -944,13 +1812,7 @@
 },
 {
   "name":"generated.PatcherComponentStateAction",
-  "fields":[
-    {"name":"CHECKINGFORUPDATES"}, 
-    {"name":"IDLE"}, 
-    {"name":"MIGRATING"}, 
-    {"name":"PATCHING"}, 
-    {"name":"REPAIRING"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.PatcherComponentStateProgress",
@@ -959,14 +1821,30 @@
 },
 {
   "name":"generated.PatcherComponentStateWorkType",
-  "fields":[
-    {"name":"DISK"}, 
-    {"name":"NETWORK"}, 
-    {"name":"SCANNING"}
-  ]
+  "allDeclaredFields":true
 },
 {
   "name":"generated.PatcherProductState",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.PlayerMissionDTO",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.PlayerMissionObjectiveDTO",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.PlayerMissionRewardDTO",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.RewardStrategy",
   "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -976,8 +1854,27 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"generated.SeriesDTO",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.SeriesMediaDTO",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"generated.TutorialMetadata",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"java.io.ObjectInputStream",
   "queryAllPublicMethods":true
+},
+{
+  "name":"java.io.Serializable",
+  "queryAllDeclaredMethods":true
 },
 {
   "name":"java.lang.Boolean",
@@ -994,6 +1891,8 @@
 },
 {
   "name":"java.lang.Class",
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
   "methods":[{"name":"getModule","parameterTypes":[] }]
 },
 {
@@ -1011,6 +1910,10 @@
 {
   "name":"java.lang.Integer",
   "fields":[{"name":"TYPE"}]
+},
+{
+  "name":"java.lang.Iterable",
+  "queryAllDeclaredMethods":true
 },
 {
   "name":"java.lang.Long",
@@ -1034,6 +1937,13 @@
 },
 {
   "name":"java.lang.String"
+},
+{
+  "name":"java.lang.Thread"
+},
+{
+  "name":"java.lang.Throwable",
+  "queriedMethods":[{"name":"addSuppressed","parameterTypes":["java.lang.Throwable"] }]
 },
 {
   "name":"java.lang.Void",
@@ -1106,6 +2016,9 @@
   "methods":[{"name":"nativeOrder","parameterTypes":[] }]
 },
 {
+  "name":"java.security.AccessController"
+},
+{
   "name":"java.security.AlgorithmParametersSpi"
 },
 {
@@ -1113,6 +2026,12 @@
 },
 {
   "name":"java.security.SecureRandomParameters"
+},
+{
+  "name":"java.security.interfaces.ECPrivateKey"
+},
+{
+  "name":"java.security.interfaces.ECPublicKey"
 },
 {
   "name":"java.security.interfaces.RSAPrivateKey"
@@ -1124,11 +2043,53 @@
   "name":"java.sql.Date"
 },
 {
+  "name":"java.util.AbstractCollection",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"java.util.ArrayList",
+  "queriedMethods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"java.util.ArrayList$ArrayListSpliterator"
+},
+{
+  "name":"java.util.Collection",
+  "queryAllDeclaredMethods":true
+},
+{
   "name":"java.util.Date"
+},
+{
+  "name":"java.util.HashSet",
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"java.util.List",
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"java.util.Map",
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"java.util.Optional"
 },
 {
   "name":"java.util.PropertyPermission",
   "methods":[{"name":"<init>","parameterTypes":["java.lang.String","java.lang.String"] }]
+},
+{
+  "name":"java.util.Set",
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"java.util.concurrent.TimeUnit",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
 },
 {
   "name":"java.util.logging.LogManager",
@@ -1137,6 +2098,36 @@
 {
   "name":"java.util.logging.LoggingMXBean",
   "queryAllPublicMethods":true
+},
+{
+  "name":"java.util.stream.AbstractPipeline"
+},
+{
+  "name":"java.util.stream.ReferencePipeline"
+},
+{
+  "name":"java.util.stream.ReferencePipeline$3$1"
+},
+{
+  "name":"java.util.stream.ReferencePipeline$7$1"
+},
+{
+  "name":"java.util.stream.ReferencePipeline$Head"
+},
+{
+  "name":"java.util.stream.Streams$StreamBuilderImpl"
+},
+{
+  "name":"javafx.beans.property.ObjectPropertyBase"
+},
+{
+  "name":"javafx.collections.ListChangeBuilder"
+},
+{
+  "name":"javafx.collections.ObservableListBase"
+},
+{
+  "name":"javafx.event.Event"
 },
 {
   "name":"javafx.fxml.FXMLLoader"
@@ -1160,6 +2151,10 @@
 },
 {
   "name":"javafx.geometry.Pos",
+  "methods":[{"name":"valueOf","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"javafx.geometry.VPos",
   "methods":[{"name":"valueOf","parameterTypes":["java.lang.String"] }]
 },
 {
@@ -1192,7 +2187,16 @@
   "methods":[{"name":"getStylesheets","parameterTypes":[] }]
 },
 {
+  "name":"javafx.scene.Parent$3"
+},
+{
   "name":"javafx.scene.Scene"
+},
+{
+  "name":"javafx.scene.Scene$MouseHandler"
+},
+{
+  "name":"javafx.scene.Scene$ScenePeerListener"
 },
 {
   "name":"javafx.scene.control.Button",
@@ -1264,6 +2268,7 @@
   "queryAllPublicConstructors":true,
   "methods":[
     {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setClosable","parameterTypes":["boolean"] }, 
     {"name":"setContent","parameterTypes":["javafx.scene.Node"] }, 
     {"name":"setText","parameterTypes":["java.lang.String"] }
   ]
@@ -1397,13 +2402,15 @@
     {"name":"setColumnSpan","parameterTypes":["javafx.scene.Node","java.lang.Integer"] }, 
     {"name":"setHalignment","parameterTypes":["javafx.scene.Node","javafx.geometry.HPos"] }, 
     {"name":"setMargin","parameterTypes":["javafx.scene.Node","javafx.geometry.Insets"] }, 
-    {"name":"setRowIndex","parameterTypes":["javafx.scene.Node","java.lang.Integer"] }
+    {"name":"setRowIndex","parameterTypes":["javafx.scene.Node","java.lang.Integer"] }, 
+    {"name":"setValignment","parameterTypes":["javafx.scene.Node","javafx.geometry.VPos"] }
   ],
   "queriedMethods":[
     {"name":"getColumnIndex","parameterTypes":["javafx.scene.Node"] }, 
     {"name":"getColumnSpan","parameterTypes":["javafx.scene.Node"] }, 
     {"name":"getHalignment","parameterTypes":["javafx.scene.Node"] }, 
-    {"name":"getRowIndex","parameterTypes":["javafx.scene.Node"] }
+    {"name":"getRowIndex","parameterTypes":["javafx.scene.Node"] }, 
+    {"name":"getValignment","parameterTypes":["javafx.scene.Node"] }
   ]
 },
 {
@@ -1412,8 +2419,11 @@
   "queryAllPublicConstructors":true,
   "methods":[
     {"name":"<init>","parameterTypes":[] }, 
-    {"name":"setAlignment","parameterTypes":["javafx.geometry.Pos"] }
-  ]
+    {"name":"setAlignment","parameterTypes":["javafx.geometry.Pos"] }, 
+    {"name":"setHgrow","parameterTypes":["javafx.scene.Node","javafx.scene.layout.Priority"] }, 
+    {"name":"setMargin","parameterTypes":["javafx.scene.Node","javafx.geometry.Insets"] }
+  ],
+  "queriedMethods":[{"name":"getHgrow","parameterTypes":["javafx.scene.Node"] }]
 },
 {
   "name":"javafx.scene.layout.Pane",
@@ -1452,6 +2462,7 @@
     {"name":"setMaxHeight","parameterTypes":["double"] }, 
     {"name":"setMinHeight","parameterTypes":["double"] }, 
     {"name":"setPrefHeight","parameterTypes":["double"] }, 
+    {"name":"setValignment","parameterTypes":["javafx.geometry.VPos"] }, 
     {"name":"setVgrow","parameterTypes":["javafx.scene.layout.Priority"] }
   ]
 },
@@ -1549,6 +2560,14 @@
 },
 {
   "name":"javax.management.openmbean.TabularData"
+},
+{
+  "name":"javax.net.ssl.SSLParameters",
+  "methods":[{"name":"setApplicationProtocols","parameterTypes":["java.lang.String[]"] }]
+},
+{
+  "name":"javax.net.ssl.SSLSocket",
+  "methods":[{"name":"getApplicationProtocol","parameterTypes":[] }]
 },
 {
   "name":"javax.security.auth.x500.X500Principal",
@@ -2435,6 +3454,41 @@
 },
 {
   "name":"org.apache.logging.log4j.util.internal.DefaultObjectInputFilter",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"org.cache2k.core.Cache2kCoreProviderImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.cache2k.core.ClockProPlusEviction$Tunable",
+  "allPublicFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.cache2k.core.HeapCache$Tunable",
+  "allPublicFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.cache2k.core.IntHeapCache",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.cache2k.core.TimingHandler$Tunable",
+  "allPublicFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.cache2k.core.concurrency.OptimisticLockStamped",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.cache2k.impl.serverSide.ManagerMXBeanImpl",
+  "queryAllPublicConstructors":true
+},
+{
+  "name":"org.cache2k.jmx.CacheManagerMXBean",
   "queryAllPublicMethods":true
 },
 {
