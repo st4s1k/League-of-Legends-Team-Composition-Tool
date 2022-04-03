@@ -15,8 +15,6 @@ import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
 import com.st4s1k.leagueteamcomp.service.ChampionSuggestionService;
 import com.st4s1k.leagueteamcomp.service.LeagueTeamCompService;
 import com.st4s1k.leagueteamcomp.service.SummonerRoleListGeneratorService;
-import com.st4s1k.leagueteamcomp.utils.Resources;
-import com.st4s1k.leagueteamcomp.utils.Utils;
 import com.stirante.lolclient.ClientApi;
 import com.stirante.lolclient.ClientConnectionListener;
 import com.stirante.lolclient.ClientWebSocket;
@@ -46,6 +44,10 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static com.st4s1k.leagueteamcomp.model.enums.SummonerRoleEnum.*;
+import static com.st4s1k.leagueteamcomp.utils.CompressionUtils.compressB64;
+import static com.st4s1k.leagueteamcomp.utils.CompressionUtils.decompressB64;
+import static com.st4s1k.leagueteamcomp.utils.Resources.*;
+import static com.st4s1k.leagueteamcomp.utils.Utils.*;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.reverseOrder;
 import static java.util.function.Predicate.not;
@@ -227,10 +229,11 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     public void stop() {
-        Utils.stop(LeagueTeamCompController.class).accept(() -> {
-            save();
-            api.stop();
-        });
+        String className = getClass().getSimpleName();
+        log.info("Stopping {}...", className);
+        save();
+        api.stop();
+        log.info("{} stopped.", className);
     }
 
     public void save() {
@@ -243,25 +246,27 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     private void saveAllCheckboxes() {
-        Utils.saveFields(this, CheckBox.class, Node::getId, CheckBox::isSelected);
+        saveFields(this, CheckBox.class, Node::getId, CheckBox::isSelected);
     }
 
     private void saveAllTextFields() {
-        Utils.saveFields(this, TextField.class, Node::getId, TextField::getText);
+        saveFields(this, TextField.class, Node::getId, TextField::getText);
     }
 
     private void saveSummonerData() {
         log.info("Saving summoner data...");
-        Resources.PREFERENCES.put(
-            "summonerDataList",
-            Resources.GSON.toJson(new ArrayList<>(summonerDataListView.getItems()))
-        );
+        List<SummonerData> summonerDataList = new ArrayList<>(summonerDataListView.getItems());
+        String summonerDataListJson = GSON.toJson(summonerDataList);
+        String summonerDataListCompressed = compressB64(summonerDataListJson);
+        PREFERENCES.put("summonerDataList", summonerDataListCompressed);
         log.info("Summoner data saved.");
     }
 
     private void saveChampionSuggestions() {
         log.info("Saving champ select data...");
-        Resources.PREFERENCES.put("champSelect", Resources.GSON.toJson(champSelect));
+        String champSelectJson = GSON.toJson(champSelect);
+        String champSelectCompressed = compressB64(champSelectJson);
+        PREFERENCES.put("champSelect", champSelectCompressed);
         log.info("Champ select data saved.");
     }
 
@@ -299,7 +304,7 @@ public class LeagueTeamCompController implements Initializable {
     @SneakyThrows
     private void registerSocketListener() {
         log.info("Registering socket listener");
-        Failsafe.with(Resources.RETRY_POLICY)
+        Failsafe.with(RETRY_POLICY)
             .runAsync(() -> socket = api.openWebSocket())
             .thenRunAsync(() -> socket.setSocketListener(new ClientWebSocket.SocketListener() {
                 @Override
@@ -312,7 +317,7 @@ public class LeagueTeamCompController implements Initializable {
                                 "\nEvent: {}\nURI: {}\ndata: {}\n",
                                 event.getEventType(),
                                 event.getUri(),
-                                Resources.GSON_PRETTY.toJson(session)
+                                GSON_PRETTY.toJson(session)
                             );
                             onChampSelectUpdate(session);
                         } else if (event.getEventType().equals("Update") &&
@@ -345,8 +350,8 @@ public class LeagueTeamCompController implements Initializable {
     private List<LolChampSelectChampSelectAction> getActions(LolChampSelectChampSelectSession session) {
         return Optional.ofNullable(session.actions).stream()
             .flatMap(Collection::stream)
-            .map(Resources.GSON::toJson)
-            .map(json -> Resources.GSON.fromJson(json, LolChampSelectChampSelectAction[].class))
+            .map(GSON::toJson)
+            .map(json -> GSON.fromJson(json, LolChampSelectChampSelectAction[].class))
             .flatMap(Arrays::stream)
             .toList();
     }
@@ -376,7 +381,7 @@ public class LeagueTeamCompController implements Initializable {
 
     private void updateBans(TeamDTO team, List<Integer> bans) {
         List<Integer> bannedChampionIdsBefore = team.getBannedChampionIds();
-        boolean shouldLog = Utils.notSame(bannedChampionIdsBefore, bans);
+        boolean shouldLog = notSame(bannedChampionIdsBefore, bans);
         if (shouldLog) {
             log.debug("team: {}", team.getTeamSide());
             log.debug("response bans: {}", bans);
@@ -543,7 +548,7 @@ public class LeagueTeamCompController implements Initializable {
 
     private void onResetButtonClick() {
         textArea.clear();
-        Utils.initializeFieldsWithDefaultState(
+        initializeFieldsWithDefaultState(
             this,
             CheckBox.class,
             CheckBox::setSelected,
@@ -552,7 +557,7 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     private void initializeAllCheckboxes() {
-        Utils.initializeFields(
+        initializeFields(
             this,
             CheckBox.class,
             CheckBox::getId,
@@ -563,7 +568,7 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     private void initializeAllTextFields() {
-        Utils.initializeFields(
+        initializeFields(
             this,
             TextField.class,
             TextField::getId,
@@ -576,11 +581,11 @@ public class LeagueTeamCompController implements Initializable {
     public void initializeChampionSuggestions() {
         log.info("Initializing champion suggestions");
         initializeChampSelect();
-        Utils.disableInteraction(allyListView);
-        Utils.disableInteraction(enemyListView);
-        Utils.disableInteraction(allyBanListView);
-        Utils.disableInteraction(enemyBanListView);
-        Utils.disableInteraction(suggestionsListView);
+        disableInteraction(allyListView);
+        disableInteraction(enemyListView);
+        disableInteraction(allyBanListView);
+        disableInteraction(enemyBanListView);
+        disableInteraction(suggestionsListView);
         suggestionService.initializeChampionListView(champSelect.getAllyTeam().getSlots(), allyListView, 50);
         suggestionService.initializeChampionListView(champSelect.getEnemyTeam().getSlots(), enemyListView, 50);
         suggestionService.initializeChampionListView(champSelect.getAllyTeam().getBans(), allyBanListView, 40);
@@ -590,9 +595,10 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     private void initializeChampSelect() {
-        String champSelectJson = Resources.PREFERENCES.get("champSelect", "");
-        if (!champSelectJson.isBlank()) {
-            ChampSelectDTO champSelect = Resources.GSON.fromJson(champSelectJson, ChampSelectDTO.class);
+        String champSelectCompressed = PREFERENCES.get("champSelect", "");
+        if (!champSelectCompressed.isBlank()) {
+            String champSelectJson = decompressB64(champSelectCompressed);
+            ChampSelectDTO champSelect = GSON.fromJson(champSelectJson, ChampSelectDTO.class);
             populateChampSelectTeams(champSelect.getAllyTeam(), this.champSelect.getAllyTeam());
             populateChampSelectTeams(champSelect.getEnemyTeam(), this.champSelect.getEnemyTeam());
         }
@@ -647,17 +653,17 @@ public class LeagueTeamCompController implements Initializable {
 
     private void manualToggleAction() {
         if (manualModeToggle.isSelected()) {
-            Utils.enableInteraction(allyListView);
-            Utils.enableInteraction(enemyListView);
-            Utils.enableInteraction(allyBanListView);
-            Utils.enableInteraction(enemyBanListView);
-            Utils.enableInteraction(suggestionsListView);
+            enableInteraction(allyListView);
+            enableInteraction(enemyListView);
+            enableInteraction(allyBanListView);
+            enableInteraction(enemyBanListView);
+            enableInteraction(suggestionsListView);
         } else {
-            Utils.disableInteraction(allyListView);
-            Utils.disableInteraction(enemyListView);
-            Utils.disableInteraction(allyBanListView);
-            Utils.disableInteraction(enemyBanListView);
-            Utils.disableInteraction(suggestionsListView);
+            disableInteraction(allyListView);
+            disableInteraction(enemyListView);
+            disableInteraction(allyBanListView);
+            disableInteraction(enemyBanListView);
+            disableInteraction(suggestionsListView);
             allyListView.getSelectionModel().clearSelection();
             enemyListView.getSelectionModel().clearSelection();
             allyBanListView.getSelectionModel().clearSelection();
@@ -864,9 +870,12 @@ public class LeagueTeamCompController implements Initializable {
 
     private void initializeSummonerData() {
         log.info("Initializing summoner data");
-        String summonerDataListJson = Resources.PREFERENCES.get("summonerDataList", "[]");
-        List<SummonerData> summonerDataList = Resources.GSON.fromJson(summonerDataListJson, getSummonerDataListType());
-        summonerDataListView.getItems().addAll(summonerDataList);
+        String summonerDataListCompressed = PREFERENCES.get("summonerDataList", "");
+        if (!summonerDataListCompressed.isBlank()) {
+            String summonerDataListJson = decompressB64(summonerDataListCompressed);
+            List<SummonerData> summonerDataList = GSON.fromJson(summonerDataListJson, getSummonerDataListType());
+            summonerDataListView.getItems().addAll(summonerDataList);
+        }
         summonerDataListView.setCellFactory(param -> new ListCell<>() {
             @Override
             public void updateItem(SummonerData item, boolean empty) {

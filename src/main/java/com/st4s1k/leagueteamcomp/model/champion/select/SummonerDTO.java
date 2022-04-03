@@ -5,7 +5,6 @@ import com.st4s1k.leagueteamcomp.model.interfaces.ChampionHolder;
 import com.st4s1k.leagueteamcomp.model.interfaces.Clearable;
 import com.st4s1k.leagueteamcomp.model.interfaces.ImageProvider;
 import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
-import com.st4s1k.leagueteamcomp.utils.Resources;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
@@ -19,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static com.st4s1k.leagueteamcomp.utils.Resources.EMPTY_SLOT_IMAGE;
 import static lombok.AccessLevel.PACKAGE;
 
 @Data
@@ -55,7 +55,7 @@ public class SummonerDTO implements SlotItem, ChampionHolder, Clearable {
 
     @Override
     public Image getImage() {
-        return getChampion().map(ImageProvider::getImage).orElse(Resources.EMPTY_SLOT_IMAGE);
+        return getChampion().map(ImageProvider::getImage).orElse(EMPTY_SLOT_IMAGE);
     }
 
     @Override

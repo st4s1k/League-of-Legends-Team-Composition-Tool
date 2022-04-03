@@ -7,9 +7,6 @@ import com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController;
 import com.st4s1k.leagueteamcomp.exceptions.LTCException;
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
-import com.st4s1k.leagueteamcomp.utils.ResizeHelper;
-import com.st4s1k.leagueteamcomp.utils.Resources;
-import com.st4s1k.leagueteamcomp.utils.Utils;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +33,9 @@ import java.util.Map;
 import java.util.stream.DoubleStream;
 
 import static com.merakianalytics.orianna.types.common.Region.EUROPE_WEST;
+import static com.st4s1k.leagueteamcomp.utils.ResizeHelper.addResizeListener;
+import static com.st4s1k.leagueteamcomp.utils.Resources.*;
+import static com.st4s1k.leagueteamcomp.utils.Utils.setFieldValue;
 import static java.net.http.HttpResponse.BodyHandlers;
 import static java.util.Objects.requireNonNull;
 
@@ -49,33 +49,38 @@ public class LeagueTeamCompApplication extends Application {
     @Override
     @SneakyThrows
     public void start(Stage stage) {
-        Orianna.setRiotAPIKey(Resources.RIOT_API_KEY);
+        Orianna.setRiotAPIKey(RIOT_API_KEY);
         Orianna.setDefaultRegion(EUROPE_WEST);
         Thread.setDefaultUncaughtExceptionHandler(LeagueTeamCompApplication::showError);
         getChampionsFromUrl();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Resources.FXML_FILE_PATH), Resources.LTC_VIEW_PROPERTIES);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_FILE_PATH), LTC_VIEW_PROPERTIES);
         Parent root = loader.load();
         LeagueTeamCompController controller = loader.getController();
         controller.setStageAndSetupListeners(stage);
-        controller.setCloseButtonAction(() -> Utils.stop(LeagueTeamCompApplication.class).accept(() -> {
-            controller.stop();
-            stage.close();
-        }));
+        controller.setCloseButtonAction(() -> applicationStopAction(stage, controller));
         controller.setMinimizeButtonAction(() -> stage.setIconified(true));
-        Scene scene = new Scene(root, Resources.WINDOW_WIDTH, Resources.WINDOW_HEIGHT);
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.initStyle(StageStyle.TRANSPARENT);
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
-        stage.getIcons().add(new Image(requireNonNull(getClass().getResourceAsStream(Resources.ICON_FILE_PATH))));
-        stage.setTitle(Resources.WINDOW_TITLE);
-        stage.setResizable(Resources.WINDOW_IS_RESIZABLE);
+        stage.getIcons().add(new Image(requireNonNull(getClass().getResourceAsStream(ICON_FILE_PATH))));
+        stage.setTitle(WINDOW_TITLE);
+        stage.setResizable(WINDOW_IS_RESIZABLE);
         stage.show();
+    }
+
+    private void applicationStopAction(Stage stage, LeagueTeamCompController controller) {
+        String className = getClass().getSimpleName();
+        log.info("Stopping {}...", className);
+        controller.stop();
+        stage.close();
+        log.info("{} stopped.", className);
     }
 
     @SneakyThrows
     private void getChampionsFromUrl() {
         HttpRequest request = HttpRequest.newBuilder()
-            .uri(new URI(Resources.CHAMPIONS_URL))
+            .uri(new URI(CHAMPIONS_URL))
             .build();
         HttpClient.newHttpClient()
             .sendAsync(request, BodyHandlers.ofString())
@@ -84,9 +89,9 @@ public class LeagueTeamCompApplication extends Application {
     }
 
     private Map<String, ChampionDTO> getChampions(HttpResponse<String> response) {
-        Map<String, ChampionDTO> champions = Resources.GSON.fromJson(response.body(), getChampionMapType());
+        Map<String, ChampionDTO> champions = GSON.fromJson(response.body(), getChampionMapType());
         champions.values().forEach(champion ->
-            Utils.setFieldValue(champion, "image", new Image(champion.getIconUrl(), true)));
+            setFieldValue(champion, "image", new Image(champion.getIconUrl(), true)));
         return champions;
     }
 
@@ -132,7 +137,7 @@ public class LeagueTeamCompApplication extends Application {
         Insets padding = root.getPadding();
         double border = DoubleStream.of(padding.getTop(), padding.getRight(), padding.getBottom(), padding.getLeft())
             .min().orElse(4);
-        ResizeHelper.addResizeListener(dialog, border);
+        addResizeListener(dialog, border);
         dialog.show();
     }
 
