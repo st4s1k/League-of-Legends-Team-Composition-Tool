@@ -2,7 +2,6 @@ package com.st4s1k.leagueteamcomp.utils;
 
 import javafx.scene.Node;
 import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
@@ -10,41 +9,36 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
-@Slf4j
-@UtilityClass
-public class Utils {
+import static com.st4s1k.leagueteamcomp.utils.Resources.PREFERENCES;
 
-    public <T> boolean same(Collection<T> collection1, Collection<T> collection2) {
+@Slf4j
+public final class Utils {
+
+    private Utils() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
+
+    public static <T> boolean same(Collection<T> collection1, Collection<T> collection2) {
         return collection1.size() == collection2.size() && collection1.containsAll(collection2);
     }
 
-    public <T> boolean notSame(Collection<T> collection1, Collection<T> collection2) {
+    public static <T> boolean notSame(Collection<T> collection1, Collection<T> collection2) {
         return !same(collection1, collection2);
     }
 
-    public void disableInteraction(Node node) {
+    public static void disableInteraction(Node node) {
         node.setMouseTransparent(true);
         node.setFocusTraversable(false);
     }
 
-    public void enableInteraction(Node node) {
+    public static void enableInteraction(Node node) {
         node.setMouseTransparent(false);
         node.setFocusTraversable(true);
     }
 
-    public Consumer<Runnable> stop(Class<?> clazz) {
-        return stopAction -> {
-            String className = clazz.getSimpleName();
-            log.info("Stopping {}...", className);
-            stopAction.run();
-            log.info("{} stopped.", className);
-        };
-    }
-
-    public <T, R> void initializeFields(
+    public static <T, R> void initializeFields(
         Object instance,
         Class<T> fieldType,
         Function<T, String> keyExtractor,
@@ -53,14 +47,14 @@ public class Utils {
         R defaultFieldState
     ) {
         initializeFields(instance, fieldType, fieldStateInitializer, fieldValue ->
-            fieldStateConverter.apply(Resources.PREFERENCES.get(
+            fieldStateConverter.apply(PREFERENCES.get(
                 keyExtractor.apply(fieldValue),
                 String.valueOf(defaultFieldState)
             ))
         );
     }
 
-    public <T, R> void initializeFields(
+    public static <T, R> void initializeFields(
         Object instance,
         Class<T> fieldType,
         BiConsumer<T, R> fieldStateInitializer,
@@ -70,7 +64,7 @@ public class Utils {
             fieldStateInitializer.accept(fieldValue, defaultFieldStateProvider.apply(fieldValue)));
     }
 
-    public <T, R> void initializeFieldsWithDefaultState(
+    public static <T, R> void initializeFieldsWithDefaultState(
         Object instance,
         Class<T> fieldType,
         BiConsumer<T, R> fieldStateInitializer,
@@ -80,19 +74,19 @@ public class Utils {
             fieldStateInitializer.accept(fieldValue, defaultFieldState));
     }
 
-    public <T> void saveFields(
+    public static <T> void saveFields(
         Object instance,
         Class<T> fieldType,
         Function<T, String> keyExtractor,
         Function<T, Object> valueExtractor
     ) {
-        getFieldTypeValues(instance, fieldType).forEach(fieldValue -> Resources.PREFERENCES.put(
+        getFieldTypeValues(instance, fieldType).forEach(fieldValue -> PREFERENCES.put(
             keyExtractor.apply(fieldValue),
             String.valueOf(valueExtractor.apply(fieldValue))
         ));
     }
 
-    public <T> List<T> getFieldTypeValues(Object instance, Class<T> fieldType) {
+    public static <T> List<T> getFieldTypeValues(Object instance, Class<T> fieldType) {
         return Arrays.stream(instance.getClass().getDeclaredFields())
             .filter(field -> field.getType().equals(fieldType))
             .map(Field::getName)
@@ -101,7 +95,7 @@ public class Utils {
     }
 
     @SneakyThrows
-    public <T> T getFieldValue(Object instance, String fieldName, Class<T> fieldType) {
+    public static <T> T getFieldValue(Object instance, String fieldName, Class<T> fieldType) {
         Field field = instance.getClass().getDeclaredField(fieldName);
         boolean defaultAccessible = field.canAccess(instance);
         field.setAccessible(true);
@@ -111,7 +105,7 @@ public class Utils {
     }
 
     @SneakyThrows
-    public <T> void setFieldValue(
+    public static <T> void setFieldValue(
         Object instance,
         String fieldName,
         T fieldValue

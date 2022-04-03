@@ -2,7 +2,6 @@ package com.st4s1k.leagueteamcomp.model.champion.select;
 
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.model.interfaces.*;
-import com.st4s1k.leagueteamcomp.utils.Resources;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
@@ -15,6 +14,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+import static com.st4s1k.leagueteamcomp.utils.Resources.EMPTY_SLOT_IMAGE;
 import static lombok.AccessLevel.PACKAGE;
 
 @Data
@@ -57,7 +57,7 @@ public abstract class SlotDTO<T extends SlotItem> implements
 
     @Override
     public Image getImage() {
-        return getItem().map(ImageProvider::getImage).orElse(Resources.EMPTY_SLOT_IMAGE);
+        return getItem().map(ImageProvider::getImage).orElse(EMPTY_SLOT_IMAGE);
     }
 
     @Override
