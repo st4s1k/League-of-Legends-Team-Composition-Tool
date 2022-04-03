@@ -343,6 +343,10 @@
   "methods":[{"name":"run","parameterTypes":[] }]
 },
 {
+  "name":"java.lang.SecurityManager",
+  "fields":[{"name":"initialized"}]
+},
+{
   "name":"java.lang.String",
   "methods":[{"name":"toLowerCase","parameterTypes":["java.util.Locale"] }]
 },

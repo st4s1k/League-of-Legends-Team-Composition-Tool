@@ -26,6 +26,8 @@
     <javafx.plugin.version>0.0.8</javafx.plugin.version>
     <sortpom.plugin.version>3.0.1</sortpom.plugin.version>
     <log4j.version>2.17.2</log4j.version>
+    <orianna.version>4.0.0-rc8</orianna.version>
+    <lol-client-java-api.version>1.2.5</lol-client-java-api.version>
   </properties>
 
   <dependencies>
@@ -56,6 +58,17 @@
       <artifactId>log4j-slf4j-impl</artifactId>
       <version>${log4j.version}</version>
     </dependency>
+    <!-- Riot API -->
+    <dependency>
+      <groupId>com.github.stirante</groupId>
+      <artifactId>lol-client-java-api</artifactId>
+      <version>${lol-client-java-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.merakianalytics.orianna</groupId>
+      <artifactId>orianna</artifactId>
+      <version>${orianna.version}</version>
+    </dependency>
     <!-- Misc -->
     <dependency>
       <groupId>org.controlsfx</groupId>
@@ -74,9 +87,9 @@
       <version>${gson.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.github.stirante</groupId>
-      <artifactId>lol-client-java-api</artifactId>
-      <version>1.2.3</version>
+      <groupId>dev.failsafe</groupId>
+      <artifactId>failsafe</artifactId>
+      <version>3.2.3</version>
     </dependency>
   </dependencies>
 

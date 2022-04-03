@@ -1,12 +1,14 @@
 package com.st4s1k.leagueteamcomp;
 
-import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.merakianalytics.orianna.Orianna;
 import com.st4s1k.leagueteamcomp.controller.LTCExceptionController;
 import com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController;
 import com.st4s1k.leagueteamcomp.exceptions.LTCException;
-import com.st4s1k.leagueteamcomp.model.champion.ChampionsDTO;
+import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
 import com.st4s1k.leagueteamcomp.utils.ResizeHelper;
+import com.st4s1k.leagueteamcomp.utils.Resources;
 import com.st4s1k.leagueteamcomp.utils.Utils;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -25,14 +27,15 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.text.MessageFormat;
+import java.util.Map;
 import java.util.stream.DoubleStream;
 
-import static com.st4s1k.leagueteamcomp.utils.Resources.*;
+import static com.merakianalytics.orianna.types.common.Region.EUROPE_WEST;
 import static java.net.http.HttpResponse.BodyHandlers;
 import static java.util.Objects.requireNonNull;
 
@@ -46,9 +49,11 @@ public class LeagueTeamCompApplication extends Application {
     @Override
     @SneakyThrows
     public void start(Stage stage) {
+        Orianna.setRiotAPIKey(Resources.RIOT_API_KEY);
+        Orianna.setDefaultRegion(EUROPE_WEST);
         Thread.setDefaultUncaughtExceptionHandler(LeagueTeamCompApplication::showError);
         getChampionsFromUrl();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_FILE_PATH), LTC_VIEW_PROPERTIES);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Resources.FXML_FILE_PATH), Resources.LTC_VIEW_PROPERTIES);
         Parent root = loader.load();
         LeagueTeamCompController controller = loader.getController();
         controller.setStageAndSetupListeners(stage);
@@ -57,20 +62,20 @@ public class LeagueTeamCompApplication extends Application {
             stage.close();
         }));
         controller.setMinimizeButtonAction(() -> stage.setIconified(true));
-        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Scene scene = new Scene(root, Resources.WINDOW_WIDTH, Resources.WINDOW_HEIGHT);
         stage.initStyle(StageStyle.TRANSPARENT);
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
-        stage.getIcons().add(new Image(requireNonNull(getClass().getResourceAsStream(ICON_FILE_PATH))));
-        stage.setTitle(WINDOW_TITLE);
-        stage.setResizable(WINDOW_IS_RESIZABLE);
+        stage.getIcons().add(new Image(requireNonNull(getClass().getResourceAsStream(Resources.ICON_FILE_PATH))));
+        stage.setTitle(Resources.WINDOW_TITLE);
+        stage.setResizable(Resources.WINDOW_IS_RESIZABLE);
         stage.show();
     }
 
     @SneakyThrows
     private void getChampionsFromUrl() {
         HttpRequest request = HttpRequest.newBuilder()
-            .uri(new URI(CHAMPIONS_URL))
+            .uri(new URI(Resources.CHAMPIONS_URL))
             .build();
         HttpClient.newHttpClient()
             .sendAsync(request, BodyHandlers.ofString())
@@ -78,16 +83,20 @@ public class LeagueTeamCompApplication extends Application {
             .thenAccept(ChampionRepository::init);
     }
 
-    private ChampionsDTO getChampions(HttpResponse<String> response) {
-        String json = MessageFormat.format("'{'\"champions\":{0}'}'", response.body());
-        ChampionsDTO champions = new Gson().fromJson(json, ChampionsDTO.class);
-        champions.getChampions().values().forEach(champion ->
+    private Map<String, ChampionDTO> getChampions(HttpResponse<String> response) {
+        Map<String, ChampionDTO> champions = Resources.GSON.fromJson(response.body(), getChampionMapType());
+        champions.values().forEach(champion ->
             Utils.setFieldValue(champion, "image", new Image(champion.getIconUrl(), true)));
         return champions;
     }
 
+    private Type getChampionMapType() {
+        return new TypeToken<Map<String, ChampionDTO>>() {
+        }.getType();
+    }
+
     private static void showError(Thread t, Throwable e) {
-        log.error("***Default exception handler***");
+        log.error(e.getMessage(), e);
         if (Platform.isFxApplicationThread()) {
             showErrorDialog(e);
         } else {
@@ -125,5 +134,10 @@ public class LeagueTeamCompApplication extends Application {
             .min().orElse(4);
         ResizeHelper.addResizeListener(dialog, border);
         dialog.show();
+    }
+
+    @Override
+    public void stop() {
+        Platform.exit();
     }
 }

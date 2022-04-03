@@ -1,12 +1,13 @@
 package com.st4s1k.leagueteamcomp.controller;
 
+import com.google.gson.reflect.TypeToken;
+import com.merakianalytics.orianna.types.core.championmastery.ChampionMastery;
+import com.merakianalytics.orianna.types.core.summoner.Summoner;
 import com.st4s1k.leagueteamcomp.exceptions.LTCException;
+import com.st4s1k.leagueteamcomp.model.SummonerData;
 import com.st4s1k.leagueteamcomp.model.champion.AttributeRatingsDTO;
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
-import com.st4s1k.leagueteamcomp.model.champion.select.ChampSelectDTO;
-import com.st4s1k.leagueteamcomp.model.champion.select.SlotDTO;
-import com.st4s1k.leagueteamcomp.model.champion.select.SummonerDTO;
-import com.st4s1k.leagueteamcomp.model.champion.select.TeamDTO;
+import com.st4s1k.leagueteamcomp.model.champion.select.*;
 import com.st4s1k.leagueteamcomp.model.enums.SummonerRoleEnum;
 import com.st4s1k.leagueteamcomp.model.interfaces.ChampionProvider;
 import com.st4s1k.leagueteamcomp.model.interfaces.Clearable;
@@ -14,13 +15,13 @@ import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
 import com.st4s1k.leagueteamcomp.service.ChampionSuggestionService;
 import com.st4s1k.leagueteamcomp.service.LeagueTeamCompService;
 import com.st4s1k.leagueteamcomp.service.SummonerRoleListGeneratorService;
+import com.st4s1k.leagueteamcomp.utils.Resources;
 import com.st4s1k.leagueteamcomp.utils.Utils;
 import com.stirante.lolclient.ClientApi;
 import com.stirante.lolclient.ClientConnectionListener;
 import com.stirante.lolclient.ClientWebSocket;
-import generated.LolChampSelectChampSelectPlayerSelection;
-import generated.LolChampSelectChampSelectSession;
-import generated.LolSummonerSummoner;
+import dev.failsafe.Failsafe;
+import generated.*;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -37,12 +38,16 @@ import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.*;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static com.st4s1k.leagueteamcomp.model.enums.SummonerRoleEnum.*;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.reverseOrder;
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.*;
 import static javafx.scene.control.SelectionMode.MULTIPLE;
@@ -151,26 +156,31 @@ public class LeagueTeamCompController implements Initializable {
 
     @FXML
     private Label teamCompResultLabel;
-
+    @FXML
+    private TextFlow teamStatsTextFlow;
+    @FXML
+    private Button allyAddButton;
+    @FXML
+    private Button enemyAddButton;
     @FXML
     private TextField allySearchField;
     @FXML
-    private ListView<SlotDTO<SummonerDTO>> allyListView;
-    @FXML
-    private ListView<SlotDTO<ChampionDTO>> allyBanListView;
-    @FXML
-    private ListView<ListView<SlotDTO<ChampionDTO>>> suggestionsListView;
-    @FXML
-    private TextFlow allyTeamResultTextFlow;
-
-    @FXML
     private TextField enemySearchField;
     @FXML
-    private ListView<SlotDTO<SummonerDTO>> enemyListView;
+    private ListView<SummonerSlotDTO> allyListView;
     @FXML
-    private ListView<SlotDTO<ChampionDTO>> enemyBanListView;
+    private ListView<SummonerSlotDTO> enemyListView;
     @FXML
-    private TextFlow enemyTeamResultTextFlow;
+    private ListView<ChampionSlotDTO> allyBanListView;
+    @FXML
+    private ListView<ChampionSlotDTO> enemyBanListView;
+    @FXML
+    private ListView<ListView<ChampionSlotDTO>> suggestionsListView;
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Summoner Data                                       *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 
     @FXML
     private ToggleButton manualModeToggle;
@@ -178,6 +188,13 @@ public class LeagueTeamCompController implements Initializable {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Controller fields                                   *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    @FXML
+    private ListView<SummonerData> summonerDataListView;
+    @FXML
+    private TextField summonerAddField;
+    @FXML
+    private Button summonerAddButton;
 
     private static double xOffset = 0;
     private static double yOffset = 0;
@@ -220,7 +237,32 @@ public class LeagueTeamCompController implements Initializable {
         log.info("Saving application state...");
         saveAllCheckboxes();
         saveAllTextFields();
+        saveSummonerData();
+        saveChampionSuggestions();
         log.info("Application saved.");
+    }
+
+    private void saveAllCheckboxes() {
+        Utils.saveFields(this, CheckBox.class, Node::getId, CheckBox::isSelected);
+    }
+
+    private void saveAllTextFields() {
+        Utils.saveFields(this, TextField.class, Node::getId, TextField::getText);
+    }
+
+    private void saveSummonerData() {
+        log.info("Saving summoner data...");
+        Resources.PREFERENCES.put(
+            "summonerDataList",
+            Resources.GSON.toJson(new ArrayList<>(summonerDataListView.getItems()))
+        );
+        log.info("Summoner data saved.");
+    }
+
+    private void saveChampionSuggestions() {
+        log.info("Saving champ select data...");
+        Resources.PREFERENCES.put("champSelect", Resources.GSON.toJson(champSelect));
+        log.info("Champ select data saved.");
     }
 
     @Override
@@ -231,6 +273,7 @@ public class LeagueTeamCompController implements Initializable {
         registerLeagueClientListeners();
         initializeRoleCompositions();
         initializeChampionSuggestions();
+        initializeSummonerData();
     }
 
     @SneakyThrows
@@ -256,34 +299,70 @@ public class LeagueTeamCompController implements Initializable {
     @SneakyThrows
     private void registerSocketListener() {
         log.info("Registering socket listener");
-        if (!api.isAuthorized()) {
-            log.warn("Not logged in!");
-            return;
-        }
-        socket = api.openWebSocket();
-        socket.setSocketListener(new ClientWebSocket.SocketListener() {
-            @Override
-            public void onEvent(ClientWebSocket.Event event) {
-                if (event.getEventType().equals("Update") &&
-                    event.getUri().equals("/lol-champ-select/v1/session") &&
-                    event.getData() instanceof LolChampSelectChampSelectSession session) {
-                    Platform.runLater(() -> LeagueTeamCompController.this.onChampSelectUpdate(session));
+        Failsafe.with(Resources.RETRY_POLICY)
+            .runAsync(() -> socket = api.openWebSocket())
+            .thenRunAsync(() -> socket.setSocketListener(new ClientWebSocket.SocketListener() {
+                @Override
+                public void onEvent(ClientWebSocket.Event event) {
+                    Platform.runLater(() -> {
+                        if (event.getEventType().equals("Update") &&
+                            event.getUri().equals("/lol-champ-select/v1/session") &&
+                            event.getData() instanceof LolChampSelectChampSelectSession session) {
+                            log.debug(
+                                "\nEvent: {}\nURI: {}\ndata: {}\n",
+                                event.getEventType(),
+                                event.getUri(),
+                                Resources.GSON_PRETTY.toJson(session)
+                            );
+                            onChampSelectUpdate(session);
+                        } else if (event.getEventType().equals("Update") &&
+                            event.getUri().equals("/lol-gameflow/v1/gameflow-phase") &&
+                            event.getData() instanceof LolGameflowGameflowPhase phase) {
+                            log.debug("\nEvent: {}\nURI: {}\nphase: {}\n", event.getEventType(), event.getUri(), phase);
+                            if (phase == LolGameflowGameflowPhase.NONE) {
+                                champSelect.clear();
+                            }
+                        }
+                    });
                 }
-            }
 
-            @Override
-            public void onClose(int code, String reason) {
-                log.warn("Socket closed, code: {}, reason: {}", code, reason);
-            }
-        });
+                @Override
+                public void onClose(int code, String reason) {
+                    log.warn("Socket closed, code: {}, reason: {}", code, reason);
+                }
+            }));
     }
 
     private void onChampSelectUpdate(LolChampSelectChampSelectSession session) {
-        if (!manualModeToggle.isSelected()) {
-            champSelect.clear();
-            updateTeam(champSelect.getAllyTeam(), session.myTeam, session.bans.myTeamBans);
-            updateTeam(champSelect.getEnemyTeam(), session.theirTeam, session.bans.theirTeamBans);
-        }
+        champSelect.clear();
+        List<LolChampSelectChampSelectAction> actions = getActions(session);
+        List<Integer> myTeamBans = getTeamBans(session.bans.myTeamBans, actions, action -> action.isAllyAction);
+        List<Integer> theirTeamBans = getTeamBans(session.bans.theirTeamBans, actions, action -> !action.isAllyAction);
+        updateTeam(champSelect.getAllyTeam(), session.myTeam, myTeamBans);
+        updateTeam(champSelect.getEnemyTeam(), session.theirTeam, theirTeamBans);
+    }
+
+    private List<LolChampSelectChampSelectAction> getActions(LolChampSelectChampSelectSession session) {
+        return Optional.ofNullable(session.actions).stream()
+            .flatMap(Collection::stream)
+            .map(Resources.GSON::toJson)
+            .map(json -> Resources.GSON.fromJson(json, LolChampSelectChampSelectAction[].class))
+            .flatMap(Arrays::stream)
+            .toList();
+    }
+
+    private List<Integer> getTeamBans(
+        List<Integer> teamBans,
+        List<LolChampSelectChampSelectAction> actions,
+        Predicate<LolChampSelectChampSelectAction> teamFilter
+    ) {
+        return Optional.ofNullable(teamBans)
+            .filter(not(List::isEmpty))
+            .orElseGet(() -> actions.stream()
+                .filter(teamFilter.and(action -> "ban".equals(action.type)))
+                .map(action -> action.championId)
+                .filter(championId -> championId != 0)
+                .toList());
     }
 
     private void updateTeam(
@@ -291,8 +370,7 @@ public class LeagueTeamCompController implements Initializable {
         List<LolChampSelectChampSelectPlayerSelection> playerSelectionList,
         List<Integer> bans
     ) {
-        playerSelectionList.forEach(playerSelection -> service.findChampionDataById(playerSelection.championId)
-            .ifPresent(champion -> populateSummonerSlot(playerSelection, team, champion)));
+        playerSelectionList.forEach(playerSelection -> populateSummonerSlot(playerSelection, team));
         updateBans(team, bans);
     }
 
@@ -308,10 +386,10 @@ public class LeagueTeamCompController implements Initializable {
             .filter(championId -> team.getBannedChampions().stream()
                 .map(ChampionDTO::getId)
                 .noneMatch(championId::equals))
-            .map(service::findChampionDataById)
+            .map(service::findChampionById)
             .flatMap(Optional::stream)
             .forEach(champion -> team.getBans().stream()
-                .filter(SlotDTO::isChampionNotSelected)
+                .filter(ChampionProvider::isChampionNotSelected)
                 .findFirst()
                 .ifPresent(slot -> slot.setChampion(champion)));
 
@@ -322,16 +400,31 @@ public class LeagueTeamCompController implements Initializable {
 
     private void populateSummonerSlot(
         LolChampSelectChampSelectPlayerSelection playerSelection,
-        TeamDTO team,
-        ChampionDTO champion
+        TeamDTO team
     ) {
         int slotId = playerSelection.cellId.intValue();
         int slotIndex = slotId % 5;
         team.getSlot(slotIndex).getItem().ifPresent(summoner -> {
-            summoner.setSlotId(slotId);
-            summoner.setSummonerName(getSummonerName(playerSelection.summonerId));
-            summoner.setChampion(champion);
+            Long summonerId = playerSelection.summonerId;
+            summoner.setSummonerId(summonerId);
+            summoner.setSummonerName(getSummonerName(summonerId));
+            service.findChampionById(playerSelection.championId)
+                .or(() -> service.findChampionById(playerSelection.championPickIntent))
+                .ifPresent(summoner::setChampion);
+            populateSummonerSuggestions(summoner);
         });
+    }
+
+    @SneakyThrows
+    private void populateSummonerSuggestions(SummonerDTO summoner) {
+        if (summoner.getSummonerId() != null && summoner.getSummonerId() > 0) {
+            Summoner.named(summoner.getSummonerName()).get().getChampionMasteries().stream()
+                .sorted(comparing(ChampionMastery::getPoints, reverseOrder()))
+                .mapToInt(championMastery -> championMastery.getChampion().getId())
+                .forEach(championId -> summoner.getChampionSuggestions().stream()
+                    .filter(ChampionSlotDTO::isEmpty).findFirst().ifPresent(suggestionSlot ->
+                        service.findChampionById(championId).ifPresent(suggestionSlot::setChampion)));
+        }
     }
 
     @SneakyThrows
@@ -480,16 +573,9 @@ public class LeagueTeamCompController implements Initializable {
         );
     }
 
-    private void saveAllCheckboxes() {
-        Utils.saveFields(this, CheckBox.class, Node::getId, CheckBox::isSelected);
-    }
-
-    private void saveAllTextFields() {
-        Utils.saveFields(this, TextField.class, Node::getId, TextField::getText);
-    }
-
     public void initializeChampionSuggestions() {
         log.info("Initializing champion suggestions");
+        initializeChampSelect();
         Utils.disableInteraction(allyListView);
         Utils.disableInteraction(enemyListView);
         Utils.disableInteraction(allyBanListView);
@@ -500,27 +586,36 @@ public class LeagueTeamCompController implements Initializable {
         suggestionService.initializeChampionListView(champSelect.getAllyTeam().getBans(), allyBanListView, 40);
         suggestionService.initializeChampionListView(champSelect.getEnemyTeam().getBans(), enemyBanListView, 40);
         suggestionService.initializeSuggestionsListView(champSelect, suggestionsListView, 40);
-        manualModeToggle.setOnAction(event -> {
-            if (manualModeToggle.isSelected()) {
-                Utils.enableInteraction(allyListView);
-                Utils.enableInteraction(enemyListView);
-                Utils.enableInteraction(allyBanListView);
-                Utils.enableInteraction(enemyBanListView);
-                Utils.enableInteraction(suggestionsListView);
-            } else {
-                Utils.disableInteraction(allyListView);
-                Utils.disableInteraction(enemyListView);
-                Utils.disableInteraction(allyBanListView);
-                Utils.disableInteraction(enemyBanListView);
-                Utils.disableInteraction(suggestionsListView);
-                allyListView.getSelectionModel().clearSelection();
-                enemyListView.getSelectionModel().clearSelection();
-                allyBanListView.getSelectionModel().clearSelection();
-                enemyBanListView.getSelectionModel().clearSelection();
-                suggestionsListView.getItems().forEach(item -> item.getSelectionModel().clearSelection());
-            }
-        });
         initializeTemporaryTeamStats();
+    }
+
+    private void initializeChampSelect() {
+        String champSelectJson = Resources.PREFERENCES.get("champSelect", "");
+        if (!champSelectJson.isBlank()) {
+            ChampSelectDTO champSelect = Resources.GSON.fromJson(champSelectJson, ChampSelectDTO.class);
+            populateChampSelectTeams(champSelect.getAllyTeam(), this.champSelect.getAllyTeam());
+            populateChampSelectTeams(champSelect.getEnemyTeam(), this.champSelect.getEnemyTeam());
+        }
+    }
+
+    private void populateChampSelectTeams(TeamDTO team, TeamDTO thisTeam) {
+        thisTeam.setAttributeRatings(team.getAttributeRatings());
+        populateChampSelectSlots(team, thisTeam);
+        populateChampSelectBans(team, thisTeam);
+    }
+
+    private void populateChampSelectSlots(TeamDTO enemyTeam, TeamDTO thisEnemyTeam) {
+        enemyTeam.getSlots().forEach(slot -> thisEnemyTeam.getSlots().stream()
+            .filter(ChampionProvider::isChampionNotSelected)
+            .findFirst()
+            .ifPresent(thisSlot -> slot.getItem().ifPresent(thisSlot::setItem)));
+    }
+
+    private void populateChampSelectBans(TeamDTO enemyTeam, TeamDTO thisEnemyTeam) {
+        enemyTeam.getBans().forEach(ban -> thisEnemyTeam.getBans().stream()
+            .filter(ChampionProvider::isChampionNotSelected)
+            .findFirst()
+            .ifPresent(thisBan -> ban.getItem().ifPresent(thisBan::setItem)));
     }
 
     private void initializeTemporaryTeamStats() {
@@ -530,8 +625,11 @@ public class LeagueTeamCompController implements Initializable {
         enemyBanListView.getSelectionModel().setSelectionMode(MULTIPLE);
         suggestionsListView.getItems().forEach(item -> item.getSelectionModel().setSelectionMode(MULTIPLE));
 
+        allyAddButton.setOnAction(event -> onSearchAction(allyListView, allySearchField.getText()));
+        enemyAddButton.setOnAction(event -> onSearchAction(enemyListView, enemySearchField.getText()));
         allySearchField.setOnAction(actionEvent -> onSearchAction(allyListView, allySearchField.getText()));
         enemySearchField.setOnAction(actionEvent -> onSearchAction(enemyListView, enemySearchField.getText()));
+        manualModeToggle.setOnAction(event -> manualToggleAction());
 
         bindAutoCompletion(enemySearchField, request -> searchFieldAutoCompletion(request.getUserText()));
         bindAutoCompletion(allySearchField, request -> searchFieldAutoCompletion(request.getUserText()));
@@ -547,13 +645,34 @@ public class LeagueTeamCompController implements Initializable {
         enemyListView.getItems().addListener(getChampionListChangeListener());
     }
 
+    private void manualToggleAction() {
+        if (manualModeToggle.isSelected()) {
+            Utils.enableInteraction(allyListView);
+            Utils.enableInteraction(enemyListView);
+            Utils.enableInteraction(allyBanListView);
+            Utils.enableInteraction(enemyBanListView);
+            Utils.enableInteraction(suggestionsListView);
+        } else {
+            Utils.disableInteraction(allyListView);
+            Utils.disableInteraction(enemyListView);
+            Utils.disableInteraction(allyBanListView);
+            Utils.disableInteraction(enemyBanListView);
+            Utils.disableInteraction(suggestionsListView);
+            allyListView.getSelectionModel().clearSelection();
+            enemyListView.getSelectionModel().clearSelection();
+            allyBanListView.getSelectionModel().clearSelection();
+            enemyBanListView.getSelectionModel().clearSelection();
+            suggestionsListView.getItems().forEach(item -> item.getSelectionModel().clearSelection());
+        }
+    }
+
     private void onSearchAction(
-        ListView<SlotDTO<SummonerDTO>> championListView,
+        ListView<SummonerSlotDTO> championListView,
         String searchFieldText
     ) {
         if (isValidSearchFieldText(championListView.getItems(), searchFieldText)) {
             log.debug("Search field text \"{}\" is valid", searchFieldText);
-            service.findChampionDataByName(searchFieldText)
+            service.findChampionByName(searchFieldText)
                 .ifPresentOrElse(
                     champion -> getSearchActionItems(championListView).stream()
                         .filter(ChampionProvider::isChampionNotSelected)
@@ -566,13 +685,14 @@ public class LeagueTeamCompController implements Initializable {
                             },
                             () -> log.debug("No empty slots found")
                         ),
-                    () -> log.debug("Champion not found for name: {}", searchFieldText));
+                    () -> log.debug("Champion not found for name: {}", searchFieldText)
+                );
         } else {
             log.debug("Search field text is not valid: {}", searchFieldText);
         }
     }
 
-    private boolean isValidSearchFieldText(List<SlotDTO<SummonerDTO>> slots, String searchFieldText) {
+    private boolean isValidSearchFieldText(List<SummonerSlotDTO> slots, String searchFieldText) {
         List<String> championKeys = slots.stream()
             .map(ChampionProvider::getChampion)
             .flatMap(Optional::stream)
@@ -581,14 +701,14 @@ public class LeagueTeamCompController implements Initializable {
         long filledSlots = slots.stream().filter(ChampionProvider::isChampionSelected).count();
         return filledSlots < 5
             && !championKeys.contains(searchFieldText)
-            && service.existsChampionDataByName(searchFieldText)
-            && !service.findChampionDataByName(searchFieldText)
+            && service.existsChampionByName(searchFieldText)
+            && !service.findChampionByName(searchFieldText)
             .map(champSelect.getChampionPool()::contains)
             .orElse(false);
     }
 
-    private ObservableList<SlotDTO<SummonerDTO>> getSearchActionItems(ListView<SlotDTO<SummonerDTO>> championListView) {
-        ObservableList<SlotDTO<SummonerDTO>> selectedItems = championListView.getSelectionModel().getSelectedItems();
+    private ObservableList<SummonerSlotDTO> getSearchActionItems(ListView<SummonerSlotDTO> championListView) {
+        ObservableList<SummonerSlotDTO> selectedItems = championListView.getSelectionModel().getSelectedItems();
         return selectedItems.isEmpty() || selectedItems.stream().noneMatch(ChampionProvider::isChampionNotSelected)
             ? championListView.getItems()
             : selectedItems;
@@ -600,41 +720,36 @@ public class LeagueTeamCompController implements Initializable {
             .toList();
         return service.getAllChampionKeys().stream()
             .filter(not(championPoolKeys::contains))
-            .map(service::findChampionDataByKey)
+            .map(service::findChampionByKey)
             .flatMap(Optional::stream)
             .map(ChampionDTO::getName)
             .filter(championName -> championName.toLowerCase().startsWith(userText.toLowerCase()))
             .collect(toList());
     }
 
-    public <T extends SlotItem> void handleDeleteButton(KeyEvent event, ListView<SlotDTO<T>> listView) {
+    public <T extends SlotItem, S extends SlotDTO<T>> void handleDeleteButton(KeyEvent event, ListView<S> listView) {
         if (event.getCode() == KeyCode.DELETE) {
-            ObservableList<SlotDTO<T>> selectedItems = listView.getSelectionModel().getSelectedItems();
+            ObservableList<S> selectedItems = listView.getSelectionModel().getSelectedItems();
             if (!selectedItems.isEmpty()) {
                 selectedItems.forEach(Clearable::clear);
             }
         }
     }
 
-    private ListChangeListener<SlotDTO<SummonerDTO>> getChampionListChangeListener() {
+    private ListChangeListener<SummonerSlotDTO> getChampionListChangeListener() {
         return change -> {
             setTeamAttributeRatings(champSelect.getAllyTeam());
             setTeamAttributeRatings(champSelect.getEnemyTeam());
-            calculateTeamStats(
+            formatTeamStats(
                 champSelect.getAllyTeam().getAttributeRatings(),
                 champSelect.getEnemyTeam().getAttributeRatings(),
-                allyTeamResultTextFlow
+                teamStatsTextFlow
             );
-            calculateTeamStats(
-                champSelect.getEnemyTeam().getAttributeRatings(),
-                champSelect.getAllyTeam().getAttributeRatings(),
-                enemyTeamResultTextFlow
-            );
-            long allyBadStatCount = getBadStatCount(allyTeamResultTextFlow);
-            long enemyBadStatCount = getBadStatCount(enemyTeamResultTextFlow);
-            if (allyBadStatCount > enemyBadStatCount) {
+            long badStatCount = getBadStatCount(teamStatsTextFlow);
+            long goodStatCount = getGoodStatCount(teamStatsTextFlow);
+            if (badStatCount > goodStatCount) {
                 teamCompResultLabel.setText("Enemy Team is better");
-            } else if (allyBadStatCount < enemyBadStatCount) {
+            } else if (badStatCount < goodStatCount) {
                 teamCompResultLabel.setText("Ally Team is better");
             } else {
                 teamCompResultLabel.setText("Teams are similar");
@@ -659,7 +774,7 @@ public class LeagueTeamCompController implements Initializable {
         team.setAttributeRatings(enemyTeamStats);
     }
 
-    private void calculateTeamStats(
+    private void formatTeamStats(
         AttributeRatingsDTO stats,
         AttributeRatingsDTO opponentStats,
         TextFlow textFlow
@@ -739,4 +854,43 @@ public class LeagueTeamCompController implements Initializable {
             .filter(pseudoClasses -> pseudoClasses.contains(CHAMPION_STAT_BAD_PSEUDO_CLASS))
             .count();
     }
+
+    private long getGoodStatCount(TextFlow textFlow) {
+        return textFlow.getChildren().stream()
+            .map(Node::getPseudoClassStates)
+            .filter(pseudoClasses -> pseudoClasses.contains(CHAMPION_STAT_GOOD_PSEUDO_CLASS))
+            .count();
+    }
+
+    private void initializeSummonerData() {
+        log.info("Initializing summoner data");
+        String summonerDataListJson = Resources.PREFERENCES.get("summonerDataList", "[]");
+        List<SummonerData> summonerDataList = Resources.GSON.fromJson(summonerDataListJson, getSummonerDataListType());
+        summonerDataListView.getItems().addAll(summonerDataList);
+        summonerDataListView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            public void updateItem(SummonerData item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getSummonerName());
+                }
+            }
+        });
+        summonerAddField.setOnAction(action -> onSummonerNameFieldAction());
+        summonerAddButton.setOnAction(action -> onSummonerNameFieldAction());
+    }
+
+    private Type getSummonerDataListType() {
+        return new TypeToken<List<SummonerData>>() {
+        }.getType();
+    }
+
+    private void onSummonerNameFieldAction() {
+        SummonerData summonerData = new SummonerData();
+        summonerData.setSummonerName(summonerAddField.getText());
+        summonerDataListView.getItems().add(summonerData);
+    }
+
 }

@@ -3,6 +3,7 @@ package com.st4s1k.leagueteamcomp.model.champion.select;
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.model.interfaces.ChampionProvider;
 import com.st4s1k.leagueteamcomp.model.interfaces.Clearable;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import static com.st4s1k.leagueteamcomp.model.enums.TeamSideEnum.ALLY_TEAM;
 import static com.st4s1k.leagueteamcomp.model.enums.TeamSideEnum.ENEMY_TEAM;
 
 @Getter
+@Builder
 @NoArgsConstructor
 public class ChampSelectDTO implements Clearable {
 

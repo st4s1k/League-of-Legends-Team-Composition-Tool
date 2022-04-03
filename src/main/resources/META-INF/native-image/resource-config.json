@@ -14,6 +14,18 @@
       "pattern":"\\QMETA-INF/services/org.apache.logging.log4j.util.PropertySource\\E"
     }, 
     {
+      "pattern":"\\QMETA-INF/services/org.cache2k.core.spi.CacheLifeCycleListener\\E"
+    }, 
+    {
+      "pattern":"\\QMETA-INF/services/org.cache2k.core.spi.CacheManagerLifeCycleListener\\E"
+    }, 
+    {
+      "pattern":"\\QMETA-INF/services/org.cache2k.spi.Cache2kExtensionProvider\\E"
+    }, 
+    {
+      "pattern":"\\Qcom/merakianalytics/orianna/default-orianna-config.json\\E"
+    }, 
+    {
       "pattern":"\\Qcom/st4s1k/leagueteamcomp/exception.fxml\\E"
     }, 
     {
@@ -41,7 +53,19 @@
       "pattern":"\\Qmozilla/public-suffix-list.txt\\E"
     }, 
     {
+      "pattern":"\\Qorg.cache2k.impl.version.txt\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/cache2k/services/org.cache2k.spi.Cache2kCoreProvider\\E"
+    }, 
+    {
       "pattern":"\\Qorg/controlsfx/control/textfield/autocompletion.css\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/joda/time/tz/data/Europe/Chisinau\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/joda/time/tz/data/ZoneInfoMap\\E"
     }, 
     {
       "pattern":"\\Qorg/slf4j/impl/StaticLoggerBinder.class\\E"

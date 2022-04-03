@@ -5,7 +5,7 @@ import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
 
-public class LTCChampionListCell<T extends SlotItem> extends ListCell<SlotDTO<T>> {
+public class LTCChampionListCell<T extends SlotItem, S extends SlotDTO<T>> extends ListCell<S> {
 
     private final ImageView imageView = new ImageView();
     private final double imageSize;
@@ -15,7 +15,7 @@ public class LTCChampionListCell<T extends SlotItem> extends ListCell<SlotDTO<T>
     }
 
     @Override
-    public void updateItem(SlotDTO<T> item, boolean empty) {
+    public void updateItem(S item, boolean empty) {
         super.updateItem(item, empty);
         if (empty || item == null) {
             setGraphic(null);

@@ -6,6 +6,7 @@ import com.st4s1k.leagueteamcomp.model.enums.AttackTypeEnum;
 import com.st4s1k.leagueteamcomp.model.enums.ResourceEnum;
 import com.st4s1k.leagueteamcomp.model.enums.RoleEnum;
 import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
+import javafx.beans.Observable;
 import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.ToString;
@@ -43,5 +44,10 @@ public class ChampionDTO implements SlotItem {
     @Override
     public Optional<ChampionDTO> getChampion() {
         return Optional.of(this);
+    }
+
+    @Override
+    public Observable[] getObservables() {
+        return new Observable[]{image.progressProperty()};
     }
 }

@@ -11,10 +11,15 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+
+import static lombok.AccessLevel.PACKAGE;
 
 @Data
 @ToString(onlyExplicitlyIncluded = true)
@@ -23,11 +28,16 @@ public class SummonerDTO implements SlotItem, ChampionHolder, Clearable {
 
     @ToString.Include
     @EqualsAndHashCode.Include
+    private Long summonerId;
+
+    @ToString.Include
+    @EqualsAndHashCode.Include
     private String summonerName;
 
-    private int slotId = -1;
+    @Getter(PACKAGE)
+    private final SimpleObjectProperty<ChampionDTO> selectedChampionProperty = new SimpleObjectProperty<>();
 
-    private final List<SlotDTO<ChampionDTO>> championSuggestions = List.of(
+    private final List<ChampionSlotDTO> championSuggestions = List.of(
         ChampionSlotDTO.newSlot(),
         ChampionSlotDTO.newSlot(),
         ChampionSlotDTO.newSlot(),
@@ -35,11 +45,12 @@ public class SummonerDTO implements SlotItem, ChampionHolder, Clearable {
         ChampionSlotDTO.newSlot()
     );
 
-    private SimpleObjectProperty<ChampionDTO> selectedChampionProperty = new SimpleObjectProperty<>();
-
     @Override
     public Observable[] getObservables() {
-        return new Observable[]{selectedChampionProperty};
+        return Stream.concat(
+            getChampion().map(ChampionDTO::getObservables).stream().flatMap(Arrays::stream),
+            Stream.of(selectedChampionProperty)
+        ).toArray(Observable[]::new);
     }
 
     @Override
@@ -61,7 +72,7 @@ public class SummonerDTO implements SlotItem, ChampionHolder, Clearable {
 
     @Override
     public void clear() {
-        slotId = -1;
         selectedChampionProperty.set(null);
+        championSuggestions.forEach(ChampionSlotDTO::clear);
     }
 }

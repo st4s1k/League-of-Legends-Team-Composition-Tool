@@ -20,15 +20,11 @@ public class SummonerSlotDTO extends SlotDTO<SummonerDTO> {
     }
 
     public static SummonerSlotDTO newSlot() {
-        return of(new SummonerDTO());
-    }
-
-    public static SummonerSlotDTO of(SummonerDTO summoner) {
         SummonerSlotDTO championSlot = new SummonerSlotDTO(
             ChampionProvider::getChampion,
             (champion, slot) -> slot.getItem().orElseThrow().setChampion(champion)
         );
-        championSlot.setItem(summoner);
+        championSlot.setItem(new SummonerDTO());
         return championSlot;
     }
 

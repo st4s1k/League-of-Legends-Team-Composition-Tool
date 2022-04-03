@@ -1,6 +1,7 @@
 * {
     /* General */
     -ltc-accent-color: #dead4a;
+    -ltc-accent-color-transparent: rgba(222, 173, 74, 0.3);
     -ltc-color-0: #1d1e22;
     -ltc-color-1: #202529;
     -ltc-color-2: #2a3036;
@@ -10,8 +11,8 @@
     /* TabPane */
     -ltc-tab-text-color: -ltc-accent-color;
     -ltc-tab-header-background-color: -ltc-color-1;
-    -ltc-tab-background-color: -ltc-color-0;
-    -ltc-tab-selected-background-color: -ltc-color-1;
+    -ltc-tab-background-color: -ltc-color-1;
+    -ltc-tab-selected-background-color: -ltc-color-0;
     -ltc-tab-selected-indicator-color: -ltc-accent-color;
     -ltc-tab-height: 40;
     /* TitledPane */
@@ -31,7 +32,7 @@
     -ltc-champion-ban-list-cell-width: -ltc-champion-ban-list-cell-size;
     -ltc-champion-ban-list-cell-height: -ltc-champion-ban-list-cell-size;
     /* Champion Suggestions List */
-    -ltc-suggestions-list-view-width: 236;
+    -ltc-suggestions-list-view-width: 238;
     -ltc-suggestions-list-view-height: -ltc-champion-list-view-height;
     -ltc-suggestions-list-cell-width: 230;
     -ltc-suggestions-list-cell-height: -ltc-champion-list-cell-height;
@@ -67,26 +68,27 @@
 }
 
 .window-button {
+    -width: 40;
+    -height: 40;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-min-height: -height;
+    -fx-min-width: -width;
+    -fx-max-height: -height;
+    -fx-max-width: -width;
+    /* ---------------------------------------- */
     -fx-background-color: transparent;
-    -wsize: 40;
-    -hsize: 40;
     -fx-border-width: 0;
-    -fx-pref-width: -wsize;
-    -fx-pref-height: -hsize;
-    -fx-min-height: -hsize;
-    -fx-min-width: -wsize;
-    -fx-max-height: -hsize;
-    -fx-max-width: -wsize;
     -fx-content-display: graphic-only;
 }
 
 .window-button.minimize-button:hover,
 .window-button.close-button:hover {
-    -fx-background-color: transparent;
+    -fx-background-color: derive(-ltc-tab-header-background-color, 5%);
 }
 
-.window-button.minimize-button:hover .icon,
-.window-button.close-button:hover .icon {
+.window-button:hover .icon,
+.window-button:pressed .icon {
     -fx-background-color: -ltc-accent-color;
 }
 
@@ -96,39 +98,46 @@
 
 .window-button.minimize-button:pressed,
 .window-button.close-button:pressed {
-    -fx-background-color: -ltc-accent-color;
+    -fx-background-color: derive(-ltc-tab-header-background-color, -20%);
     -fx-border-width: 0;
     -fx-border-color: transparent;
     -fx-text-fill: -ltc-color-0;
 }
 
-.window-button.minimize-button:pressed .icon,
-.window-button.close-button:pressed .icon {
-    -fx-background-color: -ltc-tab-background-color;
-}
-
 .window-button.close-button .icon {
+    -width: 10;
+    -height: 10;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-min-height: -height;
+    -fx-min-width: -width;
+    -fx-max-height: -height;
+    -fx-max-width: -width;
+    /* ---------------------------------------- */
     -fx-shape: "M 2 0 L 0 2 L 8 10 L 0 18 L 2 20 L 10 12 L 18 20 L 20 18 L 12 10 L 20 2 L 18 0 L 10 8 L 2 0";
-    -wsize: 10;
-    -hsize: 10;
-    -fx-pref-width: -wsize;
-    -fx-pref-height: -hsize;
-    -fx-min-height: -hsize;
-    -fx-min-width: -wsize;
-    -fx-max-height: -hsize;
-    -fx-max-width: -wsize;
 }
 
 .window-button.minimize-button .icon {
+    -width: 12;
+    -height: 1.5;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-min-height: -height;
+    -fx-min-width: -width;
+    -fx-max-height: -height;
+    -fx-max-width: -width;
     -fx-shape: "M 0 0 L 0 1 L 30 1 L 30 0 L 0 0";
-    -wsize: 10;
-    -hsize: 2;
-    -fx-pref-width: -wsize;
-    -fx-pref-height: -hsize;
-    -fx-min-height: -hsize;
-    -fx-min-width: -wsize;
-    -fx-max-height: -hsize;
-    -fx-max-width: -wsize;
+}
+
+.add-button {
+    -width: 45;
+    -height: 25;
+    -fx-pref-width: -width;
+    -fx-pref-height: -height;
+    -fx-min-height: -height;
+    -fx-min-width: -width;
+    -fx-max-height: -height;
+    -fx-max-width: -width;
 }
 
 
@@ -143,6 +152,7 @@
     -fx-max-height: -height;
     -fx-min-width: -width;
     -fx-min-height: -height;
+    /* ---------------------------------------- */
     -fx-background-color: -ltc-tab-selected-background-color, derive(-ltc-accent-color, -50%);
     -fx-border-width: 0;
     -fx-background-radius: 0;
@@ -160,12 +170,6 @@
 /* CheckBox */
 
 .check-box .box {
-    -fx-background-color: -ltc-background-color;
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-    -fx-border-radius: 0;
-    -fx-border-width: 1;
-    -fx-border-color: -ltc-accent-color;
     -width: 26;
     -height: -width;
     -fx-pref-width: -width;
@@ -174,10 +178,16 @@
     -fx-min-height: -height;
     -fx-max-width: -width;
     -fx-max-height: -height;
+    /* ---------------------------------------- */
+    -fx-background-color: -ltc-background-color;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-radius: 0;
+    -fx-border-width: 1;
+    -fx-border-color: -ltc-accent-color;
 }
 
 .check-box .mark {
-    -fx-shape: "M 4 8 L 10 1 L 12 3 L 5 9 C 6 10 6 11 7 10 C 7 11 8 12 7 12 A 1.42 1.42 0 0 1 6 13 A 5 5 0 0 0 4 10 Q 3.5 9.9 3.5 10.5 T 2 11.8 t -0.8 -0.8 T 2.5 9.5 T 3 9 A 5 5 90 0 0 0 7 A 1.42 1.42 0 0 1 1 6 C 1 5 2 6 3 6 C 2 7 3 7 4 8 M 10 1 L 13 0 L 12 3";
     -width: 18;
     -height: -width;
     -fx-pref-width: -width;
@@ -186,6 +196,8 @@
     -fx-min-height: -height;
     -fx-max-width: -width;
     -fx-max-height: -height;
+    /* ---------------------------------------- */
+    -fx-shape: "M 4 8 L 10 1 L 12 3 L 5 9 C 6 10 6 11 7 10 C 7 11 8 12 7 12 A 1.42 1.42 0 0 1 6 13 A 5 5 0 0 0 4 10 Q 3.5 9.9 3.5 10.5 T 2 11.8 t -0.8 -0.8 T 2.5 9.5 T 3 9 A 5 5 90 0 0 0 7 A 1.42 1.42 0 0 1 1 6 C 1 5 2 6 3 6 C 2 7 3 7 4 8 M 10 1 L 13 0 L 12 3";
 }
 
 .check-box:selected .mark {
@@ -199,7 +211,11 @@
 
 /* Label */
 
-.team-label {
+.label {
+    -height: 30;
+    -fx-pref-height: -height;
+    -fx-min-height: -height;
+    -fx-max-height: -height;
     -fx-text-fill: -ltc-accent-color;
 }
 
@@ -230,6 +246,11 @@
 /* TextField */
 
 .text-field {
+    -height: 30;
+    -fx-pref-height: -height;
+    -fx-min-height: -height;
+    -fx-max-height: -height;
+    /* ---------------------------------------- */
     -fx-background-color: -ltc-background-color;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-text-fill: -ltc-text-color;
@@ -238,21 +259,10 @@
     -fx-border-width: 0 0 1 0;
     -fx-border-radius: 0;
     -fx-border-color: -ltc-accent-color;
-    -height: 30;
-    -fx-pref-height: -height;
-    -fx-min-height: -height;
-    -fx-max-height: -height;
     -fx-alignment: center;
     -fx-prompt-text-fill: -ltc-color-2;
     -fx-highlight-fill: -ltc-text-color;
     -fx-highlight-text-fill: -ltc-color-2;
-}
-
-.team-search-field {
-    -width: 200;
-    -fx-pref-width: -width;
-    -fx-min-width: -width;
-    -fx-max-width: -width;
 }
 
 
@@ -282,30 +292,7 @@
 }
 
 
-/* AutoCompletePopUp */
-
-.auto-complete-popup .list-view {
-    -fx-border-width: 0 !important;
-    -fx-background-color: -ltc-color-1 !important;
-    -fx-background-insets: 0 !important;
-}
-
-.auto-complete-popup .list-view .list-cell {
-    -fx-background-color: -ltc-color-1 !important;
-    -fx-text-fill: -ltc-text-color !important;
-    -fx-alignment: center !important;
-}
-
-.auto-complete-popup .list-view .list-cell:filled:selected {
-    -fx-background-color: -ltc-accent-color !important;
-    -fx-text-fill: -ltc-color-0 !important;
-}
-
-.auto-complete-popup .list-view .list-cell:filled:hover,
-.auto-complete-popup .list-view .list-cell:filled:selected:hover {
-    -fx-background-color: -ltc-text-color !important;
-    -fx-text-fill: -ltc-color-0 !important;
-}
+/* ScrollBar */
 
 .scroll-bar {
     -fx-background-color: transparent;
@@ -353,6 +340,32 @@
 }
 
 
+/* ListView */
+
+.list-view {
+    -fx-border-width: 0 !important;
+    -fx-background-color: -ltc-color-1 !important;
+    -fx-background-insets: 0 !important;
+}
+
+.list-view .list-cell {
+    -fx-background-color: -ltc-color-1 !important;
+    -fx-text-fill: -ltc-text-color !important;
+    -fx-alignment: center !important;
+}
+
+.list-view .list-cell:filled:selected {
+    -fx-background-color: -ltc-accent-color !important;
+    -fx-text-fill: -ltc-color-0 !important;
+}
+
+.list-view .list-cell:filled:hover,
+.list-view .list-cell:filled:selected:hover {
+    -fx-background-color: -ltc-text-color !important;
+    -fx-text-fill: -ltc-color-0 !important;
+}
+
+
 /* Champion List */
 
 .champion-list-view .scroll-bar:horizontal .increment-arrow,
@@ -363,7 +376,7 @@
 .champion-list-view .scroll-bar:vertical .decrement-arrow,
 .champion-list-view .scroll-bar:vertical .increment-button,
 .champion-list-view .scroll-bar:vertical .decrement-button {
-    -fx-padding: 0;
+    -fx-padding: 0 !important;
 }
 
 .champion-list-view {
@@ -376,10 +389,10 @@
     -fx-min-width: -width;
     -fx-min-height: -height;
     /* ---------------------------------------- */
-    -fx-background-insets: 0;
-    -fx-border-width: 2;
-    -fx-border-color: -ltc-accent-color;
-    -fx-background-color: -ltc-color-1;
+    -fx-background-insets: 0 !important;
+    -fx-border-width: 2 !important;
+    -fx-border-color: -ltc-accent-color !important;
+    -fx-background-color: -ltc-color-1 !important;
 }
 
 .champion-list-view .list-cell {
@@ -392,13 +405,13 @@
     -fx-min-width: -width;
     -fx-min-height: -height;
     /* ---------------------------------------- */
-    -fx-padding: 0;
-    -fx-alignment: center;
-    -fx-background-color: transparent;
+    -fx-padding: 0 !important;
+    -fx-alignment: center !important;
+    -fx-background-color: transparent !important;
 }
 
 .champion-list-view .list-cell:selected {
-    -fx-background-color: -ltc-accent-color;
+    -fx-background-color: -ltc-accent-color !important;
 }
 
 
@@ -414,8 +427,8 @@
     -fx-min-width: -width;
     -fx-min-height: -height;
     /* ---------------------------------------- */
-    -fx-border-width: 0;
-    -fx-orientation: horizontal;
+    -fx-border-width: 0 !important;
+    -fx-orientation: horizontal !important;
 }
 
 .champion-ban-list-view .list-cell {
@@ -428,8 +441,8 @@
     -fx-min-width: -width;
     -fx-min-height: -height;
     /* ---------------------------------------- */
-    -fx-border-width: 0;
-    -fx-orientation: horizontal;
+    -fx-border-width: 0 !important;
+    -fx-orientation: horizontal !important;
 }
 
 
@@ -445,10 +458,10 @@
     -fx-min-width: -width;
     -fx-min-height: -height;
     /* ---------------------------------------- */
-    -fx-orientation: vertical;
-    -fx-border-color: transparent;
-    -fx-border-width: 2 2 2 0;
-    -fx-background-color: transparent;
+    -fx-orientation: vertical !important;
+    -fx-border-color: transparent !important;
+    -fx-border-width: 2 2 2 0 !important;
+    -fx-background-color: transparent !important;
 }
 
 .suggestions-list-view .list-cell {
@@ -461,11 +474,12 @@
     -fx-min-width: -width;
     -fx-min-height: -height;
     /* ---------------------------------------- */
-    -fx-background-color: transparent;
+    -fx-background-color: transparent !important;
+    -fx-alignment: center-left !important;
 }
 
 .suggestions-list-view .list-cell:selected {
-    -fx-background-color: transparent;
+    -fx-background-color: transparent !important;
 }
 
 
@@ -481,10 +495,10 @@
     -fx-min-width: -width;
     -fx-min-height: -height;
     /* ---------------------------------------- */
-    -fx-orientation: horizontal;
-    -fx-border-width: 1 1 1 0;
-    -fx-border-color: -ltc-accent-color;
-    -fx-background-color: -ltc-color-1;
+    -fx-orientation: horizontal !important;
+    -fx-border-width: 1 1 1 0 !important;
+    -fx-border-color: -ltc-accent-color !important;
+    -fx-background-color: -ltc-color-1 !important;
 }
 
 .suggestions-sub-list-view .list-cell {
@@ -497,11 +511,12 @@
     -fx-min-width: -width;
     -fx-min-height: -height;
     /* ---------------------------------------- */
-    -fx-background-color: transparent;
+    -fx-background-color: transparent !important;
+    -fx-alignment: center !important;
 }
 
 .suggestions-sub-list-view .list-cell:selected {
-    -fx-background-color: -ltc-accent-color;
+    -fx-background-color: -ltc-accent-color !important;
 }
 
 
@@ -536,7 +551,7 @@
 /* TabPane */
 
 .tab-pane {
-    -fx-tab-min-width: 90;
+    -fx-tab-min-width: 120;
     -fx-background-color: -ltc-background-color;
     -fx-background-insets: 0;
 }
@@ -556,7 +571,7 @@
 }
 
 .tab-pane .tab .tab-label {
-    -fx-alignment: CENTER;
+    -fx-alignment: center;
     -fx-text-fill: -ltc-tab-text-color;
     -fx-font-size: 12;
     -fx-font-weight: bold;
