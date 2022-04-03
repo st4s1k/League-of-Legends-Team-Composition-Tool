@@ -1,6 +1,7 @@
 package com.st4s1k.leagueteamcomp.service;
 
 import com.st4s1k.leagueteamcomp.model.enums.SummonerRoleEnum;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +12,8 @@ import java.util.stream.Collectors;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.swap;
 
+@Service
 public class SummonerRoleListGeneratorService {
-
-    private static SummonerRoleListGeneratorService INSTANCE;
-
-    public static SummonerRoleListGeneratorService getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new SummonerRoleListGeneratorService();
-        }
-        return INSTANCE;
-    }
 
     public List<Map<String, SummonerRoleEnum>> getCombinations(Map<String, List<SummonerRoleEnum>> playerToRoles) {
         if (playerToRoles.isEmpty() || playerToRoles.size() < 5) {

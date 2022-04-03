@@ -8,12 +8,18 @@ import com.st4s1k.leagueteamcomp.model.champion.select.SummonerDTO;
 import com.st4s1k.leagueteamcomp.model.interfaces.ChampionProvider;
 import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
 import com.st4s1k.leagueteamcomp.service.LeagueTeamCompService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 
+@Component
+@RequiredArgsConstructor
 public class SummonerDTOJsonDeserializer implements JsonDeserializer<SummonerDTO> {
+
+    private final LeagueTeamCompService leagueTeamCompService;
 
     @Override
     public SummonerDTO deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -28,7 +34,7 @@ public class SummonerDTOJsonDeserializer implements JsonDeserializer<SummonerDTO
         SummonerDTO summonerDTO = new SummonerDTO();
         summonerDTO.setSummonerId(deserializedSummonerId);
         summonerDTO.setSummonerName(deserializedSummonerName);
-        LeagueTeamCompService.getInstance().findChampionById(deserializedChampionId).ifPresent(summonerDTO::setChampion);
+        leagueTeamCompService.findChampionById(deserializedChampionId).ifPresent(summonerDTO::setChampion);
         populateSlots(deserializedChampionSuggestions, summonerDTO.getChampionSuggestions());
         return summonerDTO;
     }

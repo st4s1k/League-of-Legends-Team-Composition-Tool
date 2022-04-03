@@ -1,5 +1,6 @@
 package com.st4s1k.leagueteamcomp.controller;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.merakianalytics.orianna.types.core.championmastery.ChampionMastery;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
@@ -39,6 +40,8 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.net.URL;
@@ -61,6 +64,7 @@ import static org.controlsfx.control.textfield.TextFields.bindAutoCompletion;
 
 @Slf4j
 @Getter
+@Component
 public class LeagueTeamCompController implements Initializable {
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -196,6 +200,18 @@ public class LeagueTeamCompController implements Initializable {
      * Controller fields                                   *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+    @Autowired
+    private LeagueTeamCompService service;
+
+    @Autowired
+    private ChampionSuggestionService suggestionService;
+
+    @Autowired
+    private SummonerRoleListGeneratorService roleListGeneratorService;
+
+    @Autowired
+    private Gson gson;
+
     @FXML
     private ListView<SummonerData> summonerDataListView;
     @FXML
@@ -206,9 +222,6 @@ public class LeagueTeamCompController implements Initializable {
     private static double xOffset = 0;
     private static double yOffset = 0;
 
-    private final LeagueTeamCompService service = LeagueTeamCompService.getInstance();
-    private final ChampionSuggestionService suggestionService = ChampionSuggestionService.getInstance();
-    private final SummonerRoleListGeneratorService roleListGeneratorService = SummonerRoleListGeneratorService.getInstance();
     private final ChampSelectDTO champSelect = new ChampSelectDTO();
     private final ClientApi api = new ClientApi();
 
@@ -265,7 +278,7 @@ public class LeagueTeamCompController implements Initializable {
     private void saveSummonerData() {
         log.info("Saving summoner data...");
         List<SummonerData> summonerDataList = new ArrayList<>(summonerDataListView.getItems());
-        String summonerDataListJson = GSON.toJson(summonerDataList);
+        String summonerDataListJson = gson.toJson(summonerDataList);
         String summonerDataListCompressed = compressB64(summonerDataListJson);
         PREFERENCES.put("summonerDataList", summonerDataListCompressed);
         log.info("Summoner data saved.");
@@ -273,7 +286,7 @@ public class LeagueTeamCompController implements Initializable {
 
     private void saveChampionSuggestions() {
         log.info("Saving champ select data...");
-        String champSelectJson = GSON.toJson(champSelect);
+        String champSelectJson = gson.toJson(champSelect);
         String champSelectCompressed = compressB64(champSelectJson);
         PREFERENCES.put("champSelect", champSelectCompressed);
         log.info("Champ select data saved.");
@@ -326,7 +339,7 @@ public class LeagueTeamCompController implements Initializable {
                                 "\nEvent: {}\nURI: {}\ndata: {}\n",
                                 event.getEventType(),
                                 event.getUri(),
-                                GSON_PRETTY.toJson(session)
+                                gson.toJson(session)
                             );
                             onChampSelectUpdate(session);
                         } else if (event.getEventType().equals("Update") &&
@@ -359,8 +372,8 @@ public class LeagueTeamCompController implements Initializable {
     private List<LolChampSelectChampSelectAction> getActions(LolChampSelectChampSelectSession session) {
         return Optional.ofNullable(session.actions).stream()
             .flatMap(Collection::stream)
-            .map(GSON::toJson)
-            .map(json -> GSON.fromJson(json, LolChampSelectChampSelectAction[].class))
+            .map(gson::toJson)
+            .map(json -> gson.fromJson(json, LolChampSelectChampSelectAction[].class))
             .flatMap(Arrays::stream)
             .toList();
     }
@@ -605,7 +618,7 @@ public class LeagueTeamCompController implements Initializable {
         Optional<String> champSelectCompressed = Optional.ofNullable(PREFERENCES.get("champSelect", null));
         if (champSelectCompressed.isPresent()) {
             String champSelectJson = decompressB64(champSelectCompressed.get());
-            ChampSelectDTO champSelect = GSON.fromJson(champSelectJson, ChampSelectDTO.class);
+            ChampSelectDTO champSelect = gson.fromJson(champSelectJson, ChampSelectDTO.class);
             populateChampSelectTeams(champSelect.getAllyTeam(), this.champSelect.getAllyTeam());
             populateChampSelectTeams(champSelect.getEnemyTeam(), this.champSelect.getEnemyTeam());
         }
@@ -882,7 +895,7 @@ public class LeagueTeamCompController implements Initializable {
         Optional<String> summonerDataListCompressed = Optional.ofNullable(PREFERENCES.get("summonerDataList", null));
         if (summonerDataListCompressed.isPresent()) {
             String summonerDataListJson = decompressB64(summonerDataListCompressed.get());
-            List<SummonerData> summonerDataList = GSON.fromJson(summonerDataListJson, getSummonerDataListType());
+            List<SummonerData> summonerDataList = gson.fromJson(summonerDataListJson, getSummonerDataListType());
             summonerDataListView.getItems().addAll(summonerDataList);
         }
         summonerDataListView.setCellFactory(param -> new ListCell<>() {
