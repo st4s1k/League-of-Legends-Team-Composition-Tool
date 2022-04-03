@@ -7,10 +7,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+@Component
 public class LTCExceptionController implements Initializable {
 
     private static double xOffset = 0;

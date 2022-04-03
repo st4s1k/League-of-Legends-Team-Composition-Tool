@@ -1,10 +1,6 @@
 package com.st4s1k.leagueteamcomp.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.st4s1k.leagueteamcomp.LeagueTeamCompApplication;
-import com.st4s1k.leagueteamcomp.json.*;
-import com.st4s1k.leagueteamcomp.model.champion.select.*;
 import dev.failsafe.RetryPolicy;
 import javafx.scene.image.Image;
 
@@ -61,22 +57,8 @@ public final class Resources {
 
     public static final Image EMPTY_SLOT_IMAGE = new Image(LeagueTeamCompApplication.class.getResourceAsStream(EMPTY_SLOT_IMAGE_PATH));
 
-    private static final GsonBuilder GSON_BUILDER = new GsonBuilder()
-        .registerTypeAdapter(ChampSelectDTO.class, new ChampSelectDTOJsonSerializer())
-        .registerTypeAdapter(ChampSelectDTO.class, new ChampSelectDTOJsonDeserializer())
-        .registerTypeAdapter(TeamDTO.class, new TeamDTOJsonSerializer())
-        .registerTypeAdapter(TeamDTO.class, new TeamDTOJsonDeserializer())
-        .registerTypeAdapter(ChampionSlotDTO.class, new ChampionSlotDTOJsonSerializer())
-        .registerTypeAdapter(ChampionSlotDTO.class, new ChampionSlotDTOJsonDeserializer())
-        .registerTypeAdapter(SummonerSlotDTO.class, new SummonerSlotDTOJsonSerializer())
-        .registerTypeAdapter(SummonerSlotDTO.class, new SummonerSlotDTOJsonDeserializer())
-        .registerTypeAdapter(SummonerDTO.class, new SummonerDTOJsonSerializer())
-        .registerTypeAdapter(SummonerDTO.class, new SummonerDTOJsonDeserializer());
-    public static final Gson GSON = GSON_BUILDER.create();
-    public static final Gson GSON_PRETTY = GSON_BUILDER.setPrettyPrinting().create();
     public static final RetryPolicy<?> RETRY_POLICY = RetryPolicy.builder()
         .withDelay(Duration.ofSeconds(1))
         .withMaxRetries(Integer.MAX_VALUE)
         .build();
 }
-

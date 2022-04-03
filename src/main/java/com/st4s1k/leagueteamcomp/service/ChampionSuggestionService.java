@@ -12,30 +12,18 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import static lombok.AccessLevel.PRIVATE;
-
 @Slf4j
-@NoArgsConstructor(access = PRIVATE)
+@Service
 public class ChampionSuggestionService {
 
-    private static ChampionSuggestionService INSTANCE;
-
-    public static ChampionSuggestionService getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ChampionSuggestionService();
-        }
-        return INSTANCE;
-    }
-
-    @SuppressWarnings("SameParameterValue")
     public void initializeSuggestionsListView(
         ChampSelectDTO champSelect,
         ListView<ListView<ChampionSlotDTO>> suggestionsListView,

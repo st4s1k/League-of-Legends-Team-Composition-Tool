@@ -3,30 +3,21 @@ package com.st4s1k.leagueteamcomp.service;
 import com.st4s1k.leagueteamcomp.model.champion.AttributeRatingsDTO;
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
 import com.st4s1k.leagueteamcomp.repository.ChampionRepository;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.ToDoubleFunction;
 
-import static lombok.AccessLevel.PRIVATE;
-
-@NoArgsConstructor(access = PRIVATE)
+@Service
+@RequiredArgsConstructor
 public class LeagueTeamCompService {
 
-    private static LeagueTeamCompService INSTANCE;
     private static final double CHAMPION_STAT_OUTPUT_SCALE = 10;
 
-    private ChampionRepository championRepository;
-
-    public static LeagueTeamCompService getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new LeagueTeamCompService();
-            INSTANCE.championRepository = ChampionRepository.getInstance();
-        }
-        return INSTANCE;
-    }
+    private final ChampionRepository championRepository;
 
     public Set<String> getAllChampionKeys() {
         return championRepository.getAllChampionKeys();
