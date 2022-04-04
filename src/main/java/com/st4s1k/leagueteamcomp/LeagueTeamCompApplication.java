@@ -102,10 +102,8 @@ public class LeagueTeamCompApplication extends Application {
 
     private static void showError(Thread t, Throwable e) {
         log.error(e.getMessage(), e);
-        if (Platform.isFxApplicationThread()) {
+        if (Platform.isFxApplicationThread() && e instanceof LTCException) {
             showErrorDialog(e);
-        } else {
-            log.error("An unexpected error occurred in " + t);
         }
     }
 
