@@ -59,7 +59,7 @@ public final class Resources {
      * Application constants                               *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    public static final String RIOT_API_KEY = LTC_PROPERTIES.getString("riot-api-key");
+    public static final String RIOT_API_KEY = System.getenv("RIOT_API_KEY");
     public static final Image EMPTY_SLOT_IMAGE = new Image(LeagueTeamCompApplication.class.getResourceAsStream(EMPTY_SLOT_IMAGE_PATH));
 
     private static final GsonBuilder GSON_BUILDER = new GsonBuilder()

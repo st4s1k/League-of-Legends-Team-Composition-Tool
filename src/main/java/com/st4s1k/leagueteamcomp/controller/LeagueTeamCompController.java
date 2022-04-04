@@ -1,6 +1,7 @@
 package com.st4s1k.leagueteamcomp.controller;
 
 import com.google.gson.reflect.TypeToken;
+import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.core.championmastery.ChampionMastery;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
 import com.st4s1k.leagueteamcomp.exceptions.LTCException;
@@ -46,6 +47,7 @@ import java.util.function.Predicate;
 import static com.st4s1k.leagueteamcomp.model.enums.SummonerRoleEnum.*;
 import static com.st4s1k.leagueteamcomp.utils.CompressionUtils.compressB64;
 import static com.st4s1k.leagueteamcomp.utils.CompressionUtils.decompressB64;
+import static com.st4s1k.leagueteamcomp.utils.LeagueTeamCompTransformerUtils.convertToSummonerData;
 import static com.st4s1k.leagueteamcomp.utils.Resources.*;
 import static com.st4s1k.leagueteamcomp.utils.Utils.*;
 import static java.util.Comparator.comparing;
@@ -548,7 +550,7 @@ public class LeagueTeamCompController implements Initializable {
 
     private void onResetButtonClick() {
         textArea.clear();
-        initializeFieldsWithDefaultState(
+        initializeAllFieldsWithDefaultProperty(
             this,
             CheckBox.class,
             CheckBox::setSelected,
@@ -557,24 +559,22 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     private void initializeAllCheckboxes() {
-        initializeFields(
+        initializeSavedFieldsProperty(
             this,
             CheckBox.class,
             CheckBox::getId,
-            CheckBox::setSelected,
             Boolean::parseBoolean,
-            DEFAULT_CHECKBOX_STATE
+            CheckBox::setSelected
         );
     }
 
     private void initializeAllTextFields() {
-        initializeFields(
+        initializeSavedFieldsProperty(
             this,
             TextField.class,
             TextField::getId,
-            TextInputControl::setText,
             Function.identity(),
-            ""
+            TextInputControl::setText
         );
     }
 
@@ -595,9 +595,9 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     private void initializeChampSelect() {
-        String champSelectCompressed = PREFERENCES.get("champSelect", "");
-        if (!champSelectCompressed.isBlank()) {
-            String champSelectJson = decompressB64(champSelectCompressed);
+        Optional<String> champSelectCompressed = Optional.ofNullable(PREFERENCES.get("champSelect", null));
+        if (champSelectCompressed.isPresent()) {
+            String champSelectJson = decompressB64(champSelectCompressed.get());
             ChampSelectDTO champSelect = GSON.fromJson(champSelectJson, ChampSelectDTO.class);
             populateChampSelectTeams(champSelect.getAllyTeam(), this.champSelect.getAllyTeam());
             populateChampSelectTeams(champSelect.getEnemyTeam(), this.champSelect.getEnemyTeam());
@@ -640,11 +640,11 @@ public class LeagueTeamCompController implements Initializable {
         bindAutoCompletion(enemySearchField, request -> searchFieldAutoCompletion(request.getUserText()));
         bindAutoCompletion(allySearchField, request -> searchFieldAutoCompletion(request.getUserText()));
 
-        allyListView.setOnKeyPressed(event -> handleDeleteButton(event, allyListView));
-        enemyListView.setOnKeyPressed(event -> handleDeleteButton(event, enemyListView));
-        allyBanListView.setOnKeyPressed(event -> handleDeleteButton(event, allyBanListView));
-        enemyBanListView.setOnKeyPressed(event -> handleDeleteButton(event, enemyBanListView));
-        suggestionsListView.getItems().forEach(item -> item.setOnKeyPressed(event -> handleDeleteButton(event, item)));
+        allyListView.setOnKeyPressed(event -> handleSlotListViewKeyPressed(event, allyListView));
+        enemyListView.setOnKeyPressed(event -> handleSlotListViewKeyPressed(event, enemyListView));
+        allyBanListView.setOnKeyPressed(event -> handleSlotListViewKeyPressed(event, allyBanListView));
+        enemyBanListView.setOnKeyPressed(event -> handleSlotListViewKeyPressed(event, enemyBanListView));
+        suggestionsListView.getItems().forEach(item -> item.setOnKeyPressed(event -> handleSlotListViewKeyPressed(event, item)));
 
         getChampionListChangeListener().onChanged(null);
         allyListView.getItems().addListener(getChampionListChangeListener());
@@ -733,7 +733,9 @@ public class LeagueTeamCompController implements Initializable {
             .collect(toList());
     }
 
-    public <T extends SlotItem, S extends SlotDTO<T>> void handleDeleteButton(KeyEvent event, ListView<S> listView) {
+    public <T extends SlotItem, S extends SlotDTO<T>> void handleSlotListViewKeyPressed(
+        KeyEvent event, ListView<S> listView
+    ) {
         if (event.getCode() == KeyCode.DELETE) {
             ObservableList<S> selectedItems = listView.getSelectionModel().getSelectedItems();
             if (!selectedItems.isEmpty()) {
@@ -870,9 +872,9 @@ public class LeagueTeamCompController implements Initializable {
 
     private void initializeSummonerData() {
         log.info("Initializing summoner data");
-        String summonerDataListCompressed = PREFERENCES.get("summonerDataList", "");
-        if (!summonerDataListCompressed.isBlank()) {
-            String summonerDataListJson = decompressB64(summonerDataListCompressed);
+        Optional<String> summonerDataListCompressed = Optional.ofNullable(PREFERENCES.get("summonerDataList", null));
+        if (summonerDataListCompressed.isPresent()) {
+            String summonerDataListJson = decompressB64(summonerDataListCompressed.get());
             List<SummonerData> summonerDataList = GSON.fromJson(summonerDataListJson, getSummonerDataListType());
             summonerDataListView.getItems().addAll(summonerDataList);
         }
@@ -887,8 +889,20 @@ public class LeagueTeamCompController implements Initializable {
                 }
             }
         });
+        summonerDataListView.setOnKeyPressed(event -> handleSummonerDataListViewKeyPressed(event, summonerDataListView));
         summonerAddField.setOnAction(action -> onSummonerNameFieldAction());
         summonerAddButton.setOnAction(action -> onSummonerNameFieldAction());
+    }
+
+    public void handleSummonerDataListViewKeyPressed(
+        KeyEvent event, ListView<SummonerData> listView
+    ) {
+        if (event.getCode() == KeyCode.DELETE) {
+            ObservableList<SummonerData> selectedItems = listView.getSelectionModel().getSelectedItems();
+            if (!selectedItems.isEmpty()) {
+                listView.getItems().removeAll(selectedItems);
+            }
+        }
     }
 
     private Type getSummonerDataListType() {
@@ -897,9 +911,19 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     private void onSummonerNameFieldAction() {
-        SummonerData summonerData = new SummonerData();
-        summonerData.setSummonerName(summonerAddField.getText());
-        summonerDataListView.getItems().add(summonerData);
+        String fieldText = summonerAddField.getText();
+        if (!fieldText.isBlank()) {
+            Summoner summoner = Orianna.summonerNamed(fieldText).get();
+            if (summoner.exists()) {
+                SummonerData summonerData = convertToSummonerData(summoner);
+                summonerDataListView.getItems().add(summonerData);
+            } else {
+                throw new LTCException(
+                    "Summoner {0} doesn't exist in region {1}",
+                    summoner.getName(),
+                    summoner.getRegion().getTag()
+                );
+            }
+        }
     }
-
 }

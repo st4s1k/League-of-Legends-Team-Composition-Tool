@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -38,40 +39,31 @@ public final class Utils {
         node.setFocusTraversable(true);
     }
 
-    public static <T, R> void initializeFields(
+    public static <T, R> void initializeSavedFieldsProperty(
         Object instance,
         Class<T> fieldType,
         Function<T, String> keyExtractor,
-        BiConsumer<T, R> fieldStateInitializer,
-        Function<String, R> fieldStateConverter,
-        R defaultFieldState
-    ) {
-        initializeFields(instance, fieldType, fieldStateInitializer, fieldValue ->
-            fieldStateConverter.apply(PREFERENCES.get(
-                keyExtractor.apply(fieldValue),
-                String.valueOf(defaultFieldState)
-            ))
-        );
-    }
-
-    public static <T, R> void initializeFields(
-        Object instance,
-        Class<T> fieldType,
-        BiConsumer<T, R> fieldStateInitializer,
-        Function<T, R> defaultFieldStateProvider
+        Function<String, R> fieldPropertyConverter,
+        BiConsumer<T, R> fieldPropertySetter
     ) {
         getFieldTypeValues(instance, fieldType).forEach(fieldValue ->
-            fieldStateInitializer.accept(fieldValue, defaultFieldStateProvider.apply(fieldValue)));
+            getFieldProperty(fieldValue, keyExtractor)
+                .map(fieldPropertyConverter)
+                .ifPresent(fieldProperty -> fieldPropertySetter.accept(fieldValue, fieldProperty)));
     }
 
-    public static <T, R> void initializeFieldsWithDefaultState(
+    private static <T> Optional<String> getFieldProperty(T fieldValue, Function<T, String> keyExtractor) {
+        return Optional.ofNullable(PREFERENCES.get(keyExtractor.apply(fieldValue), null));
+    }
+
+    public static <T, R> void initializeAllFieldsWithDefaultProperty(
         Object instance,
         Class<T> fieldType,
-        BiConsumer<T, R> fieldStateInitializer,
-        R defaultFieldState
+        BiConsumer<T, R> fieldPropertySetter,
+        R defaultFieldProperty
     ) {
         getFieldTypeValues(instance, fieldType).forEach(fieldValue ->
-            fieldStateInitializer.accept(fieldValue, defaultFieldState));
+            fieldPropertySetter.accept(fieldValue, defaultFieldProperty));
     }
 
     public static <T> void saveFields(
