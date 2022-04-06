@@ -36,10 +36,7 @@
 },
 {
   "name":"com.sun.glass.ui.Screen",
-  "methods":[
-    {"name":"<init>","parameterTypes":["long","int","int","int","int","int","int","int","int","int","int","int","int","int","int","int","float","float","float","float"] }, 
-    {"name":"notifySettingsChanged","parameterTypes":[] }
-  ]
+  "methods":[{"name":"<init>","parameterTypes":["long","int","int","int","int","int","int","int","int","int","int","int","int","int","int","int","float","float","float","float"] }]
 },
 {
   "name":"com.sun.glass.ui.Size",
@@ -82,80 +79,6 @@
   ]
 },
 {
-  "name":"com.sun.glass.ui.win.WinAccessible",
-  "methods":[
-    {"name":"AddToSelection","parameterTypes":[] }, 
-    {"name":"AdviseEventAdded","parameterTypes":["int","long"] }, 
-    {"name":"AdviseEventRemoved","parameterTypes":["int","long"] }, 
-    {"name":"Collapse","parameterTypes":[] }, 
-    {"name":"ElementProviderFromPoint","parameterTypes":["double","double"] }, 
-    {"name":"Expand","parameterTypes":[] }, 
-    {"name":"GetColumnHeaderItems","parameterTypes":[] }, 
-    {"name":"GetColumnHeaders","parameterTypes":[] }, 
-    {"name":"GetEmbeddedFragmentRoots","parameterTypes":[] }, 
-    {"name":"GetFocus","parameterTypes":[] }, 
-    {"name":"GetItem","parameterTypes":["int","int"] }, 
-    {"name":"GetPatternProvider","parameterTypes":["int"] }, 
-    {"name":"GetPropertyValue","parameterTypes":["int"] }, 
-    {"name":"GetRowHeaderItems","parameterTypes":[] }, 
-    {"name":"GetRowHeaders","parameterTypes":[] }, 
-    {"name":"GetRuntimeId","parameterTypes":[] }, 
-    {"name":"GetSelection","parameterTypes":[] }, 
-    {"name":"GetVisibleRanges","parameterTypes":[] }, 
-    {"name":"Invoke","parameterTypes":[] }, 
-    {"name":"Move","parameterTypes":["double","double"] }, 
-    {"name":"Navigate","parameterTypes":["int"] }, 
-    {"name":"RangeFromChild","parameterTypes":["long"] }, 
-    {"name":"RangeFromPoint","parameterTypes":["double","double"] }, 
-    {"name":"RemoveFromSelection","parameterTypes":[] }, 
-    {"name":"Resize","parameterTypes":["double","double"] }, 
-    {"name":"Rotate","parameterTypes":["double"] }, 
-    {"name":"Scroll","parameterTypes":["int","int"] }, 
-    {"name":"ScrollIntoView","parameterTypes":[] }, 
-    {"name":"Select","parameterTypes":[] }, 
-    {"name":"SetFocus","parameterTypes":[] }, 
-    {"name":"SetScrollPercent","parameterTypes":["double","double"] }, 
-    {"name":"SetValue","parameterTypes":["double"] }, 
-    {"name":"SetValueString","parameterTypes":["java.lang.String"] }, 
-    {"name":"Toggle","parameterTypes":[] }, 
-    {"name":"get_BoundingRectangle","parameterTypes":[] }, 
-    {"name":"get_CanMove","parameterTypes":[] }, 
-    {"name":"get_CanResize","parameterTypes":[] }, 
-    {"name":"get_CanRotate","parameterTypes":[] }, 
-    {"name":"get_CanSelectMultiple","parameterTypes":[] }, 
-    {"name":"get_Column","parameterTypes":[] }, 
-    {"name":"get_ColumnCount","parameterTypes":[] }, 
-    {"name":"get_ColumnSpan","parameterTypes":[] }, 
-    {"name":"get_ContainingGrid","parameterTypes":[] }, 
-    {"name":"get_DocumentRange","parameterTypes":[] }, 
-    {"name":"get_ExpandCollapseState","parameterTypes":[] }, 
-    {"name":"get_FragmentRoot","parameterTypes":[] }, 
-    {"name":"get_HorizontalScrollPercent","parameterTypes":[] }, 
-    {"name":"get_HorizontalViewSize","parameterTypes":[] }, 
-    {"name":"get_HorizontallyScrollable","parameterTypes":[] }, 
-    {"name":"get_HostRawElementProvider","parameterTypes":[] }, 
-    {"name":"get_IsReadOnly","parameterTypes":[] }, 
-    {"name":"get_IsSelected","parameterTypes":[] }, 
-    {"name":"get_IsSelectionRequired","parameterTypes":[] }, 
-    {"name":"get_LargeChange","parameterTypes":[] }, 
-    {"name":"get_Maximum","parameterTypes":[] }, 
-    {"name":"get_Minimum","parameterTypes":[] }, 
-    {"name":"get_Row","parameterTypes":[] }, 
-    {"name":"get_RowCount","parameterTypes":[] }, 
-    {"name":"get_RowOrColumnMajor","parameterTypes":[] }, 
-    {"name":"get_RowSpan","parameterTypes":[] }, 
-    {"name":"get_SelectionContainer","parameterTypes":[] }, 
-    {"name":"get_SmallChange","parameterTypes":[] }, 
-    {"name":"get_SupportedTextSelection","parameterTypes":[] }, 
-    {"name":"get_ToggleState","parameterTypes":[] }, 
-    {"name":"get_Value","parameterTypes":[] }, 
-    {"name":"get_ValueString","parameterTypes":[] }, 
-    {"name":"get_VerticalScrollPercent","parameterTypes":[] }, 
-    {"name":"get_VerticalViewSize","parameterTypes":[] }, 
-    {"name":"get_VerticallyScrollable","parameterTypes":[] }
-  ]
-},
-{
   "name":"com.sun.glass.ui.win.WinApplication"
 },
 {
@@ -182,20 +105,6 @@
   "name":"com.sun.glass.ui.win.WinSystemClipboard",
   "fields":[{"name":"ptr"}],
   "methods":[{"name":"fosSerialize","parameterTypes":["java.lang.String","long"] }]
-},
-{
-  "name":"com.sun.glass.ui.win.WinVariant",
-  "fields":[
-    {"name":"boolVal"}, 
-    {"name":"bstrVal"}, 
-    {"name":"dblVal"}, 
-    {"name":"fltVal"}, 
-    {"name":"iVal"}, 
-    {"name":"lVal"}, 
-    {"name":"pDblVal"}, 
-    {"name":"punkVal"}, 
-    {"name":"vt"}
-  ]
 },
 {
   "name":"com.sun.glass.ui.win.WinView"
@@ -307,10 +216,6 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"com.sun.javafx.geom.Path2D",
-  "methods":[{"name":"<init>","parameterTypes":["int","byte[]","int","float[]","int"] }]
-},
-{
   "name":"com.sun.management.internal.DiagnosticCommandArgumentInfo",
   "methods":[{"name":"<init>","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.lang.String","boolean","boolean","boolean","int"] }]
 },
@@ -343,30 +248,8 @@
   "methods":[{"name":"run","parameterTypes":[] }]
 },
 {
-  "name":"java.lang.SecurityManager",
-  "fields":[{"name":"initialized"}]
-},
-{
-  "name":"java.lang.String",
-  "methods":[{"name":"toLowerCase","parameterTypes":["java.util.Locale"] }]
-},
-{
-  "name":"java.util.ArrayList",
-  "methods":[
-    {"name":"<init>","parameterTypes":["int"] }, 
-    {"name":"add","parameterTypes":["java.lang.Object"] }
-  ]
-},
-{
   "name":"java.util.Arrays",
   "methods":[{"name":"asList","parameterTypes":["java.lang.Object[]"] }]
-},
-{
-  "name":"java.util.HashMap",
-  "methods":[
-    {"name":"containsKey","parameterTypes":["java.lang.Object"] }, 
-    {"name":"put","parameterTypes":["java.lang.Object","java.lang.Object"] }
-  ]
 },
 {
   "name":"jdk.internal.loader.ClassLoaders$PlatformClassLoader"
