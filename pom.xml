@@ -41,7 +41,7 @@
     <!-- Spring Boot -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
+      <artifactId>spring-boot-starter</artifactId>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.boot</groupId>
@@ -191,7 +191,7 @@
           <nativeImageArgs>
             <nativeImageArg>--native-image-info</nativeImageArg>
             <nativeImageArg>--verbose</nativeImageArg>
-<!--            <nativeImageArg>-J-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005</nativeImageArg>-->
+            <!--            <nativeImageArg>-J-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005</nativeImageArg>-->
             <nativeImageArg>--allow-incomplete-classpath</nativeImageArg>
             <nativeImageArg>--add-exports</nativeImageArg>
             <nativeImageArg>javafx.base/com.sun.javafx.event=org.controlsfx.controls</nativeImageArg>
