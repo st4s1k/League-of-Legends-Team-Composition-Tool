@@ -493,7 +493,7 @@ public class LeagueTeamCompController implements Initializable {
         );
         Set<String> summonerNameSet = Set.copyOf(summonerNames);
         if (summonerNames.size() != summonerNameSet.size()) {
-            throw new LTCException("Summoner names must be unique!");
+            throw LTCException.of("Summoner names must be unique!");
         }
     }
 
@@ -915,15 +915,23 @@ public class LeagueTeamCompController implements Initializable {
         if (!fieldText.isBlank()) {
             Summoner summoner = Orianna.summonerNamed(fieldText).get();
             if (summoner.exists()) {
-                SummonerData summonerData = convertToSummonerData(summoner);
-                summonerDataListView.getItems().add(summonerData);
+                if (summonerIsNotAlreadyAdded(summoner)) {
+                    SummonerData summonerData = convertToSummonerData(summoner);
+                    summonerDataListView.getItems().add(summonerData);
+                } else {
+                    throw LTCException.of("Summoner {} was already added", summoner.getName());
+                }
             } else {
-                throw new LTCException(
-                    "Summoner {0} doesn't exist in region {1}",
+                throw LTCException.of(
+                    "Summoner {} doesn't exist in region {}",
                     summoner.getName(),
                     summoner.getRegion().getTag()
                 );
             }
         }
+    }
+
+    private boolean summonerIsNotAlreadyAdded(Summoner summoner) {
+        return summonerDataListView.getItems().stream().noneMatch(summonerData -> summonerData.getSummonerName().equals(summoner.getName()));
     }
 }

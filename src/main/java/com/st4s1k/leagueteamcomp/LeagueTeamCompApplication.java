@@ -22,8 +22,6 @@ import javafx.stage.StageStyle;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -49,7 +47,7 @@ public class LeagueTeamCompApplication extends Application {
     @Override
     @SneakyThrows
     public void start(Stage stage) {
-        Orianna.setRiotAPIKey(RIOT_API_KEY);
+        Orianna.loadConfiguration("orianna-config.json");
         Orianna.setDefaultRegion(EUROPE_WEST);
         Thread.setDefaultUncaughtExceptionHandler(LeagueTeamCompApplication::showError);
         getChampionsFromUrl();
@@ -101,31 +99,24 @@ public class LeagueTeamCompApplication extends Application {
     }
 
     private static void showError(Thread t, Throwable e) {
-        log.error(e.getMessage(), e);
-        if (Platform.isFxApplicationThread() && e instanceof LTCException) {
-            showErrorDialog(e);
+        if (Platform.isFxApplicationThread() && e instanceof LTCException ltcException) {
+            showErrorDialog(ltcException);
+        } else {
+            log.error(e.getMessage(), e);
         }
     }
 
     @SneakyThrows
-    private static void showErrorDialog(Throwable e) {
-        StringWriter errorMsg = new StringWriter();
-        e.printStackTrace(new PrintWriter(errorMsg));
+    private static void showErrorDialog(LTCException ltcException) {
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         FXMLLoader loader = new FXMLLoader(LeagueTeamCompApplication.class.getResource("ltc-exception.fxml"));
         Region root = loader.load();
         LTCExceptionController controller = loader.getController();
         controller.setStageAndSetupListeners(dialog);
-        int sceneWidth = 600;
-        int sceneHeight = 400;
-        if (e instanceof LTCException ltcException) {
-            sceneWidth = 300;
-            sceneHeight = 150;
-            controller.setErrorText(ltcException.getMessage());
-        } else {
-            controller.setErrorText(errorMsg.toString());
-        }
+        int sceneWidth = 400;
+        int sceneHeight = 150;
+        controller.setErrorText(ltcException.getMessage());
         Scene scene = new Scene(root, sceneWidth, sceneHeight);
         scene.setFill(Color.TRANSPARENT);
         dialog.initStyle(StageStyle.TRANSPARENT);
