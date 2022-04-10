@@ -252,9 +252,12 @@ public class LeagueTeamCompController implements Initializable {
     public void stop() {
         String className = getClass().getSimpleName();
         log.info("Stopping {}...", className);
-        save();
-        api.stop();
-        log.info("{} stopped.", className);
+        try {
+            save();
+            api.stop();
+        } finally {
+            log.info("{} stopped.", className);
+        }
     }
 
     public void save() {

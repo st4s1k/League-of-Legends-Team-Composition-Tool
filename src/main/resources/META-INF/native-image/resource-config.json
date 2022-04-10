@@ -26,6 +26,12 @@
       "pattern":"\\Qapplication.properties\\E"
     }, 
     {
+      "pattern":"\\Qcom/gluonhq/ignite/spring/FXModule.class\\E"
+    }, 
+    {
+      "pattern":"\\Qcom/gluonhq/ignite/spring/\\E"
+    }, 
+    {
       "pattern":"\\Qcom/google/gson/JsonDeserializer.class\\E"
     }, 
     {
@@ -47,6 +53,12 @@
       "pattern":"\\Qcom/st4s1k/leagueteamcomp/config/GsonConfig.class\\E"
     }, 
     {
+      "pattern":"\\Qcom/st4s1k/leagueteamcomp/config/SpringConfig.class\\E"
+    }, 
+    {
+      "pattern":"\\Qcom/st4s1k/leagueteamcomp/config/\\E"
+    }, 
+    {
       "pattern":"\\Qcom/st4s1k/leagueteamcomp/controller/LTCExceptionController.class\\E"
     }, 
     {
@@ -65,6 +77,9 @@
       "pattern":"\\Qcom/st4s1k/leagueteamcomp/json/SummonerDTOJsonDeserializer.class\\E"
     }, 
     {
+      "pattern":"\\Qcom/st4s1k/leagueteamcomp/ltc-exception.fxml\\E"
+    }, 
+    {
       "pattern":"\\Qcom/st4s1k/leagueteamcomp/ltc-view.fxml\\E"
     }, 
     {
@@ -80,6 +95,9 @@
       "pattern":"\\Qcom/st4s1k/leagueteamcomp/service/SummonerRoleListGeneratorService.class\\E"
     }, 
     {
+      "pattern":"\\Qcom/st4s1k/leagueteamcomp/service/\\E"
+    }, 
+    {
       "pattern":"\\Qcom/stirante/lolclient/libs/org/apache/http/client/version.properties\\E"
     }, 
     {
@@ -92,6 +110,9 @@
       "pattern":"\\Qorg/cache2k/services/org.cache2k.spi.Cache2kCoreProvider\\E"
     }, 
     {
+      "pattern":"\\Qorg/controlsfx/control/textfield/autocompletion.css\\E"
+    }, 
+    {
       "pattern":"\\Qorg/joda/time/tz/data/Europe/Chisinau\\E"
     }, 
     {
@@ -101,7 +122,13 @@
       "pattern":"\\Qorg/slf4j/impl/StaticLoggerBinder.class\\E"
     }, 
     {
+      "pattern":"\\Qorg/springframework/beans/factory/Aware.class\\E"
+    }, 
+    {
       "pattern":"\\Qorg/springframework/beans/factory/config/BeanFactoryPostProcessor.class\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/springframework/beans/factory/support/BeanDefinitionBuilder.class\\E"
     }, 
     {
       "pattern":"\\Qorg/springframework/boot/autoconfigure/AbstractDependsOnBeanFactoryPostProcessor.class\\E"
@@ -111,6 +138,9 @@
     }, 
     {
       "pattern":"\\Qorg/springframework/boot/autoconfigure/AutoConfigureOrder.class\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/springframework/boot/autoconfigure/SharedMetadataReaderFactoryContextInitializer$CachingMetadataReaderFactoryPostProcessor.class\\E"
     }, 
     {
       "pattern":"\\Qorg/springframework/boot/autoconfigure/admin/SpringApplicationAdminJmxAutoConfiguration.class\\E"
@@ -188,6 +218,21 @@
       "pattern":"\\Qorg/springframework/boot/autoconfigure/info/ProjectInfoAutoConfiguration.class\\E"
     }, 
     {
+      "pattern":"\\Qorg/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration.class\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration.class\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperConfiguration.class\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$ParameterNamesModuleConfiguration.class\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration.class\\E"
+    }, 
+    {
       "pattern":"\\Qorg/springframework/boot/autoconfigure/jmx/JmxAutoConfiguration.class\\E"
     }, 
     {
@@ -222,6 +267,9 @@
     }, 
     {
       "pattern":"\\Qorg/springframework/boot/sql/init/dependency/DatabaseInitializationDependencyConfigurer.class\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/springframework/context/ApplicationContextAware.class\\E"
     }, 
     {
       "pattern":"\\Qorg/springframework/context/ApplicationListener.class\\E"

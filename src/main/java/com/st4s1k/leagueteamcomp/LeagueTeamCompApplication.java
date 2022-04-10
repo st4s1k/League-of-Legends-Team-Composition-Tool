@@ -1,5 +1,7 @@
 package com.st4s1k.leagueteamcomp;
 
+import com.gluonhq.ignite.spring.SpringContext;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.merakianalytics.orianna.Orianna;
 import com.st4s1k.leagueteamcomp.controller.LTCExceptionController;
@@ -21,6 +23,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.lang.reflect.Type;
 import java.net.URI;
@@ -34,25 +40,39 @@ import static com.merakianalytics.orianna.types.common.Region.EUROPE_WEST;
 import static com.st4s1k.leagueteamcomp.utils.ResizeHelper.addResizeListener;
 import static com.st4s1k.leagueteamcomp.utils.Resources.*;
 import static com.st4s1k.leagueteamcomp.utils.Utils.setFieldValue;
-import static java.net.http.HttpResponse.BodyHandlers;
 import static java.util.Objects.requireNonNull;
 
 @Slf4j
+@SpringBootApplication
+@ComponentScan({
+    "com.gluonhq.ignite.spring",
+    "com.st4s1k.leagueteamcomp.config"
+})
 public class LeagueTeamCompApplication extends Application {
 
     public static void main(String[] args) {
-        launch();
+        Application.launch(LeagueTeamCompApplication.class, args);
     }
+
+    private final SpringContext springContext = new SpringContext(this);
+
+    @Autowired
+    private FXMLLoader loader;
+
+    @Autowired
+    private Gson gson;
 
     @Override
     @SneakyThrows
     public void start(Stage stage) {
+        springContext.init(() -> SpringApplication.run(LeagueTeamCompApplication.class));
         Orianna.loadConfiguration("orianna-config.json");
         Orianna.setDefaultRegion(EUROPE_WEST);
         Thread.setDefaultUncaughtExceptionHandler(this::showError);
         getChampionsFromUrl();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_FILE_PATH), LTC_VIEW_PROPERTIES);
+        loader.setLocation(getClass().getResource(FXML_FILE_PATH));
+        loader.setResources(LTC_VIEW_PROPERTIES);
         Parent root = loader.load();
         LeagueTeamCompController controller = loader.getController();
         controller.setStageAndSetupListeners(stage);
@@ -84,13 +104,13 @@ public class LeagueTeamCompApplication extends Application {
             .uri(new URI(CHAMPIONS_URL))
             .build();
         HttpClient.newHttpClient()
-            .sendAsync(request, BodyHandlers.ofString())
+            .sendAsync(request, HttpResponse.BodyHandlers.ofString())
             .thenApply(this::getChampions)
             .thenAccept(ChampionRepository::init);
     }
 
     private Map<String, ChampionDTO> getChampions(HttpResponse<String> response) {
-        Map<String, ChampionDTO> champions = GSON.fromJson(response.body(), getChampionMapType());
+        Map<String, ChampionDTO> champions = gson.fromJson(response.body(), getChampionMapType());
         champions.values().forEach(champion ->
             setFieldValue(champion, "image", new Image(champion.getIconUrl(), true)));
         return champions;
@@ -116,7 +136,7 @@ public class LeagueTeamCompApplication extends Application {
         Region root = loader.load();
         LTCExceptionController controller = loader.getController();
         controller.setStageAndSetupListeners(dialog);
-        int sceneWidth = 400;
+        int sceneWidth = 500;
         int sceneHeight = 150;
         if (e instanceof LTCException ltcException) {
             controller.setErrorText(ltcException.getMessage());

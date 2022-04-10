@@ -1,7 +1,6 @@
 package com.st4s1k.leagueteamcomp.repository;
 
 import com.st4s1k.leagueteamcomp.model.champion.ChampionDTO;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Map;
@@ -10,7 +9,6 @@ import java.util.Set;
 
 import static java.util.Collections.emptyMap;
 
-@Component
 public class ChampionRepository {
 
     private static Map<String, ChampionDTO> champions;

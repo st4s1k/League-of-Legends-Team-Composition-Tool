@@ -9,13 +9,11 @@ import com.st4s1k.leagueteamcomp.model.interfaces.ChampionProvider;
 import com.st4s1k.leagueteamcomp.model.interfaces.SlotItem;
 import com.st4s1k.leagueteamcomp.service.LeagueTeamCompService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 
-@Component
 @RequiredArgsConstructor
 public class SummonerDTOJsonDeserializer implements JsonDeserializer<SummonerDTO> {
 

@@ -209,7 +209,14 @@
           "port": 80,
           "msgpack": true,
           "http404Strategy": {
-            "type": "RETURN_NULL"
+            "backoff": 1,
+            "backoffUnit": "SECONDS",
+            "backupStrategy": {
+              "type": "THROW_EXCEPTION"
+            },
+            "maxAttempts": 4,
+            "backoffFactor": 2,
+            "type": "EXPONENTIAL_BACKOFF"
           },
           "http500Strategy": {
             "backoff": 1,

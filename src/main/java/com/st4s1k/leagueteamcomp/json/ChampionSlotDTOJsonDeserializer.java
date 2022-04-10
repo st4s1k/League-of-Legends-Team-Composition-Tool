@@ -4,12 +4,10 @@ import com.google.gson.*;
 import com.st4s1k.leagueteamcomp.model.champion.select.ChampionSlotDTO;
 import com.st4s1k.leagueteamcomp.service.LeagueTeamCompService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.util.Optional;
 
-@Component
 @RequiredArgsConstructor
 public class ChampionSlotDTOJsonDeserializer implements JsonDeserializer<ChampionSlotDTO> {
 

@@ -109,6 +109,19 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"com.fasterxml.jackson.core.Versioned",
+  "queryAllPublicMethods":true
+},
+{
+  "name":"com.fasterxml.jackson.databind.Module",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queriedMethods":[{"name":"getDependencies","parameterTypes":[] }]
+},
+{
+  "name":"com.fasterxml.jackson.databind.ObjectMapper"
+},
+{
   "name":"com.fasterxml.jackson.databind.ext.Java7HandlersImpl",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -117,8 +130,164 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"com.fasterxml.jackson.databind.module.SimpleModule",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queriedMethods":[
+    {"name":"addAbstractTypeMapping","parameterTypes":["java.lang.Class","java.lang.Class"] }, 
+    {"name":"addDeserializer","parameterTypes":["java.lang.Class","com.fasterxml.jackson.databind.JsonDeserializer"] }, 
+    {"name":"addKeyDeserializer","parameterTypes":["java.lang.Class","com.fasterxml.jackson.databind.KeyDeserializer"] }, 
+    {"name":"addKeySerializer","parameterTypes":["java.lang.Class","com.fasterxml.jackson.databind.JsonSerializer"] }, 
+    {"name":"addSerializer","parameterTypes":["com.fasterxml.jackson.databind.JsonSerializer"] }, 
+    {"name":"addSerializer","parameterTypes":["java.lang.Class","com.fasterxml.jackson.databind.JsonSerializer"] }, 
+    {"name":"addValueInstantiator","parameterTypes":["java.lang.Class","com.fasterxml.jackson.databind.deser.ValueInstantiator"] }, 
+    {"name":"getModuleName","parameterTypes":[] }, 
+    {"name":"getTypeId","parameterTypes":[] }, 
+    {"name":"registerSubtypes","parameterTypes":["java.util.Collection"] }, 
+    {"name":"registerSubtypes","parameterTypes":["com.fasterxml.jackson.databind.jsontype.NamedType[]"] }, 
+    {"name":"registerSubtypes","parameterTypes":["java.lang.Class[]"] }, 
+    {"name":"setAbstractTypes","parameterTypes":["com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver"] }, 
+    {"name":"setDeserializerModifier","parameterTypes":["com.fasterxml.jackson.databind.deser.BeanDeserializerModifier"] }, 
+    {"name":"setDeserializers","parameterTypes":["com.fasterxml.jackson.databind.module.SimpleDeserializers"] }, 
+    {"name":"setKeyDeserializers","parameterTypes":["com.fasterxml.jackson.databind.module.SimpleKeyDeserializers"] }, 
+    {"name":"setKeySerializers","parameterTypes":["com.fasterxml.jackson.databind.module.SimpleSerializers"] }, 
+    {"name":"setMixInAnnotation","parameterTypes":["java.lang.Class","java.lang.Class"] }, 
+    {"name":"setSerializerModifier","parameterTypes":["com.fasterxml.jackson.databind.ser.BeanSerializerModifier"] }, 
+    {"name":"setSerializers","parameterTypes":["com.fasterxml.jackson.databind.module.SimpleSerializers"] }, 
+    {"name":"setValueInstantiators","parameterTypes":["com.fasterxml.jackson.databind.module.SimpleValueInstantiators"] }, 
+    {"name":"setupModule","parameterTypes":["com.fasterxml.jackson.databind.Module$SetupContext"] }, 
+    {"name":"version","parameterTypes":[] }
+  ]
+},
+{
   "name":"com.fasterxml.jackson.databind.ser.std.ClassSerializer",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"provideFxmlLoader","parameterTypes":[] }],
+  "queriedMethods":[{"name":"setApplicationContext","parameterTypes":["org.springframework.context.ApplicationContext"] }]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$2b167631",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$2b167631$$FastClassBySpringCGLIB$$37835bed",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$38a44cb5",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$38a44cb5$$FastClassBySpringCGLIB$$436a9075",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$5b82ed67",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$5b82ed67$$FastClassBySpringCGLIB$$7af60702",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$5e4d88a1",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$5e4d88a1$$FastClassBySpringCGLIB$$1580d8cb",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$7bcd8926",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$7bcd8926$$FastClassBySpringCGLIB$$96c4440c",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$df11ae3d",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$df11ae3d$$FastClassBySpringCGLIB$$54e45f32",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$f657b5b4",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "fields":[{"name":"CGLIB$FACTORY_DATA"}],
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ],
+  "queriedMethods":[{"name":"provideFxmlLoader","parameterTypes":[] }]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$f657b5b4$$FastClassBySpringCGLIB$$40a351f2",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$fa760b0c",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$EnhancerBySpringCGLIB$$fa760b0c$$FastClassBySpringCGLIB$$2694c81a",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.gluonhq.ignite.spring.FXModule$$FastClassBySpringCGLIB$$c321cf9e",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
 },
 {
   "name":"com.google.common.collect.ImmutableCollection",
@@ -171,6 +340,18 @@
   "name":"com.google.gson.JsonSerializer",
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true
+},
+{
+  "name":"com.merakianalytics.datapipelines.DataPipeline"
+},
+{
+  "name":"com.merakianalytics.datapipelines.SourceHandler"
+},
+{
+  "name":"com.merakianalytics.datapipelines.sources.AbstractDataSource"
+},
+{
+  "name":"com.merakianalytics.datapipelines.sources.CompositeDataSource"
 },
 {
   "name":"com.merakianalytics.orianna.Orianna$Configuration",
@@ -368,6 +549,9 @@
   ]
 },
 {
+  "name":"com.merakianalytics.orianna.datapipeline.kernel.data.KernelService"
+},
+{
   "name":"com.merakianalytics.orianna.datapipeline.kernel.data.KernelService$FailedRequestStrategy$Configuration",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
@@ -563,6 +747,9 @@
   "queryAllDeclaredMethods":true
 },
 {
+  "name":"com.merakianalytics.orianna.types.core.GhostObject"
+},
+{
   "name":"com.merakianalytics.orianna.types.core.champion.ChampionRotation"
 },
 {
@@ -731,14 +918,80 @@
   "allDeclaredClasses":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "queriedMethods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"main","parameterTypes":["java.lang.String[]"] }
+  ],
+  "queriedMethods":[
+    {"name":"start","parameterTypes":["javafx.stage.Stage"] }, 
+    {"name":"stop","parameterTypes":[] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication$$EnhancerBySpringCGLIB$$17eab72d",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication$$EnhancerBySpringCGLIB$$28513c7c",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
 },
 {
   "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication$$EnhancerBySpringCGLIB$$3127b894",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "fields":[{"name":"CGLIB$FACTORY_DATA"}],
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication$$EnhancerBySpringCGLIB$$35df1300",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication$$EnhancerBySpringCGLIB$$58bdb3b2",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication$$EnhancerBySpringCGLIB$$5b884eec",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication$$EnhancerBySpringCGLIB$$79084f71",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
   "methods":[
     {"name":"<init>","parameterTypes":[] }, 
     {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
@@ -755,24 +1008,49 @@
   ]
 },
 {
+  "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication$$EnhancerBySpringCGLIB$$dc4c7488",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication$$EnhancerBySpringCGLIB$$f3927bff",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "fields":[{"name":"CGLIB$FACTORY_DATA"}],
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompApplication$$EnhancerBySpringCGLIB$$f7b0d157",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
   "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompStageInitializer",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }],
-  "queriedMethods":[{"name":"onApplicationEvent","parameterTypes":["org.springframework.context.ApplicationEvent"] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"com.st4s1k.leagueteamcomp.LeagueTeamCompStarter",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }],
-  "queriedMethods":[
-    {"name":"init","parameterTypes":[] }, 
-    {"name":"start","parameterTypes":["javafx.stage.Stage"] }, 
-    {"name":"stop","parameterTypes":[] }
-  ]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"com.st4s1k.leagueteamcomp.config.GsonConfig",
@@ -808,7 +1086,7 @@
   "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
 },
 {
-  "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$a6536a78",
+  "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$68be2de3",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
@@ -832,7 +1110,72 @@
   ]
 },
 {
+  "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$68be2de3$$FastClassBySpringCGLIB$$14732f51",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$6cdc833b",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$6cdc833b$$FastClassBySpringCGLIB$$fa6ea1e2",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$8d166911",
+  "fields":[
+    {"name":"CGLIB$CALLBACK_FILTER"}, 
+    {"name":"CGLIB$FACTORY_DATA"}
+  ],
+  "methods":[{"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }],
+  "queriedMethods":[{"name":"CGLIB$SET_THREAD_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$a6536a78",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
   "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$a6536a78$$FastClassBySpringCGLIB$$cdf057cb",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$ab0ac4e4",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$ab0ac4e4$$FastClassBySpringCGLIB$$df96565e",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$cde96596",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.GsonConfig$$EnhancerBySpringCGLIB$$cde96596$$FastClassBySpringCGLIB$$714ddd1d",
   "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
 },
 {
@@ -840,20 +1183,102 @@
   "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
 },
 {
+  "name":"com.st4s1k.leagueteamcomp.config.SpringConfig",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"getChampionRepository","parameterTypes":[] }, 
+    {"name":"getChampionSuggestionService","parameterTypes":[] }, 
+    {"name":"getLeagueTeamCompService","parameterTypes":["com.st4s1k.leagueteamcomp.repository.ChampionRepository"] }, 
+    {"name":"getSummonerRoleListGeneratorService","parameterTypes":[] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.SpringConfig$$EnhancerBySpringCGLIB$$623984e5",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "fields":[{"name":"CGLIB$FACTORY_DATA"}],
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ],
+  "queriedMethods":[
+    {"name":"getChampionRepository","parameterTypes":[] }, 
+    {"name":"getChampionSuggestionService","parameterTypes":[] }, 
+    {"name":"getLeagueTeamCompService","parameterTypes":["com.st4s1k.leagueteamcomp.repository.ChampionRepository"] }, 
+    {"name":"getSummonerRoleListGeneratorService","parameterTypes":[] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.SpringConfig$$EnhancerBySpringCGLIB$$623984e5$$FastClassBySpringCGLIB$$34fce9f8",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.SpringConfig$$EnhancerBySpringCGLIB$$6657da3d",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.SpringConfig$$EnhancerBySpringCGLIB$$6657da3d$$FastClassBySpringCGLIB$$bf7fc9a",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.SpringConfig$$EnhancerBySpringCGLIB$$8691c013",
+  "fields":[
+    {"name":"CGLIB$CALLBACK_FILTER"}, 
+    {"name":"CGLIB$FACTORY_DATA"}
+  ],
+  "methods":[{"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }],
+  "queriedMethods":[{"name":"CGLIB$SET_THREAD_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.SpringConfig$$EnhancerBySpringCGLIB$$a4861be6",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.SpringConfig$$EnhancerBySpringCGLIB$$a4861be6$$FastClassBySpringCGLIB$$19f75c9d",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.SpringConfig$$EnhancerBySpringCGLIB$$c764bc98",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }
+  ]
+},
+{
+  "name":"com.st4s1k.leagueteamcomp.config.SpringConfig$$FastClassBySpringCGLIB$$9b1189af",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
   "name":"com.st4s1k.leagueteamcomp.controller.LTCExceptionController",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }],
-  "queriedMethods":[{"name":"initialize","parameterTypes":["java.net.URL","java.util.ResourceBundle"] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"com.st4s1k.leagueteamcomp.controller.LeagueTeamCompController",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }],
-  "queriedMethods":[{"name":"initialize","parameterTypes":["java.net.URL","java.util.ResourceBundle"] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"com.st4s1k.leagueteamcomp.json.ChampSelectDTOJsonDeserializer",
@@ -1057,6 +1482,12 @@
   "name":"com.sun.glass.ui.Screen"
 },
 {
+  "name":"com.sun.glass.ui.View"
+},
+{
+  "name":"com.sun.glass.ui.win.WinApplication"
+},
+{
   "name":"com.sun.glass.ui.win.WinDnDClipboard"
 },
 {
@@ -1065,6 +1496,27 @@
 {
   "name":"com.sun.glass.ui.win.WinPlatformFactory",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.javafx.event.BasicEventDispatcher"
+},
+{
+  "name":"com.sun.javafx.event.CompositeEventDispatcher"
+},
+{
+  "name":"com.sun.javafx.event.CompositeEventHandler"
+},
+{
+  "name":"com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord"
+},
+{
+  "name":"com.sun.javafx.event.EventDispatchChainImpl"
+},
+{
+  "name":"com.sun.javafx.event.EventHandlerManager"
+},
+{
+  "name":"com.sun.javafx.event.EventUtil"
 },
 {
   "name":"com.sun.javafx.font.directwrite.DWFactory",
@@ -1083,8 +1535,23 @@
   "methods":[{"name":"invoke","parameterTypes":["java.lang.reflect.Method","java.lang.Object","java.lang.Object[]"] }]
 },
 {
+  "name":"com.sun.javafx.scene.control.behavior.TextFieldBehavior"
+},
+{
+  "name":"com.sun.javafx.scene.control.behavior.TextInputControlBehavior"
+},
+{
+  "name":"com.sun.javafx.scene.control.inputmap.InputMap"
+},
+{
   "name":"com.sun.javafx.scene.control.skin.Utils",
   "methods":[{"name":"getResource","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"com.sun.javafx.tk.quantum.GlassViewEventHandler"
+},
+{
+  "name":"com.sun.javafx.tk.quantum.GlassViewEventHandler$KeyEventNotification"
 },
 {
   "name":"com.sun.javafx.tk.quantum.QuantumToolkit",
@@ -1280,7 +1747,11 @@
   "name":"java.lang.String"
 },
 {
+  "name":"java.lang.Thread"
+},
+{
   "name":"java.lang.Throwable",
+  "methods":[{"name":"getSuppressed","parameterTypes":[] }],
   "queriedMethods":[{"name":"addSuppressed","parameterTypes":["java.lang.Throwable"] }]
 },
 {
@@ -1370,6 +1841,9 @@
   "queryAllPublicMethods":true
 },
 {
+  "name":"java.lang.reflect.Method"
+},
+{
   "name":"java.lang.reflect.ParameterizedType",
   "methods":[
     {"name":"getActualTypeArguments","parameterTypes":[] }, 
@@ -1399,6 +1873,9 @@
 {
   "name":"java.nio.ByteOrder",
   "methods":[{"name":"nativeOrder","parameterTypes":[] }]
+},
+{
+  "name":"java.security.AccessController"
 },
 {
   "name":"java.security.AlgorithmParametersSpi"
@@ -1481,6 +1958,7 @@
     {"name":"getHostServices","parameterTypes":[] }, 
     {"name":"getParameters","parameterTypes":[] }, 
     {"name":"getUserAgentStylesheet","parameterTypes":[] }, 
+    {"name":"init","parameterTypes":[] }, 
     {"name":"launch","parameterTypes":["java.lang.Class","java.lang.String[]"] }, 
     {"name":"launch","parameterTypes":["java.lang.String[]"] }, 
     {"name":"notifyPreloader","parameterTypes":["javafx.application.Preloader$PreloaderNotification"] }, 
@@ -1488,11 +1966,16 @@
   ]
 },
 {
+  "name":"javafx.event.Event"
+},
+{
   "name":"javafx.fxml.FXML",
   "queryAllDeclaredMethods":true
 },
 {
-  "name":"javafx.fxml.FXMLLoader"
+  "name":"javafx.fxml.FXMLLoader",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
 },
 {
   "name":"javafx.fxml.Initializable",
@@ -1553,6 +2036,12 @@
 },
 {
   "name":"javafx.scene.Scene"
+},
+{
+  "name":"javafx.scene.Scene$KeyHandler"
+},
+{
+  "name":"javafx.scene.Scene$ScenePeerListener"
 },
 {
   "name":"javafx.scene.control.Button",
@@ -1687,6 +2176,9 @@
   "name":"javafx.scene.image.ImageView"
 },
 {
+  "name":"javafx.scene.input.Clipboard"
+},
+{
   "name":"javafx.scene.layout.AnchorPane",
   "queryAllDeclaredMethods":true,
   "queryAllPublicConstructors":true,
@@ -1710,7 +2202,10 @@
   "queryAllPublicConstructors":true,
   "methods":[
     {"name":"<init>","parameterTypes":[] }, 
-    {"name":"setCenter","parameterTypes":["javafx.scene.Node"] }
+    {"name":"setAlignment","parameterTypes":["javafx.scene.Node","javafx.geometry.Pos"] }, 
+    {"name":"setBottom","parameterTypes":["javafx.scene.Node"] }, 
+    {"name":"setCenter","parameterTypes":["javafx.scene.Node"] }, 
+    {"name":"setTop","parameterTypes":["javafx.scene.Node"] }
   ]
 },
 {
@@ -1920,6 +2415,12 @@
   "name":"javax.sql.DataSource"
 },
 {
+  "name":"jdk.internal.reflect.DelegatingMethodAccessorImpl"
+},
+{
+  "name":"jdk.internal.reflect.NativeMethodAccessorImpl"
+},
+{
   "name":"jdk.management.jfr.ConfigurationInfo",
   "queryAllPublicMethods":true
 },
@@ -2062,6 +2563,10 @@
   "queryAllPublicMethods":true
 },
 {
+  "name":"org.springframework.beans.factory.InitializingBean",
+  "queryAllPublicMethods":true
+},
+{
   "name":"org.springframework.beans.factory.annotation.Autowired",
   "queryAllDeclaredMethods":true,
   "methods":[{"name":"required","parameterTypes":[] }]
@@ -2085,6 +2590,9 @@
 {
   "name":"org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostProcessor",
   "queryAllPublicMethods":true
+},
+{
+  "name":"org.springframework.beans.factory.support.BeanDefinitionBuilder"
 },
 {
   "name":"org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor",
@@ -2166,6 +2674,9 @@
 {
   "name":"org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer$CachingMetadataReaderFactoryPostProcessor"
 },
 {
   "name":"org.springframework.boot.autoconfigure.SpringBootApplication",
@@ -2323,8 +2834,20 @@
   ]
 },
 {
+  "name":"org.springframework.boot.autoconfigure.data.redis.RedisUrlSyntaxFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.autoconfigure.diagnostics.analyzer.NoSuchBeanDefinitionFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializerDatabaseInitializerDetector",
   "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.autoconfigure.flyway.FlywayMigrationScriptMissingFailureAnalyzer",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -2334,6 +2857,7 @@
   "queryAllDeclaredConstructors":true,
   "methods":[
     {"name":"<init>","parameterTypes":[] }, 
+    {"name":"gson","parameterTypes":["com.google.gson.GsonBuilder"] }, 
     {"name":"gsonBuilder","parameterTypes":["java.util.List"] }, 
     {"name":"standardGsonBuilderCustomizer","parameterTypes":["org.springframework.boot.autoconfigure.gson.GsonProperties"] }
   ]
@@ -2378,17 +2902,55 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration"
+  "name":"org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"jsonComponentModule","parameterTypes":[] }
+  ]
 },
 {
   "name":"org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"
+},
+{
+  "name":"org.springframework.boot.autoconfigure.jdbc.DataSourceBeanCreationFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.autoconfigure.jdbc.HikariDriverConfigurationFailureAnalyzer"
+},
+{
+  "name":"org.springframework.boot.autoconfigure.jooq.NoDslContextBeanFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.springframework.boot.autoconfigure.r2dbc.ConnectionFactoryBeanCreationFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.autoconfigure.r2dbc.MissingR2dbcPoolDependencyFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.autoconfigure.r2dbc.MultipleConnectionPoolConfigurationsFailureAnalzyer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.autoconfigure.r2dbc.NoConnectionFactoryBeanFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration"
+},
+{
+  "name":"org.springframework.boot.autoconfigure.session.NonUniqueSessionRepositoryFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"org.springframework.boot.autoconfigure.sql.init.DataSourceInitializationConfiguration"
@@ -2499,6 +3061,10 @@
   "methods":[{"name":"<init>","parameterTypes":["org.springframework.boot.logging.DeferredLogFactory","org.springframework.boot.ConfigurableBootstrapContext"] }]
 },
 {
+  "name":"org.springframework.boot.context.config.ConfigDataNotFoundFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.springframework.boot.context.config.ConfigDataProperties",
   "queryAllDeclaredConstructors":true
 },
@@ -2573,9 +3139,79 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.springframework.boot.context.properties.IncompatibleConfigurationFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.context.properties.NotConstructorBoundInjectionFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.springframework.boot.context.properties.bind.Name",
   "queryAllDeclaredMethods":true,
   "methods":[{"name":"value","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.FailureAnalyzers",
+  "methods":[{"name":"<init>","parameterTypes":["org.springframework.context.ConfigurableApplicationContext"] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.BeanCurrentlyInCreationFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.BeanDefinitionOverrideFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.BeanNotOfRequiredTypeFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.BindFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.BindValidationFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.InvalidConfigurationPropertyNameFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.InvalidConfigurationPropertyValueFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.MutuallyExclusiveConfigurationPropertiesFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.NoSuchMethodFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.NoUniqueBeanDefinitionFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.PatternParseFailureAnalyzer"
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.PortInUseFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.UnboundConfigurationPropertyFailureAnalyzer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.diagnostics.analyzer.ValidationExceptionFailureAnalyzer"
 },
 {
   "name":"org.springframework.boot.env.EnvironmentPostProcessorApplicationListener",
@@ -2610,6 +3246,11 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.springframework.boot.jackson.JsonComponentModule",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
   "name":"org.springframework.boot.jdbc.AbstractDataSourceInitializerDatabaseInitializerDetector",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
@@ -2618,6 +3259,9 @@
   "name":"org.springframework.boot.jdbc.init.DataSourceScriptDatabaseInitializerDetector",
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.liquibase.LiquibaseChangelogMissingFailureAnalyzer"
 },
 {
   "name":"org.springframework.boot.liquibase.LiquibaseDatabaseInitializerDetector",
@@ -2687,6 +3331,36 @@
   "queryAllPublicMethods":true
 },
 {
+  "name":"org.springframework.boot.validation.beanvalidation.MethodValidationExcludeFilter$$Lambda$419/0x0000000800e72000",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"org.springframework.boot.validation.beanvalidation.MethodValidationExcludeFilter$$Lambda$419/0x0000000800e779e8",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"org.springframework.boot.validation.beanvalidation.MethodValidationExcludeFilter$$Lambda$419/0x0000000800e92000",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"org.springframework.boot.validation.beanvalidation.MethodValidationExcludeFilter$$Lambda$419/0x0000000800e979e8",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"org.springframework.boot.validation.beanvalidation.MethodValidationExcludeFilter$$Lambda$449/0x0000000800e704a0",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"org.springframework.boot.validation.beanvalidation.MethodValidationExcludeFilter$$Lambda$449/0x0000000800e70cc8",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
   "name":"org.springframework.boot.validation.beanvalidation.MethodValidationExcludeFilter$$Lambda$450/0x0000000800ebb3b0",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true
@@ -2698,6 +3372,10 @@
 },
 {
   "name":"org.springframework.boot.web.context.ServerPortInfoApplicationContextInitializer",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.web.embedded.tomcat.ConnectorStartFailureAnalyzer",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -2727,6 +3405,7 @@
 },
 {
   "name":"org.springframework.context.ApplicationContextAware",
+  "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true
 },
 {
@@ -2833,6 +3512,15 @@
 {
   "name":"org.springframework.context.annotation.Primary",
   "queryAllDeclaredMethods":true
+},
+{
+  "name":"org.springframework.context.annotation.Scope",
+  "queryAllDeclaredMethods":true,
+  "methods":[
+    {"name":"proxyMode","parameterTypes":[] }, 
+    {"name":"scopeName","parameterTypes":[] }, 
+    {"name":"value","parameterTypes":[] }
+  ]
 },
 {
   "name":"org.springframework.context.event.DefaultEventListenerFactory",
