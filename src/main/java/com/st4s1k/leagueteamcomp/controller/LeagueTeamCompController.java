@@ -1,9 +1,11 @@
 package com.st4s1k.leagueteamcomp.controller;
 
 import com.google.gson.reflect.TypeToken;
-import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.core.championmastery.ChampionMastery;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
+import com.st4s1k.leagueteamcomp.actions.AddSummonerAction;
+import com.st4s1k.leagueteamcomp.actions.AddSummonerListener;
+import com.st4s1k.leagueteamcomp.actions.base.LTCAction;
 import com.st4s1k.leagueteamcomp.exceptions.LTCException;
 import com.st4s1k.leagueteamcomp.model.SummonerData;
 import com.st4s1k.leagueteamcomp.model.champion.AttributeRatingsDTO;
@@ -34,6 +36,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,7 +50,6 @@ import java.util.function.Predicate;
 import static com.st4s1k.leagueteamcomp.model.enums.SummonerRoleEnum.*;
 import static com.st4s1k.leagueteamcomp.utils.CompressionUtils.compressB64;
 import static com.st4s1k.leagueteamcomp.utils.CompressionUtils.decompressB64;
-import static com.st4s1k.leagueteamcomp.utils.LeagueTeamCompTransformerUtils.convertToSummonerData;
 import static com.st4s1k.leagueteamcomp.utils.Resources.*;
 import static com.st4s1k.leagueteamcomp.utils.Utils.*;
 import static java.util.Comparator.comparing;
@@ -58,6 +60,7 @@ import static javafx.scene.control.SelectionMode.MULTIPLE;
 import static org.controlsfx.control.textfield.TextFields.bindAutoCompletion;
 
 @Slf4j
+@Getter
 public class LeagueTeamCompController implements Initializable {
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -239,12 +242,16 @@ public class LeagueTeamCompController implements Initializable {
     }
 
     public void save() {
-        log.info("Saving application state...");
-        saveAllCheckboxes();
-        saveAllTextFields();
-        saveSummonerData();
-        saveChampionSuggestions();
-        log.info("Application saved.");
+        try {
+            log.info("Saving application state...");
+            saveAllCheckboxes();
+            saveAllTextFields();
+            saveSummonerData();
+            saveChampionSuggestions();
+            log.info("Application saved.");
+        } catch (Throwable t) {
+            log.error("An exception occurred while trying to save the application state!", t);
+        }
     }
 
     private void saveAllCheckboxes() {
@@ -890,8 +897,10 @@ public class LeagueTeamCompController implements Initializable {
             }
         });
         summonerDataListView.setOnKeyPressed(event -> handleSummonerDataListViewKeyPressed(event, summonerDataListView));
-        summonerAddField.setOnAction(action -> onSummonerNameFieldAction());
-        summonerAddButton.setOnAction(action -> onSummonerNameFieldAction());
+        LTCAction onSummonerAddAction = new AddSummonerAction(this)
+            .addListener(new AddSummonerListener(this));
+        summonerAddField.setOnAction(action -> onSummonerAddAction.execute());
+        summonerAddButton.setOnAction(action -> onSummonerAddAction.execute());
     }
 
     public void handleSummonerDataListViewKeyPressed(
@@ -908,30 +917,5 @@ public class LeagueTeamCompController implements Initializable {
     private Type getSummonerDataListType() {
         return new TypeToken<List<SummonerData>>() {
         }.getType();
-    }
-
-    private void onSummonerNameFieldAction() {
-        String fieldText = summonerAddField.getText();
-        if (!fieldText.isBlank()) {
-            Summoner summoner = Orianna.summonerNamed(fieldText).get();
-            if (summoner.exists()) {
-                if (summonerIsNotAlreadyAdded(summoner)) {
-                    SummonerData summonerData = convertToSummonerData(summoner);
-                    summonerDataListView.getItems().add(summonerData);
-                } else {
-                    throw LTCException.of("Summoner {} was already added", summoner.getName());
-                }
-            } else {
-                throw LTCException.of(
-                    "Summoner {} doesn't exist in region {}",
-                    summoner.getName(),
-                    summoner.getRegion().getTag()
-                );
-            }
-        }
-    }
-
-    private boolean summonerIsNotAlreadyAdded(Summoner summoner) {
-        return summonerDataListView.getItems().stream().noneMatch(summonerData -> summonerData.getSummonerName().equals(summoner.getName()));
     }
 }

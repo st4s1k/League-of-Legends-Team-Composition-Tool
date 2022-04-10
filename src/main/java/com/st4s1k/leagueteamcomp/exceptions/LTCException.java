@@ -3,8 +3,17 @@ package com.st4s1k.leagueteamcomp.exceptions;
 import org.slf4j.helpers.MessageFormatter;
 
 public class LTCException extends RuntimeException {
+
+    private LTCException(Throwable cause) {
+        super(cause);
+    }
+
     private LTCException(String message) {
         super(message);
+    }
+
+    public static LTCException of(Throwable t) {
+        return new LTCException(t);
     }
 
     public static LTCException of(String message) {

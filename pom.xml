@@ -137,7 +137,6 @@
             <configuration>
               <mainClass>com.st4s1k.leagueteamcomp.LeagueTeamCompApplication</mainClass>
               <options>
-                <option>-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image</option>
                 <option>--add-exports</option>
                 <option>javafx.base/com.sun.javafx.event=org.controlsfx.controls</option>
                 <option>--add-exports</option>
