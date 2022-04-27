@@ -1,5 +1,6 @@
 package com.st4s1k.leagueteamcomp;
 
+import com.gluonhq.ignite.spring.SpringContext;
 import com.google.gson.reflect.TypeToken;
 import com.merakianalytics.orianna.Orianna;
 import com.st4s1k.leagueteamcomp.controller.LTCExceptionController;
@@ -21,6 +22,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.lang.reflect.Type;
 import java.net.URI;
@@ -38,22 +44,39 @@ import static java.net.http.HttpResponse.BodyHandlers;
 import static java.util.Objects.requireNonNull;
 
 @Slf4j
+@SpringBootApplication
+@ComponentScan({
+    "com.st4s1k.leagueteamcomp",
+    "com.gluonhq.ignite.spring"
+})
 public class LeagueTeamCompApplication extends Application {
 
+    private final SpringContext springContext = new SpringContext(this);
+
+    @Autowired
+    private ApplicationContext context;
+
+    @Autowired
+    private FXMLLoader loader;
+
     public static void main(String[] args) {
-        launch();
+        printBanner();
+        Application.launch(LeagueTeamCompApplication.class, args);
     }
 
     @Override
     @SneakyThrows
     public void start(Stage stage) {
+        springContext.init(() -> SpringApplication.run(LeagueTeamCompApplication.class));
         Orianna.loadConfiguration("orianna-config.json");
         Orianna.setDefaultRegion(EUROPE_WEST);
         Thread.setDefaultUncaughtExceptionHandler(this::showError);
         getChampionsFromUrl();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_FILE_PATH), LTC_VIEW_PROPERTIES);
+        loader.setLocation(getClass().getResource(FXML_FILE_PATH));
+        loader.setResources(LTC_VIEW_PROPERTIES);
         Parent root = loader.load();
+        loader.setControllerFactory(context::getBean);
         LeagueTeamCompController controller = loader.getController();
         controller.setStageAndSetupListeners(stage);
         controller.setCloseButtonAction(() -> applicationStopAction(stage, controller));
@@ -134,6 +157,18 @@ public class LeagueTeamCompApplication extends Application {
             .min().orElse(4);
         addResizeListener(dialog, border);
         dialog.show();
+    }
+
+    private static void printBanner() {
+        System.out.println();
+        System.out.println("  _                               _____                     ____                      ");
+        System.out.println(" | |    ___  __ _  __ _ _   _  __|_   _|__  __ _ _ __ ___  / ___|___  _ __ ___  _ __  ");
+        System.out.println(" | |   / _ \\/ _` |/ _` | | | |/ _ \\| |/ _ \\/ _` | '_ ` _ \\| |   / _ \\| '_ ` _ \\| '_ \\ ");
+        System.out.println(" | |__|  __/ (_| | (_| | |_| |  __/| |  __/ (_| | | | | | | |__| (_) | | | | | | |_) |");
+        System.out.println(" |_____\\___|\\__,_|\\__, |\\__,_|\\___||_|\\___|\\__,_|_| |_| |_|\\____\\___/|_| |_| |_| .__/ ");
+        System.out.println("==================|___/========================================================|_|====");
+        System.out.println(":: League of Legends Team Composition Tool ::".concat(String.format("%41s", String.format("(v%s)", LTC_VERSION))));
+        System.out.println();
     }
 
     @Override
