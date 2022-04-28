@@ -41,6 +41,7 @@ import static java.util.Objects.requireNonNull;
 public class LeagueTeamCompApplication extends Application {
 
     public static void main(String[] args) {
+        printBanner();
         launch();
     }
 
@@ -134,6 +135,18 @@ public class LeagueTeamCompApplication extends Application {
             .min().orElse(4);
         addResizeListener(dialog, border);
         dialog.show();
+    }
+
+    private static void printBanner() {
+        System.out.println();
+        System.out.println("  _                               _____                     ____                      ");
+        System.out.println(" | |    ___  __ _  __ _ _   _  __|_   _|__  __ _ _ __ ___  / ___|___  _ __ ___  _ __  ");
+        System.out.println(" | |   / _ \\/ _` |/ _` | | | |/ _ \\| |/ _ \\/ _` | '_ ` _ \\| |   / _ \\| '_ ` _ \\| '_ \\ ");
+        System.out.println(" | |__|  __/ (_| | (_| | |_| |  __/| |  __/ (_| | | | | | | |__| (_) | | | | | | |_) |");
+        System.out.println(" |_____\\___|\\__,_|\\__, |\\__,_|\\___||_|\\___|\\__,_|_| |_| |_|\\____\\___/|_| |_| |_| .__/ ");
+        System.out.println("==================|___/========================================================|_|====");
+        System.out.println(":: League of Legends Team Composition Tool ::".concat(String.format("%41s", String.format("(v%s)", LTC_VERSION))));
+        System.out.println();
     }
 
     @Override
