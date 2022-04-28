@@ -59,6 +59,8 @@ public final class Resources {
      * Application constants                               *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+    public static final String LTC_VERSION = LTC_PROPERTIES.getString("version");
+
     public static final Image EMPTY_SLOT_IMAGE = new Image(LeagueTeamCompApplication.class.getResourceAsStream(EMPTY_SLOT_IMAGE_PATH));
 
     private static final GsonBuilder GSON_BUILDER = new GsonBuilder()

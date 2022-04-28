@@ -41,6 +41,7 @@ import static java.util.Objects.requireNonNull;
 public class LeagueTeamCompApplication extends Application {
 
     public static void main(String[] args) {
+        printBanner();
         launch();
     }
 
@@ -49,14 +50,16 @@ public class LeagueTeamCompApplication extends Application {
     public void start(Stage stage) {
         Orianna.loadConfiguration("orianna-config.json");
         Orianna.setDefaultRegion(EUROPE_WEST);
-        Thread.setDefaultUncaughtExceptionHandler(LeagueTeamCompApplication::showError);
+        Thread.setDefaultUncaughtExceptionHandler(this::showError);
         getChampionsFromUrl();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_FILE_PATH), LTC_VIEW_PROPERTIES);
         Parent root = loader.load();
         LeagueTeamCompController controller = loader.getController();
         controller.setStageAndSetupListeners(stage);
         controller.setCloseButtonAction(() -> applicationStopAction(stage, controller));
         controller.setMinimizeButtonAction(() -> stage.setIconified(true));
+
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.initStyle(StageStyle.TRANSPARENT);
         scene.setFill(Color.TRANSPARENT);
@@ -64,6 +67,7 @@ public class LeagueTeamCompApplication extends Application {
         stage.getIcons().add(new Image(requireNonNull(getClass().getResourceAsStream(ICON_FILE_PATH))));
         stage.setTitle(WINDOW_TITLE);
         stage.setResizable(WINDOW_IS_RESIZABLE);
+        stage.setOnCloseRequest(event -> applicationStopAction(stage, controller));
         stage.show();
     }
 
@@ -98,16 +102,15 @@ public class LeagueTeamCompApplication extends Application {
         }.getType();
     }
 
-    private static void showError(Thread t, Throwable e) {
-        if (Platform.isFxApplicationThread() && e instanceof LTCException ltcException) {
-            showErrorDialog(ltcException);
-        } else {
-            log.error(e.getMessage(), e);
+    private void showError(Thread t, Throwable e) {
+        log.error("Exception thrown in thread " + Thread.currentThread().getName(), e);
+        if (Platform.isFxApplicationThread()) {
+            showErrorDialog(e);
         }
     }
 
     @SneakyThrows
-    private static void showErrorDialog(LTCException ltcException) {
+    private void showErrorDialog(Throwable e) {
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         FXMLLoader loader = new FXMLLoader(LeagueTeamCompApplication.class.getResource("ltc-exception.fxml"));
@@ -116,7 +119,11 @@ public class LeagueTeamCompApplication extends Application {
         controller.setStageAndSetupListeners(dialog);
         int sceneWidth = 400;
         int sceneHeight = 150;
-        controller.setErrorText(ltcException.getMessage());
+        if (e instanceof LTCException ltcException) {
+            controller.setErrorText(ltcException.getMessage());
+        } else {
+            controller.setErrorText("An exception occurred, please try again later...");
+        }
         Scene scene = new Scene(root, sceneWidth, sceneHeight);
         scene.setFill(Color.TRANSPARENT);
         dialog.initStyle(StageStyle.TRANSPARENT);
@@ -128,6 +135,18 @@ public class LeagueTeamCompApplication extends Application {
             .min().orElse(4);
         addResizeListener(dialog, border);
         dialog.show();
+    }
+
+    private static void printBanner() {
+        System.out.println();
+        System.out.println("  _                               _____                     ____                      ");
+        System.out.println(" | |    ___  __ _  __ _ _   _  __|_   _|__  __ _ _ __ ___  / ___|___  _ __ ___  _ __  ");
+        System.out.println(" | |   / _ \\/ _` |/ _` | | | |/ _ \\| |/ _ \\/ _` | '_ ` _ \\| |   / _ \\| '_ ` _ \\| '_ \\ ");
+        System.out.println(" | |__|  __/ (_| | (_| | |_| |  __/| |  __/ (_| | | | | | | |__| (_) | | | | | | |_) |");
+        System.out.println(" |_____\\___|\\__,_|\\__, |\\__,_|\\___||_|\\___|\\__,_|_| |_| |_|\\____\\___/|_| |_| |_| .__/ ");
+        System.out.println("==================|___/========================================================|_|====");
+        System.out.println(":: League of Legends Team Composition Tool ::".concat(String.format("%41s", String.format("(v%s)", LTC_VERSION))));
+        System.out.println();
     }
 
     @Override

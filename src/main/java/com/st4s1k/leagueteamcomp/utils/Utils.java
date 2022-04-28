@@ -34,9 +34,23 @@ public final class Utils {
         node.setFocusTraversable(false);
     }
 
+    public static void disableInteraction(Node firstNode, Node... nodes) {
+        disableInteraction(firstNode);
+        for (Node node : nodes) {
+            disableInteraction(node);
+        }
+    }
+
     public static void enableInteraction(Node node) {
         node.setMouseTransparent(false);
         node.setFocusTraversable(true);
+    }
+
+    public static void enableInteraction(Node firstNode, Node... nodes) {
+        enableInteraction(firstNode);
+        for (Node node : nodes) {
+            enableInteraction(node);
+        }
     }
 
     public static <T, R> void initializeSavedFieldsProperty(

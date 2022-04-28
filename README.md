@@ -24,6 +24,6 @@ How to build:
 
 - Go to project folder (ex: `cd /d D:\Downloads\LeagueTeamComp`)
 
-- Execute `mvn gluonfx:build` command from project folder
+- Execute `gradle ltcBuild` (shortcut for `gradle clean nativeRunAgent build nativeBuild nativeRun`) command from project folder
 
 - Go to `<project folder>\target\gluonfx\x86_64-windows` and run `LeagueTeamComp.exe`

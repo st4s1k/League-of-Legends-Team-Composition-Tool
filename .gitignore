@@ -1,5 +1,7 @@
 /target/
 /.idea/
-/LeagueTeamComp.iml
+/*.iml
 /out/
 /logs/
+/.gradle/
+/build/
